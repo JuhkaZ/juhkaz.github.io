@@ -12,7 +12,7 @@
       --bg: #070a12;
       --card-bg: #121a2d;
       --accent: #38bdf8;
-      --accent-purple: #a855f7;
+      --accent-purple: #c084fc;
       --text: #f8fafc;
       --text-dim: #94a3b8;
       --done: #22c55e;
@@ -21,37 +21,32 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      padding: 10px 10px 100px 10px;
+      padding: 12px 12px 100px 12px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
     }
     header {
       text-align: center;
-      padding: 6px 0 12px 0;
+      padding: 8px 0 16px 0;
     }
     .main-title {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 900;
       color: var(--accent);
       letter-spacing: 1px;
       text-transform: uppercase;
       cursor: pointer;
       display: inline-block;
-      padding: 4px 12px;
-      background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(168,85,247,0.15));
+      padding: 6px 16px;
+      background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(192,132,252,0.15));
       border: 1px solid var(--border);
       border-radius: 12px;
       transition: transform 0.1s ease;
     }
     .main-title:active {
       transform: scale(0.96);
-    }
-    .title-sub {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      margin-top: 4px;
     }
     
     /* Mode selector */
@@ -234,7 +229,7 @@
       cursor: pointer;
     }
 
-    /* Visual 2-Step Guide Modal */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -349,31 +344,31 @@
 
     /* Mörkö Easter Egg Modal */
     .morko-card {
-      background: #110e24;
+      background: #0d0b1a;
       border: 2px solid var(--accent-purple);
       text-align: center;
       padding: 24px 16px;
     }
     .morko-svg {
       width: 100%;
-      max-width: 260px;
+      max-width: 290px;
       height: auto;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 14px auto;
       display: block;
-      filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));
+      filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.45));
     }
     .morko-quote {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 900;
       color: var(--accent-purple);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       margin-bottom: 6px;
     }
     .morko-sub {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-dim);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     /* History View */
@@ -438,7 +433,6 @@
 
   <header>
     <div class="main-title" onclick="openMorkoModal()">VITUN ISO MÖRKÖ</div>
-    <div class="title-sub">Kosketa nimeä nähdäksesi Mörkö 💪</div>
   </header>
 
   <div class="mode-container">
@@ -478,56 +472,88 @@
   <!-- Mörkö Easter Egg Modal -->
   <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
     <div class="modal-card morko-card" onclick="event.stopPropagation()">
-      <svg class="morko-svg" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
-        <!-- Aura / Ice glow -->
-        <circle cx="150" cy="160" r="140" fill="radial-gradient(circle, rgba(168,85,247,0.3) 0%, rgba(0,0,0,0) 70%)" />
-        
-        <!-- Massive Left Bicep & Arm -->
-        <g fill="#2e1065" stroke="#a855f7" stroke-width="3">
-          <!-- Forearm & Fist -->
-          <path d="M 40 160 C 20 130, 30 90, 60 85 C 75 80, 85 100, 75 130 Z" />
-          <!-- Massive Bicep Peak -->
-          <path d="M 65 110 C 60 70, 95 50, 115 80 C 130 100, 120 140, 95 150 Z" />
-          <!-- Veins on left bicep -->
-          <path d="M 85 75 Q 90 95, 80 115" stroke="#38bdf8" stroke-width="2" fill="none" />
-          <path d="M 95 85 Q 105 105, 95 125" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+      <svg class="morko-svg" viewBox="0 0 340 330" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="iceAura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#a855f7" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Aura -->
+        <circle cx="170" cy="165" r="160" fill="url(#iceAura)" />
+
+        <!-- MASSIVE LEFT BICEP & FOREARM (Double Biceps Pose) -->
+        <g fill="#5a3d73" stroke="#321e42" stroke-width="2.5">
+          <!-- Left Deltoid (Shoulder) -->
+          <ellipse cx="95" cy="115" rx="32" ry="24" fill="#664682" />
+          <path d="M 85 105 Q 100 115, 95 130" stroke="#38bdf8" stroke-width="1.8" fill="none" />
+          
+          <!-- Left Giant Bicep Peak -->
+          <path d="M 90 95 C 65 50, 20 70, 45 115 C 65 135, 95 125, 90 95 Z" fill="#6d4b8c" />
+          <!-- Bicep Veins -->
+          <path d="M 50 85 Q 60 95, 52 110" stroke="#38bdf8" stroke-width="2" fill="none" />
+          <path d="M 62 80 Q 75 95, 68 115" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+
+          <!-- Left Forearm & Fist -->
+          <path d="M 35 110 C 15 85, 25 50, 48 55 C 65 58, 60 85, 50 108 Z" fill="#583970" />
+          <circle cx="48" cy="55" r="14" fill="#462c5c" />
         </g>
 
-        <!-- Massive Right Bicep & Arm -->
-        <g fill="#2e1065" stroke="#a855f7" stroke-width="3">
-          <!-- Forearm & Fist -->
-          <path d="M 260 160 C 280 130, 270 90, 240 85 C 225 80, 215 100, 225 130 Z" />
-          <!-- Massive Bicep Peak -->
-          <path d="M 235 110 C 240 70, 205 50, 185 80 C 170 100, 180 140, 205 150 Z" />
-          <!-- Veins on right bicep -->
-          <path d="M 215 75 Q 210 95, 220 115" stroke="#38bdf8" stroke-width="2" fill="none" />
-          <path d="M 205 85 Q 195 105, 205 125" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+        <!-- MASSIVE RIGHT BICEP & FOREARM -->
+        <g fill="#5a3d73" stroke="#321e42" stroke-width="2.5">
+          <!-- Right Deltoid (Shoulder) -->
+          <ellipse cx="245" cy="115" rx="32" ry="24" fill="#664682" />
+          <path d="M 255 105 Q 240 115, 245 130" stroke="#38bdf8" stroke-width="1.8" fill="none" />
+          
+          <!-- Right Giant Bicep Peak -->
+          <path d="M 250 95 C 275 50, 320 70, 295 115 C 275 135, 245 125, 250 95 Z" fill="#6d4b8c" />
+          <!-- Bicep Veins -->
+          <path d="M 290 85 Q 280 95, 288 110" stroke="#38bdf8" stroke-width="2" fill="none" />
+          <path d="M 278 80 Q 265 95, 272 115" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+
+          <!-- Right Forearm & Fist -->
+          <path d="M 305 110 C 325 85, 315 50, 292 55 C 275 58, 280 85, 290 108 Z" fill="#583970" />
+          <circle cx="292" cy="55" r="14" fill="#462c5c" />
         </g>
 
-        <!-- Mörkö Body (Pear silhouette) -->
-        <path d="M 150 70 C 110 70, 90 110, 85 170 C 80 230, 70 280, 60 300 C 110 310, 190 310, 240 300 C 230 280, 220 230, 215 170 C 210 110, 190 70, 150 70 Z" fill="#1e1b4b" stroke="#6366f1" stroke-width="3" />
+        <!-- AUTHENTIC MOOMIN GROKE (MÖRKÖ) BODY -->
+        <!-- Main Grote Silhouette (Muted Purple Hue: #624378) -->
+        <path d="M 170 45 C 130 45, 115 85, 105 150 C 95 210, 85 270, 68 295 C 120 308, 220 308, 272 295 C 255 270, 245 210, 235 150 C 225 85, 210 45, 170 45 Z" fill="#624378" stroke="#321e42" stroke-width="3" />
 
-        <!-- Eyes (Glowing icy yellow/cyan) -->
-        <ellipse cx="130" cy="115" rx="10" ry="12" fill="#38bdf8" />
-        <ellipse cx="170" cy="115" rx="10" ry="12" fill="#38bdf8" />
-        <circle cx="130" cy="115" r="4" fill="#030712" />
-        <circle cx="170" cy="115" r="4" fill="#030712" />
+        <!-- Bottom Hem / Ruffle Pleats (Classic Groke skirt folds) -->
+        <path d="M 68 295 Q 85 305, 102 296 Q 120 306, 137 296 Q 155 307, 170 297 Q 187 307, 205 296 Q 222 306, 239 296 Q 256 305, 272 295 L 268 312 C 215 322, 125 322, 72 312 Z" fill="#4d3360" stroke="#321e42" stroke-width="2" />
 
-        <!-- Nose -->
-        <path d="M 146 125 Q 150 135, 154 125" stroke="#6366f1" stroke-width="3" fill="none" />
+        <!-- Massive Traps & Lat Flare Lines -->
+        <path d="M 125 75 Q 170 55, 215 75" stroke="#321e42" stroke-width="2.5" fill="none" />
+        <path d="M 115 145 Q 170 175, 225 145" stroke="#4a2e5e" stroke-width="3" fill="none" />
 
-        <!-- Teeth / Grin -->
-        <path d="M 125 145 Q 150 155, 175 145" stroke="#38bdf8" stroke-width="2" fill="none" />
-        <rect x="130" y="146" width="7" height="8" fill="#fff" rx="1" />
-        <rect x="140" y="148" width="7" height="8" fill="#fff" rx="1" />
-        <rect x="153" y="148" width="7" height="8" fill="#fff" rx="1" />
-        <rect x="163" y="146" width="7" height="8" fill="#fff" rx="1" />
+        <!-- Authentic Snout / Dark Nose Area -->
+        <polygon points="170,68 152,108 188,108" fill="#1b1c31" stroke="#0e0f1c" stroke-width="2" />
 
-        <!-- Lat flare / Traps -->
-        <path d="M 115 85 Q 150 65, 185 85" stroke="#a855f7" stroke-width="3" fill="none" />
+        <!-- Iconic Round Eyes (Above Snout) -->
+        <ellipse cx="158" cy="65" rx="7.5" ry="9" fill="#f8fafc" stroke="#0e0f1c" stroke-width="1.8" />
+        <ellipse cx="182" cy="65" rx="7.5" ry="9" fill="#f8fafc" stroke="#0e0f1c" stroke-width="1.8" />
+        <!-- Pupils looking straight -->
+        <circle cx="159" cy="65" r="3.2" fill="#030712" />
+        <circle cx="181" cy="65" r="3.2" fill="#030712" />
+
+        <!-- Iconic Rectangular Teeth Grin -->
+        <rect x="142" y="116" width="56" height="11" rx="4" fill="#1b1c31" stroke="#0e0f1c" stroke-width="1.5" />
+        <g fill="#ffffff">
+          <rect x="145" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="151.5" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="158" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="164.5" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="171" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="177.5" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="184" y="117.5" width="4.5" height="8" rx="0.8" />
+          <rect x="190.5" y="117.5" width="4.5" height="8" rx="0.8" />
+        </g>
       </svg>
+
       <div class="morko-quote">VITUN ISO MÖRKÖ</div>
-      <div class="morko-sub">"Kylmää rautaa, tulisia sarjoja."</div>
+      <div class="morko-sub">"Kylmää rautaa, hemo hauikset."</div>
       <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
     </div>
   </div>
@@ -1196,4 +1222,3 @@
   </script>
 </body>
 </html>
-
