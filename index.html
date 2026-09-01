@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Treeniloki">
+  <title>Treeniohjelma</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --done: #22c55e;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      padding: 12px 12px 90px 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      text-align: center;
+      padding: 8px 0;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 10px 4px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+    .exercise-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .exercise-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .exercise-target {
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .set-row {
+      display: grid;
+      grid-template-columns: 28px 1fr 1fr 44px;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .set-label {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .stepper {
+      display: flex;
+      align-items: center;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .step-btn {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 32px;
+      height: 34px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-value {
+      flex: 1;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .btn-done {
+      background: var(--border);
+      border: none;
+      color: var(--text-dim);
+      height: 34px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-done.completed {
+      background: var(--done);
+      color: #0f172a;
+    }
+    /* Timer bar at bottom */
+    .timer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0284c7;
+      color: #fff;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.4);
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+      z-index: 100;
+    }
+    .timer-bar.show {
+      transform: translateY(0);
+    }
+    .timer-btn {
+      background: rgba(0,0,0,0.2);
+      border: none;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .footer-actions {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .btn-reset {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>TREENILOKI</h1>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(0)">Ylä A</button>
+    <button class="tab-btn" onclick="switchTab(1)">Ala A</button>
+    <button class="tab-btn" onclick="switchTab(2)">Ylä B</button>
+    <button class="tab-btn" onclick="switchTab(3)">Ala B</button>
+  </div>
+
+  <div id="workout-container"></div>
+
+  <div class="footer-actions">
+    <button class="btn-reset" onclick="resetCurrentWorkout()">Tyhjennä tämän päivän rastit</button>
+  </div>
+
+  <div id="timer" class="timer-bar">
+    <span id="timer-text">Palautusaika: 2:00</span>
+    <div>
+      <button class="timer-btn" onclick="addTimer(30)">+30s</button>
+      <button class="timer-btn" onclick="stopTimer()">Sulje</button>
+    </div>
+  </div>
+
+  <script>
+    const workouts = [
+      {
+        name: "Yläkroppa A (Rinta & Selkä)",
+        exercises: [
+          { name: "Penkkipunnerrus", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
+          { name: "Tuettu kulmasoutu", defaultWeight: 30, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+          { name: "Vinopenkki KP", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
+          { name: "Ylätalja", defaultWeight: 45, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
+          { name: "Vipunostot sivulle", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
+          { name: "Ojentajapunnerrus taljassa", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+        ]
+      },
+      {
+        name: "Alakroppa A (Kyykky & Etureidet)",
+        exercises: [
+          { name: "Takakyykky", defaultWeight: 50, step: 2.5, defaultReps: 8, sets: 3, rest: 180 },
+          { name: "Romanialainen mave (RDL)", defaultWeight: 50, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+          { name: "Jalkaprässi / Askelkyykky", defaultWeight: 80, step: 5, defaultReps: 10, sets: 3, rest: 120 },
+          { name: "Reidenkoukistus", defaultWeight: 6, step: 1, defaultReps: 12, sets: 3, rest: 90, isLevel: true },
+          { name: "Pohkeet seisten", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 },
+          { name: "Vatsarutistus taljassa", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 }
+        ]
+      },
+      {
+        name: "Yläkroppa B (Olkapäät & Pystyveto)",
+        exercises: [
+          { name: "Pystypunnerrus KP", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
+          { name: "Leuanveto / Ylätalja", defaultWeight: 0, step: 2.5, defaultReps: 6, sets: 3, rest: 120 },
+          { name: "Rintaprässi / Vinopenkkikone", defaultWeight: 40, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+          { name: "Alataljasoutu", defaultWeight: 45, step: 2.5, defaultReps: 10, sets: 3, rest: 120 },
+          { name: "Face pull taljassa", defaultWeight: 15, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
+          { name: "Hauiskääntö KP / tanko", defaultWeight: 12, step: 1, defaultReps: 10, sets: 3, rest: 90 }
+        ]
+      },
+      {
+        name: "Alakroppa B (Mave & Takaketju)",
+        exercises: [
+          { name: "Maastaveto", defaultWeight: 100, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
+          { name: "Reisiojennus", defaultWeight: 35, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
+          { name: "Lantionnosto (Hip Thrust)", defaultWeight: 60, step: 5, defaultReps: 8, sets: 3, rest: 120 },
+          { name: "Reidenkoukistus istuen", defaultWeight: 6, step: 1, defaultReps: 12, sets: 3, rest: 90, isLevel: true },
+          { name: "Pohkeet istuen", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
+          { name: "Roikkuvat jalannostot / Vatsat", defaultWeight: 0, step: 1, defaultReps: 10, sets: 3, rest: 90 }
+        ]
+      }
+    ];
+
+    let currentTab = 0;
+    let timerInterval = null;
+    let timerSeconds = 0;
+
+    function getStorageKey(wIdx, eIdx, sIdx, field) {
+      return `workout_${wIdx}_e_${eIdx}_s_${sIdx}_${field}`;
+    }
+
+    function renderWorkout() {
+      const container = document.getElementById("workout-container");
+      const workout = workouts[currentTab];
+      let html = "";
+
+      workout.exercises.forEach((ex, eIdx) => {
+        html += `
+          <div class="exercise-card">
+            <div class="exercise-title">
+              <span>${ex.name}</span>
+            </div>
+            <div class="exercise-target">${ex.sets} sarjaa | Lepo: ${ex.rest}s</div>
+        `;
+
+        for (let s = 0; s < ex.sets; s++) {
+          const wKey = getStorageKey(currentTab, eIdx, s, "w");
+          const rKey = getStorageKey(currentTab, eIdx, s, "r");
+          const dKey = getStorageKey(currentTab, eIdx, s, "done");
+
+          const savedWeight = localStorage.getItem(wKey) !== null ? parseFloat(localStorage.getItem(wKey)) : ex.defaultWeight;
+          const savedReps = localStorage.getItem(rKey) !== null ? parseInt(localStorage.getItem(rKey)) : ex.defaultReps;
+          const isDone = localStorage.getItem(dKey) === "true";
+
+          const unit = ex.isLevel ? "taso" : "kg";
+
+          html += `
+            <div class="set-row">
+              <span class="set-label">S${s + 1}</span>
+              <div class="stepper">
+                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'w', -${ex.step})">-</button>
+                <span class="step-value" id="val_w_${eIdx}_${s}">${savedWeight} ${unit}</span>
+                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'w', ${ex.step})">+</button>
+              </div>
+              <div class="stepper">
+                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'r', -1)">-</button>
+                <span class="step-value" id="val_r_${eIdx}_${s}">${savedReps} t</span>
+                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'r', 1)">+</button>
+              </div>
+              <button id="btn_done_${eIdx}_${s}" class="btn-done ${isDone ? 'completed' : ''}" onclick="toggleDone(${eIdx}, ${s}, ${ex.rest})">
+                ${isDone ? '✓' : ''}
+              </button>
+            </div>
+          `;
+        }
+
+        html += `</div>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function changeVal(eIdx, sIdx, type, delta) {
+      const ex = workouts[currentTab].exercises[eIdx];
+      const key = getStorageKey(currentTab, eIdx, sIdx, type);
+      let currentVal = localStorage.getItem(key) !== null ? parseFloat(localStorage.getItem(key)) : (type === 'w' ? ex.defaultWeight : ex.defaultReps);
+
+      currentVal = Math.max(0, currentVal + delta);
+      // Clean decimals
+      currentVal = Math.round(currentVal * 10) / 10;
+
+      localStorage.setItem(key, currentVal);
+      const unit = type === 'w' ? (ex.isLevel ? "taso" : "kg") : "t";
+      document.getElementById(`val_${type}_${eIdx}_${sIdx}`).innerText = `${currentVal} ${unit}`;
+    }
+
+    function toggleDone(eIdx, sIdx, restSeconds) {
+      const key = getStorageKey(currentTab, eIdx, sIdx, "done");
+      const isCurrentlyDone = localStorage.getItem(key) === "true";
+      const newStatus = !isCurrentlyDone;
+
+      localStorage.setItem(key, newStatus);
+      const btn = document.getElementById(`btn_done_${eIdx}_${sIdx}`);
+
+      if (newStatus) {
+        btn.classList.add("completed");
+        btn.innerText = "✓";
+        startTimer(restSeconds);
+      } else {
+        btn.classList.remove("completed");
+        btn.innerText = "";
+      }
+    }
+
+    function switchTab(index) {
+      currentTab = index;
+      document.querySelectorAll(".tab-btn").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === index);
+      });
+      renderWorkout();
+    }
+
+    function startTimer(seconds) {
+      clearInterval(timerInterval);
+      timerSeconds = seconds;
+      const bar = document.getElementById("timer");
+      const text = document.getElementById("timer-text");
+      bar.classList.add("show");
+
+      updateTimerDisplay();
+
+      timerInterval = setInterval(() => {
+        timerSeconds--;
+        if (timerSeconds <= 0) {
+          clearInterval(timerInterval);
+          text.innerText = "Aika loppui! Seuraava sarja!";
+          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        } else {
+          updateTimerDisplay();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById("timer-text").innerText = `Lepo: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function addTimer(sec) {
+      timerSeconds += sec;
+      updateTimerDisplay();
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      document.getElementById("timer").classList.remove("show");
+    }
+
+    function resetCurrentWorkout() {
+      if (confirm("Nollataanko tämän päivän suoritetut rastit? Painot ja toistot jäävät muistiin.")) {
+        const workout = workouts[currentTab];
+        workout.exercises.forEach((ex, eIdx) => {
+          for (let s = 0; s < ex.sets; s++) {
+            localStorage.setItem(getStorageKey(currentTab, eIdx, s, "done"), "false");
+          }
+        });
+        renderWorkout();
+      }
+    }
+
+    // Init
+    renderWorkout();
+  </script>
+</body>
+</html>
