@@ -28,7 +28,7 @@
     }
     header {
       text-align: center;
-      padding: 8px 0 16px 0;
+      padding: 8px 0 14px 0;
     }
     .main-title {
       margin: 0;
@@ -342,23 +342,29 @@
       font-size: 0.8rem;
     }
 
-    /* Mörkö Easter Egg Modal */
+    /* Mörkö Modal with Official Image */
     .morko-card {
       background: #0d0b1a;
       border: 2px solid var(--accent-purple);
       text-align: center;
-      padding: 24px 16px;
+      padding: 20px 16px;
     }
-    .morko-svg {
+    .morko-img-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .morko-real-img {
       width: 100%;
-      max-width: 290px;
+      max-width: 270px;
       height: auto;
-      margin: 0 auto 14px auto;
+      border-radius: 12px;
+      border: 2px solid var(--accent-purple);
+      box-shadow: 0 0 25px rgba(192, 132, 252, 0.45);
       display: block;
-      filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.45));
     }
     .morko-quote {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 900;
       color: var(--accent-purple);
       text-transform: uppercase;
@@ -368,7 +374,7 @@
     .morko-sub {
       font-size: 0.82rem;
       color: var(--text-dim);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     /* History View */
@@ -469,91 +475,19 @@
     </div>
   </div>
 
-  <!-- Mörkö Easter Egg Modal -->
+  <!-- Authentic Mörkö Modal -->
   <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
     <div class="modal-card morko-card" onclick="event.stopPropagation()">
-      <svg class="morko-svg" viewBox="0 0 340 330" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="iceAura" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#a855f7" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Aura -->
-        <circle cx="170" cy="165" r="160" fill="url(#iceAura)" />
-
-        <!-- MASSIVE LEFT BICEP & FOREARM (Double Biceps Pose) -->
-        <g fill="#5a3d73" stroke="#321e42" stroke-width="2.5">
-          <!-- Left Deltoid (Shoulder) -->
-          <ellipse cx="95" cy="115" rx="32" ry="24" fill="#664682" />
-          <path d="M 85 105 Q 100 115, 95 130" stroke="#38bdf8" stroke-width="1.8" fill="none" />
-          
-          <!-- Left Giant Bicep Peak -->
-          <path d="M 90 95 C 65 50, 20 70, 45 115 C 65 135, 95 125, 90 95 Z" fill="#6d4b8c" />
-          <!-- Bicep Veins -->
-          <path d="M 50 85 Q 60 95, 52 110" stroke="#38bdf8" stroke-width="2" fill="none" />
-          <path d="M 62 80 Q 75 95, 68 115" stroke="#38bdf8" stroke-width="1.5" fill="none" />
-
-          <!-- Left Forearm & Fist -->
-          <path d="M 35 110 C 15 85, 25 50, 48 55 C 65 58, 60 85, 50 108 Z" fill="#583970" />
-          <circle cx="48" cy="55" r="14" fill="#462c5c" />
-        </g>
-
-        <!-- MASSIVE RIGHT BICEP & FOREARM -->
-        <g fill="#5a3d73" stroke="#321e42" stroke-width="2.5">
-          <!-- Right Deltoid (Shoulder) -->
-          <ellipse cx="245" cy="115" rx="32" ry="24" fill="#664682" />
-          <path d="M 255 105 Q 240 115, 245 130" stroke="#38bdf8" stroke-width="1.8" fill="none" />
-          
-          <!-- Right Giant Bicep Peak -->
-          <path d="M 250 95 C 275 50, 320 70, 295 115 C 275 135, 245 125, 250 95 Z" fill="#6d4b8c" />
-          <!-- Bicep Veins -->
-          <path d="M 290 85 Q 280 95, 288 110" stroke="#38bdf8" stroke-width="2" fill="none" />
-          <path d="M 278 80 Q 265 95, 272 115" stroke="#38bdf8" stroke-width="1.5" fill="none" />
-
-          <!-- Right Forearm & Fist -->
-          <path d="M 305 110 C 325 85, 315 50, 292 55 C 275 58, 280 85, 290 108 Z" fill="#583970" />
-          <circle cx="292" cy="55" r="14" fill="#462c5c" />
-        </g>
-
-        <!-- AUTHENTIC MOOMIN GROKE (MÖRKÖ) BODY -->
-        <!-- Main Grote Silhouette (Muted Purple Hue: #624378) -->
-        <path d="M 170 45 C 130 45, 115 85, 105 150 C 95 210, 85 270, 68 295 C 120 308, 220 308, 272 295 C 255 270, 245 210, 235 150 C 225 85, 210 45, 170 45 Z" fill="#624378" stroke="#321e42" stroke-width="3" />
-
-        <!-- Bottom Hem / Ruffle Pleats (Classic Groke skirt folds) -->
-        <path d="M 68 295 Q 85 305, 102 296 Q 120 306, 137 296 Q 155 307, 170 297 Q 187 307, 205 296 Q 222 306, 239 296 Q 256 305, 272 295 L 268 312 C 215 322, 125 322, 72 312 Z" fill="#4d3360" stroke="#321e42" stroke-width="2" />
-
-        <!-- Massive Traps & Lat Flare Lines -->
-        <path d="M 125 75 Q 170 55, 215 75" stroke="#321e42" stroke-width="2.5" fill="none" />
-        <path d="M 115 145 Q 170 175, 225 145" stroke="#4a2e5e" stroke-width="3" fill="none" />
-
-        <!-- Authentic Snout / Dark Nose Area -->
-        <polygon points="170,68 152,108 188,108" fill="#1b1c31" stroke="#0e0f1c" stroke-width="2" />
-
-        <!-- Iconic Round Eyes (Above Snout) -->
-        <ellipse cx="158" cy="65" rx="7.5" ry="9" fill="#f8fafc" stroke="#0e0f1c" stroke-width="1.8" />
-        <ellipse cx="182" cy="65" rx="7.5" ry="9" fill="#f8fafc" stroke="#0e0f1c" stroke-width="1.8" />
-        <!-- Pupils looking straight -->
-        <circle cx="159" cy="65" r="3.2" fill="#030712" />
-        <circle cx="181" cy="65" r="3.2" fill="#030712" />
-
-        <!-- Iconic Rectangular Teeth Grin -->
-        <rect x="142" y="116" width="56" height="11" rx="4" fill="#1b1c31" stroke="#0e0f1c" stroke-width="1.5" />
-        <g fill="#ffffff">
-          <rect x="145" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="151.5" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="158" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="164.5" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="171" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="177.5" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="184" y="117.5" width="4.5" height="8" rx="0.8" />
-          <rect x="190.5" y="117.5" width="4.5" height="8" rx="0.8" />
-        </g>
-      </svg>
-
+      <div class="morko-img-container">
+        <img 
+          src="morko.png" 
+          onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/fi/thumb/b/be/Morko_muumilaaksosta.png/400px-Morko_muumilaaksosta.png'" 
+          alt="Mörkö" 
+          class="morko-real-img"
+        />
+      </div>
       <div class="morko-quote">VITUN ISO MÖRKÖ</div>
-      <div class="morko-sub">"Kylmää rautaa, hemo hauikset."</div>
+      <div class="morko-sub">"Gym08:n kylmintä rautaa ja kuuminta pumppia."</div>
       <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
     </div>
   </div>
@@ -567,174 +501,174 @@
   </div>
 
   <script>
-    // --- 2-STEP VISUAL TRAJECTORIES & CUES ---
+    // --- GYM08-OPTIMIZED GUIDES & CUES ---
     const exerciseGuides = {
       "Penkkipunnerrus": {
-        step1: "Tanko suorilla käsillä rinnan yläpuolella. Lavat tiukasti yhdessä penkissä.",
-        step2: "Laske tanko rintalastan alaosaan (kyynärpäät 45°), punnerra voimalla ylös.",
+        step1: "Tanko rinnan yläpuolella, lavat lukittuna penkkiin ja jalkapohjat maassa.",
+        step2: "Laske rintalastan alaosaan (kyynärpäät 45°), räjähtävä työntö ylös.",
         target: "Kohde: Rintalihakset, etuolkapäät, ojentajat",
-        tips: ["Pidä lavat yhdessä koko liikkeen ajan.", "Paina jaloilla maata vasten."],
+        tips: ["Käytä salin jämäkkää kisapenkkiä.", "Pidä lavat yhdessä koko noston ajan."],
         query: "bench press form 15 seconds"
       },
-      "Vinopenkki KP (30°)": {
-        step1: "Käsipainot rinnan sivuilla syvässä venytyksessä, penkki 30 asteen kulmassa.",
-        step2: "Punnerrus ylös kevyessä kaaressa rinnan yläosan päälle.",
-        target: "Kohde: Ylärintalihas ja etuolkapäät",
-        tips: ["Älä kolauta painoja yhteen ylhäällä.", "Hallittu 2 sekunnin lasku."],
-        query: "incline dumbbell press form quick"
+      "Vipuvarsivinopenkki / Vinopenkki KP": {
+        step1: "Säädä Gym08:n vipuvarsikoneen istuin siten, että kahvat ovat ylärinnan tasolla.",
+        step2: "Paina kyynärvarsilla rintalihaksen yläosaa supistaen suoraan yläviistoon.",
+        target: "Kohde: Ylärintalihas (clavicular head)",
+        tips: ["Vipuvarsikone antaa turvallisen maksimikuormituksen.", "Hallittu 2s alaslasku."],
+        query: "incline chest press machine form"
       },
       "Rintaprässi / Taljaristikkäistalja": {
         step1: "Kahvat rinnan tasolla, rintakehä auki ja selkä kiinni tuessa.",
         step2: "Purista kädet suoraksi eteen ja pidä 1 sekunnin huippusupistus.",
-        target: "Kohde: Rintalihaksen kokonaisvaltainen eristys",
-        tips: ["Vie kyynärvarsia toisiaan kohti.", "Viimeinen sarja täyteen uupumukseen."],
-        query: "chest press machine form"
+        target: "Kohde: Rintalihaksen eristys ja venytys",
+        tips: ["Gym08:n ristikkäistaljassa vie vaijerit hieman ristiin.", "Viimeinen sarja RIR 0."],
+        query: "cable crossover chest form"
       },
-      "Vipunostot sivulle taljassa": {
-        step1: "Vaijeri jalkojen takana, käsi alhaalla kevyesti kyljen edessä.",
-        step2: "Nosta kyynärpääjohtoisesti 30° etuviistoon hartiatasoon asti.",
+      "Vipunostot taljassa / Sivuvipuvarsikone": {
+        step1: "Kädet alhaalla kyljen tasalla, niska rentona.",
+        step2: "Nosta kyynärpäät hartialinjalle 30° etuviistoon ja pysäytä 1 sekunniksi.",
         target: "Kohde: Sivuolkapäät (lateral deltoid)",
-        tips: ["Kyynärpää johtaa liikettä, ei ranne.", "Jarruta alasvienti."],
+        tips: ["Gym08:n vipunostokone tai säädettävä talja takaa jatkuvan vastuksen."],
         query: "cable lateral raise form short"
       },
-      "Ojentajapunnerrus pään yli taljassa": {
-        step1: "Naru pään takana, kyynärvarret täysin koukussa (voimakas venytys).",
-        step2: "Ojenna kädet suoraksi etuviistoon pitäen olkavarret paikallaan.",
+      "Ojentajat taljassa pään yli (pitkä köysi)": {
+        step1: "Talja alaselän tasolla, naru pään taakse vietynä täyteen venytykseen.",
+        step2: "Ojenna kyynärvarret suoraksi eteenpäin pitäen olkavarret paikallaan.",
         target: "Kohde: Ojentajan pitkä pää (stretch-hypertrophy)",
-        tips: ["Pidä kyynärpäät lähellä päätä.", "Täysi ojennus etuasennossa."],
+        tips: ["Käytä pitkää narua täyden liikeradan saamiseksi."],
         query: "overhead cable tricep extension form"
       },
-      "Ylätalja lapiokahvalla": {
-        step1: "Kädet suorana ylhäällä, latsit täydessä venytyksessä, rinta auki.",
-        step2: "Vedä kyynärpäät suoraan kohti lattiaa ja kylkiä leuan alle.",
-        target: "Kohde: Leveä selkälihas (latsit) ja yläselkä",
-        tips: ["Aloita liike lapojen alaspainamisella.", "Älä heijaa vartaloa taakse."],
-        query: "lat pulldown form short"
+      "Ylätalja lapiokahvalla / MAG-kahvalla": {
+        step1: "Ota Gym08:n MAG- tai lapiokahvasta ote. Rintakehä auki, latsit venytyksessä.",
+        step2: "Vedä kyynärpäät suoraan alas kohti kylkiä ja taskuja leuan alle.",
+        target: "Kohde: Leveä selkälihas (latsit)",
+        tips: ["MAG-kahva poistaa forkkujen väsymisen ja kohdistaa vedon suoraan latseihin."],
+        query: "mag grip lat pulldown form"
       },
-      "Tuettu kulmasoutu": {
-        step1: "Kädet ojennettuna eteen, rinta tiukasti kiinni pehmusteessa.",
-        step2: "Vedä kyynärpäät taakse 45° kulmassa ja purista lavat yhteen.",
+      "Rintatuettu T-kulmasoutu / Vipuvarsisoutu": {
+        step1: "Asetu Gym08:n rintatuettuun T-tankoon tai vipuvarsilaitteeseen rinta kiinni pehmusteessa.",
+        step2: "Vedä kyynärpäät taakse ja purista lavat tiukasti yhteen selän takana.",
         target: "Kohde: Keskiselkä, lapojen lähentäjät, takaolkapäät",
-        tips: ["Pidä rinta tuessa koko ajan.", "1 s stoppi takaosassa."],
-        query: "chest supported row form short"
+        tips: ["Rintatuki säästää alaselkää kyykkyä ja maastavetoa varten."],
+        query: "chest supported t bar row form"
       },
-      "Yhden käden taljasoutu": {
-        step1: "Käsi ojennettuna eteen, latsin alaosa pitkässä venytyksessä.",
-        step2: "Vedä kyynärpää tiukasti kylkeä hipoen kohti lonkkaluuta.",
+      "Yhden käden taljasoutu (Lats-fokus)": {
+        step1: "Aseta talja navan korkeudelle. Ota tuki toisella kädellä ja anna latsin venyä.",
+        step2: "Vedä kyynärpää kylkeä hipoen kohti lonkkaluuta ilman vartalon kiertoa.",
         target: "Kohde: Latsien alaosa",
-        tips: ["Älä kierrä rintakehää.", "Keskity kyynärpään vetoon."],
-        query: "single arm lat pulldown cable form"
+        tips: ["Pysäytä 1 sekunniksi supistuksessa lonkan vieressä."],
+        query: "single arm cable row for lats"
       },
-      "Face Pull / Reverse Pec Deck": {
-        step1: "Naru ojennettuna silmien korkeudella eteen.",
-        step2: "Vedä naru kohti ohimoita ja käännä peukalot taaksepäin ulkokiertoon.",
-        target: "Kohde: Takaolkapäät ja kiertäjäkalvosin",
-        tips: ["Kyynärpäät pysyvät korkealla.", "Tärkeä olkapään ryhdille."],
+      "Face Pull taljassa / Reverse Pec Deck": {
+        step1: "Naru silmien tasolla tai asetu Gym08:n Reverse Pec Deck -koneeseen.",
+        step2: "Vedä kädet auki taakse ohimoiden tasalle peukalot taaksepäin kääntäen.",
+        target: "Kohde: Takaolkapäät ja ulkokiertäjät",
+        tips: ["Takaolkapääkoneessa pidä rinta kiinni pehmusteessa."],
         query: "face pull form short"
       },
       "Incline DB Hauiskääntö": {
-        step1: "Kädet roikkuvat vapaana vinopenkissä suoraan kohti maata.",
-        step2: "Käännä käsipainot ylös pitäen kyynärpäät tiukasti takana.",
-        target: "Kohde: Hauiksen pitkä pää (stretch-mediated hypertrophy)",
-        tips: ["Hidas laskuvaihe täyteen kyynärvarren ojennukseen."],
+        step1: "Asetu Gym08:n säädettävään vinopenkkiin (45–60°). Kädet roikkuvat vapaana alas.",
+        step2: "Käännä käsipainot ylös pitäen kyynärpäät vartalon takana.",
+        target: "Kohde: Hauiksen pitkä pää (stretch-hypertrophy)",
+        tips: ["Laske painot hitaasti täyteen kyynärvarren ojennukseen."],
         query: "incline bicep curl form short"
       },
-      "Hammer-kääntö käsipainoilla": {
-        step1: "Käsipainot sivuilla kämmenet toisiaan kohti (neutraali ote).",
-        step2: "Nosta painot eteen kyynärvarsia ja brachialis-lihasta puristaen.",
+      "Hammer-kääntö taljassa köydellä / KP": {
+        step1: "Naru alataljassa tai käsipainot sivuilla kämmenet toisiaan kohti.",
+        step2: "Nosta painot ylös puristaen kyynärvarsia ja brachialis-lihasta.",
         target: "Kohde: Brachialis ja kyynärvarret",
-        tips: ["Ei heiluria lantiosta."],
-        query: "hammer curl form short"
+        tips: ["Taljalla tehty versio antaa tasaisen kuormituksen läpi koko liikeradan."],
+        query: "hammer curl cable form"
       },
-      "Takakyykky tangolla": {
-        step1: "Tanko tukevasti epäkkäillä, happea vatsaan ja keskivartalo lukkoon.",
-        step2: "Kyykky vähintään 90° syvyyteen polvet varvaslinjassa, nousu voimalla.",
-        target: "Kohde: Etureidet, pakarat ja keskivartalo",
-        tips: ["Paina koko jalkapohjalla lattiaan.", "Pidä rinta pystyssä."],
-        query: "barbell squat form short"
-      },
-      "Jalkaprässi / Hack-kyykky": {
-        step1: "Jalat hartioiden leveydellä kelkan keskellä, polvet suorana.",
-        step2: "Laske kelkka syvälle ilman alaselän irtoamista selkänojasta, työnnä ylös.",
+      "Takakyykky (tai Gym08 Hack-kyykky)": {
+        step1: "Tanko tukevasti epäkkäillä (tai asetu Hack-kyykkyyn selkä kiinni kelkassa).",
+        step2: "Kyykkää hallitusti syvälle vähintään 90 asteen kulmaan ja ponnista ylös.",
         target: "Kohde: Etureidet ja pakarat",
-        tips: ["Älä lukitse polvia tärähtäen ylhäällä."],
+        tips: ["Gym08:n Hack-kyykky on loistava vaihtoehto etureisien maksimaaliseen eristykseen."],
+        query: "hack squat form short"
+      },
+      "Jalkaprässi / V-Kyykky": {
+        step1: "Jalat kelkan keskellä hartialeveydellä selkänojassa tukevasti kiinni.",
+        step2: "Laske kelkka niin syvälle kuin mahdollista ilman lantion pyöristymistä ja työnnä ylös.",
+        target: "Kohde: Etureisien kokonaisvolyymi",
+        tips: ["Älä yliojenna polvia lukkoon yläasennossa."],
         query: "leg press form short"
       },
-      "Reidenkoukistus istuen": {
-        step1: "Jalat suorana eteen pehmuste nilkoilla, reisituki kiristetty tiukasti.",
-        step2: "Koukista kantapäät voimalla penkin alle ja jarruta palautusta 2 s.",
-        target: "Kohde: Takareidet (hamstrings)",
-        tips: ["Istuma-asento venyttää takareittä tehokkaasti."],
+      "Reidenkoukistus istuen (Gymleco/Prime)": {
+        step1: "Asetu Gym08:n istuvaan koukistuslaitteeseen ja kiristä reisituki erittäin tiukasti.",
+        step2: "Koukista kantapäät penkin alle ja jarruta palautusvaihetta 2–3 sekuntia.",
+        target: "Kohde: Takareidet (venytyspainotus)",
+        tips: ["Istuma-asento venyttää takareittä lantiosta ja tuo maksimaalisen hypertrofian."],
         query: "seated leg curl form short"
       },
       "Reisiojennus laitteessa": {
-        step1: "Polvet koukussa 90°, pehmuste nilkan alaosaan säädettynä.",
-        step2: "Ojenna jalat suoraksi ja pidä 1 s kova puristus yläasennossa.",
+        step1: "Nilkkapehmuste säädettynä, polven kääntöpiste laitteen akselin kohdalla.",
+        step2: "Ojenna jalat suoraksi ja pidä 1 sekunnin kova huippusupistus ylhäällä.",
         target: "Kohde: Suora reisilihas (rectus femoris)",
         tips: ["Laske paino rauhallisesti alas."],
         query: "leg extension form short"
       },
-      "Pohjenousu seisten": {
-        step1: "Kantapäät laskettuina syvälle tason alapuolelle (2 s venytys).",
-        step2: "Ponnista räjähtävästi päkiöille täyteen pohjesupistukseen.",
+      "Pohjenousu seisten / Prässissä": {
+        step1: "Päkiät laitteen reunalla, kantapäät laskettuna syvään 2 sekunnin venytykseen.",
+        step2: "Ponnista räjähtävästi suoraan päkiöille täyteen supistukseen.",
         target: "Kohde: Kaksoiskantalihas (gastrocnemius)",
-        tips: ["Pysäytä pohjassa – älä pomputa akillesjänteellä."],
+        tips: ["Tee 2s stoppi pohjassa akillesjänteen pompun poistamiseksi."],
         query: "standing calf raise form short"
       },
       "Vatsarutistus taljassa": {
-        step1: "Polvillaan naru pään sivuilla, lantio lukittuna paikalleen.",
-        step2: "Pyöristä selkärankaa viemällä kyynärpäitä kohti reisiä.",
+        step1: "Polvillaan taljan edessä naru pään sivuilla, lantio lukittuna.",
+        step2: "Pyöristä selkärankaa viemällä rintakehää kohti lantiota.",
         target: "Kohde: Suora vatsalihas",
-        tips: ["Älä istu taaksepäin – tee liike vatsalla."],
+        tips: ["Älä istu taaksepäin – tee työ vatsalla."],
         query: "cable crunch form short"
       },
-      "Pystypunnerrus KP istuen": {
-        step1: "Käsipainot korvien tasolla, kyynärpäät hieman etuviistossa.",
-        step2: "Punnerra suoraan pään päälle ilman alaselän notkistamista.",
-        target: "Kohde: Olkapäät ja ojentajat",
-        tips: ["Selkänoja n. 75–80° kulmassa."],
-        query: "seated dumbbell shoulder press short"
+      "Pystypunnerrus KP / Vipuvarsikone": {
+        step1: "Käsipainot tai Gym08:n pystypunnerruskoneen kahvat korvien tasolla.",
+        step2: "Punnerra suoraan pään päälle ilman alaselän voimakasta notkistamista.",
+        target: "Kohde: Etu- ja sivuolkapäät, ojentajat",
+        tips: ["Vipuvarsipystypunnerrus sallii kovat sarjat ilman käsipainojen tasapainottelua."],
+        query: "seated shoulder press machine form"
       },
-      "Alataljasoutu kapealla": {
+      "Alataljasoutu kapealla kahvalla": {
         step1: "Kädet ojennettuna eteen, rinta auki ja polvissa pieni jousto.",
-        step2: "Vedä kahva napaan ja purista lapaluut tiukasti yhteen.",
+        step2: "Vedä kahva napaan ja purista lavat tiukasti yhteen.",
         target: "Kohde: Keskiselkä ja leveä selkälihas",
-        tips: ["Pidä vartalo vakaana."],
+        tips: ["Pidä vartalo vakaana ilman liiallista heijausta."],
         query: "seated cable row form short"
       },
       "Vinopenkkikone / Tasapenkki KP": {
-        step1: "Kahvat/painot rinnan tasolla lavat kiinni penkissä.",
-        step2: "Punnerra eteen rintalihaksilla puristaen.",
+        step1: "Asetu Gym08:n rintalaitteeseen tai penkille lavat kiinni tuessa.",
+        step2: "Punnerra rintalihaksilla puristaen ja pidä hallittu 2s laskuvaihe.",
         target: "Kohde: Rintalihakset",
-        tips: ["Hallittu 2 sekunnin laskuvaihe."],
+        tips: ["Koneversio mahdollistaa turvallisen RIR 0 -uupumuksen."],
         query: "incline chest press machine form"
       },
       "Ylätalja leveällä otteella": {
-        step1: "Leveä myötäote, kädet suorana ylhäällä.",
+        step1: "Leveä myötäote tangosta, kädet suorana ylhäällä.",
         step2: "Vedä tanko rinnan yläosaan lapoja alaspäin ohjaten.",
-        target: "Kohde: Yläselkä ja leveä selkälihas",
+        target: "Kohde: Yläselkä ja latsit",
         tips: ["Tuo rintakehää kevyesti tankoa kohti."],
         query: "lat pulldown form short"
       },
-      "Ojentajapunnerrus taljassa": {
-        step1: "Kyynärpäät lukittuna kylkiin, kyynärvarret 90 asteen kulmassa.",
-        step2: "Ojenna kädet alas suoraksi ja levitä narua ala-asennossa.",
+      "Ojentajapunnerrus taljassa (suora tanko/naru)": {
+        step1: "Kyynärpäät lukittuina kylkiin, kyynärvarret 90 asteen kulmassa.",
+        step2: "Ojenna kädet alas suoraksi ja purista ojentajaa 1 sekunti.",
         target: "Kohde: Ojentajan ulko- ja keskiosa",
-        tips: ["Älä anna olkavarsien liikkua."],
+        tips: ["Älä päästä olkavarsia liikkumaan eteen-taakse."],
         query: "tricep pushdown cable short"
       },
-      "Hauiskääntö tangolla": {
-        step1: "Tanko suorilla käsillä reisien edessä, lavat taakse lukittuina.",
-        step2: "Käännä tanko leuan alle pitäen kyynärpäät kylkien tasalla.",
+      "Hauiskääntö mutkatangolla / Scott-penkissä": {
+        step1: "Ota ote Gym08:n mutkatangosta tai asetu Scott-penkkiin olkavarret tuettuna.",
+        step2: "Käännä tanko ylös ja laske rauhallisesti alas täyteen ojennukseen.",
         target: "Kohde: Hauislihaksen molemmat päät",
-        tips: ["Laske tanko rauhallisesti alas."],
-        query: "barbell curl form short"
+        tips: ["Scott-penkki eristää hauiksen täysin ilman heijausta."],
+        query: "preacher curl form short"
       },
-      "Maastaveto (perinteinen)": {
-        step1: "Tanko 2 cm säärissä, rinta auki, lapaluut lukittuina ja tanko jännitettynä.",
-        step2: "Paina jaloilla lattiaa poispäin ja ojenna vartalo suoraksi tangon noustessa.",
+      "Maastaveto (Gym08 nostolavalla)": {
+        step1: "Asetu nostolavalle tanko 2 cm säärissä, rinta auki ja lapaluut lukittuina.",
+        step2: "Paina lattiaa jaloilla ja ojenna vartalo suoraksi tangon noustessa.",
         target: "Kohde: Koko takaketju (pakarat, takareidet, selkä)",
-        tips: ["Tanko kulkee koko matkan ihoa hipoen."],
+        tips: ["Käytä tarvittaessa magnesiumia ja vetoremmejä."],
         query: "deadlift form short 15 seconds"
       },
       "Romanialainen mave (RDL)": {
@@ -744,31 +678,31 @@
         tips: ["Liike tapahtuu lonkasta, ei alaselkää pyöristämällä."],
         query: "romanian deadlift form short"
       },
-      "Lantionnosto (Hip Thrust)": {
-        step1: "Yläselkä penkin reunassa, tanko lantion päällä, polvet 90° kulmassa.",
-        step2: "Paina kantapäillä ja nosta lantio suoraksi linjaksi pakaroita puristaen.",
+      "Lantionnosto (Booty Builder / Glute Drive)": {
+        step1: "Kiinnitä Gym08:n Glute Drive / Booty Builder -laitteen vyö tiukasti lantion yli.",
+        step2: "Paina kantapäillä ja nosta lantio ylös voimakkaaseen pakarasupistukseen.",
         target: "Kohde: Pakaralihas (gluteus maximus)",
-        tips: ["Leuka rinnassa ja katse eteenpäin."],
-        query: "hip thrust form short"
+        tips: ["Glute Drive -kone on huomattavasti nopeampi ja tehokkaampi kuin irtotangon virittäminen."],
+        query: "glute drive machine form"
       },
       "Askelkyykky taakse KP": {
         step1: "Seiso suorana käsipainot sivuilla.",
         step2: "Astu taakse ja laske polvi lähelle lattiaa, ponnista etujalalla ylös.",
         target: "Kohde: Pakarat ja etureidet",
-        tips: ["Kallista ylävartaloa kevyesti eteenpäin."],
+        tips: ["Kallista ylävartaloa kevyesti eteenpäin pakara-aktivaation korostamiseksi."],
         query: "reverse lunge form short"
       },
-      "Pohjenousu istuen": {
+      "Pohjenousu istuen laitteessa": {
         step1: "Pehmuste reisien päällä, kantapäät laskettuna syvään venytykseen.",
         step2: "Nouse päkiöille täyteen supistukseen ja pysäytä 1 sekunniksi.",
         target: "Kohde: Leveä kantalihas (soleus)",
-        tips: ["Istuma-asento kohdistaa työn soleukseen."],
+        tips: ["Istuma-asennon polvikulma kohdistaa työn suoraan soleus-lihakseen."],
         query: "seated calf raise form short"
       },
-      "Roikkuvat jalannostot": {
-        step1: "Roiku tangosta aktiivisilla olkapäillä.",
-        step2: "Nosta polvia/jalkoja kohti rintakehää lantiota kääntäen.",
-        target: "Kohde: Suora vatsalihas",
+      "Roikkuvat jalannostot / Voimapyörä": {
+        step1: "Roiku tangosta aktiivisilla olkapäillä (tai ota Gym08:n voimapyörä).",
+        step2: "Nosta polvia kohti rintakehää lantiota kääntäen hallitusti.",
+        target: "Kohde: Suora vatsalihas ja syvä tuki",
         tips: ["Älä heijaa vartaloa."],
         query: "hanging leg raise form short"
       }
@@ -781,55 +715,55 @@
           name: "Push (Työntävät)",
           exercises: [
             { name: "Penkkipunnerrus", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Vinopenkki KP (30°)", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Vipuvarsivinopenkki / Vinopenkki KP", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Rintaprässi / Taljaristikkäistalja", defaultWeight: 45, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Vipunostot sivulle taljassa", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajapunnerrus pään yli taljassa", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            { name: "Vipunostot taljassa / Sivuvipuvarsikone", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Ojentajat taljassa pään yli (pitkä köysi)", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
           ]
         },
         {
           name: "Pull (Vetävät)",
           exercises: [
-            { name: "Ylätalja lapiokahvalla", defaultWeight: 45, step: 2.5, defaultReps: 6, sets: 3, rest: 120 },
-            { name: "Tuettu kulmasoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Yhden käden taljasoutu", defaultWeight: 25, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Face Pull / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Ylätalja lapiokahvalla / MAG-kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 6, sets: 3, rest: 120 },
+            { name: "Rintatuettu T-kulmasoutu / Vipuvarsisoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Yhden käden taljasoutu (Lats-fokus)", defaultWeight: 25, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
+            { name: "Face Pull taljassa / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
             { name: "Incline DB Hauiskääntö", defaultWeight: 12, step: 1, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Hammer-kääntö käsipainoilla", defaultWeight: 12, step: 1, defaultReps: 10, sets: 2, rest: 90 }
+            { name: "Hammer-kääntö taljassa köydellä / KP", defaultWeight: 15, step: 2.5, defaultReps: 10, sets: 2, rest: 90 }
           ]
         },
         {
           name: "Legs (Etureidet & Kyykky)",
           exercises: [
-            { name: "Takakyykky tangolla", defaultWeight: 50, step: 2.5, defaultReps: 8, sets: 3, rest: 180 },
-            { name: "Jalkaprässi / Hack-kyykky", defaultWeight: 90, step: 5, defaultReps: 8, sets: 3, rest: 150 },
-            { name: "Reidenkoukistus istuen", defaultWeight: 6, step: 1, defaultReps: 12, sets: 3, rest: 90, isLevel: true },
+            { name: "Takakyykky (tai Gym08 Hack-kyykky)", defaultWeight: 50, step: 2.5, defaultReps: 8, sets: 3, rest: 180 },
+            { name: "Jalkaprässi / V-Kyykky", defaultWeight: 90, step: 5, defaultReps: 8, sets: 3, rest: 150 },
+            { name: "Reidenkoukistus istuen (Gymleco/Prime)", defaultWeight: 6, step: 1, defaultReps: 12, sets: 3, rest: 90, isLevel: true },
             { name: "Reisiojennus laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Pohjenousu seisten", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Pohjenousu seisten / Prässissä", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 },
             { name: "Vatsarutistus taljassa", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 }
           ]
         },
         {
           name: "Upper (Yläkroppa B)",
           exercises: [
-            { name: "Pystypunnerrus KP istuen", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Alataljasoutu kapealla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Pystypunnerrus KP / Vipuvarsikone", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
+            { name: "Alataljasoutu kapealla kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Vinopenkkikone / Tasapenkki KP", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Ylätalja leveällä otteella", defaultWeight: 45, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Vipunostot sivulle taljassa", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajapunnerrus taljassa", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Hauiskääntö tangolla", defaultWeight: 25, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            { name: "Vipunostot taljassa / Sivuvipuvarsikone", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Ojentajapunnerrus taljassa (suora tanko/naru)", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
+            { name: "Hauiskääntö mutkatangolla / Scott-penkissä", defaultWeight: 25, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
           ]
         },
         {
           name: "Lower (Takaketju & Mave)",
           exercises: [
-            { name: "Maastaveto (perinteinen)", defaultWeight: 100, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
+            { name: "Maastaveto (Gym08 nostolavalla)", defaultWeight: 100, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
             { name: "Romanialainen mave (RDL)", defaultWeight: 60, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Lantionnosto (Hip Thrust)", defaultWeight: 70, step: 5, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Lantionnosto (Booty Builder / Glute Drive)", defaultWeight: 70, step: 5, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Askelkyykky taakse KP", defaultWeight: 14, step: 2, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Pohjenousu istuen", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Roikkuvat jalannostot", defaultWeight: 0, step: 1, defaultReps: 10, sets: 3, rest: 90 }
+            { name: "Pohjenousu istuen laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Roikkuvat jalannostot / Voimapyörä", defaultWeight: 0, step: 1, defaultReps: 10, sets: 3, rest: 90 }
           ]
         }
       ],
@@ -837,33 +771,33 @@
         {
           name: "Koko keho A (Kyykky & Penkki)",
           exercises: [
-            { name: "Takakyykky tangolla", defaultWeight: 50, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
+            { name: "Takakyykky (tai Gym08 Hack-kyykky)", defaultWeight: 50, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
             { name: "Penkkipunnerrus", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Tuettu kulmasoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Reidenkoukistus istuen", defaultWeight: 6, step: 1, defaultReps: 10, sets: 3, rest: 90, isLevel: true },
-            { name: "Vipunostot sivulle taljassa", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajapunnerrus pään yli taljassa", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            { name: "Rintatuettu T-kulmasoutu / Vipuvarsisoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Reidenkoukistus istuen (Gymleco/Prime)", defaultWeight: 6, step: 1, defaultReps: 10, sets: 3, rest: 90, isLevel: true },
+            { name: "Vipunostot taljassa / Sivuvipuvarsikone", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Ojentajat taljassa pään yli (pitkä köysi)", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
           ]
         },
         {
           name: "Koko keho B (Mave & Pystypunnerrus)",
           exercises: [
-            { name: "Maastaveto (perinteinen)", defaultWeight: 100, step: 2.5, defaultReps: 5, sets: 3, rest: 180 },
-            { name: "Pystypunnerrus KP istuen", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Ylätalja lapiokahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Jalkaprässi / Hack-kyykky", defaultWeight: 80, step: 5, defaultReps: 10, sets: 3, rest: 120 },
+            { name: "Maastaveto (Gym08 nostolavalla)", defaultWeight: 100, step: 2.5, defaultReps: 5, sets: 3, rest: 180 },
+            { name: "Pystypunnerrus KP / Vipuvarsikone", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
+            { name: "Ylätalja lapiokahvalla / MAG-kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Jalkaprässi / V-Kyykky", defaultWeight: 80, step: 5, defaultReps: 10, sets: 3, rest: 120 },
             { name: "Incline DB Hauiskääntö", defaultWeight: 12, step: 1, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Pohjenousu seisten", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 }
+            { name: "Pohjenousu seisten / Prässissä", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 }
           ]
         },
         {
           name: "Koko keho C (Hypertrofia & Yläkeho)",
           exercises: [
             { name: "Romanialainen mave (RDL)", defaultWeight: 60, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Vinopenkki KP (30°)", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Alataljasoutu kapealla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Vipuvarsivinopenkki / Vinopenkki KP", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
+            { name: "Alataljasoutu kapealla kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Reisiojennus laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Face Pull / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Face Pull taljassa / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
             { name: "Vatsarutistus taljassa", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 }
           ]
         }
@@ -1019,7 +953,7 @@
     // --- 2-STEP GUIDE MODAL ---
     function openExerciseGuide(name) {
       const guide = exerciseGuides[name] || {
-        step1: "Ota tukeva alkuasento.",
+        step1: "Ota tukeva alkuasento laitteessa.",
         step2: "Tee hallittu supistus ja nosto.",
         target: "Kohdelihakset: Voima & Hypertrofia",
         tips: ["Tee toistot puhtaalla tekniikalla."],
@@ -1047,7 +981,7 @@
       document.getElementById("guide-modal").classList.remove("open");
     }
 
-    // --- MÖRKÖ EASTER EGG ---
+    // --- MÖRKÖ MODAL ---
     function openMorkoModal() {
       document.getElementById("morko-modal").classList.add("open");
     }
