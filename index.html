@@ -17,7 +17,6 @@
       --text-dim: #94a3b8;
       --done: #22c55e;
       --border: #23324d;
-      --warning: #f59e0b;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
@@ -107,6 +106,21 @@
       font-size: 0.98rem;
       font-weight: 700;
       margin-bottom: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #f8fafc;
+    }
+    .exercise-title span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .info-tag {
+      font-size: 0.75rem;
+      color: var(--accent);
+      opacity: 0.85;
     }
     .exercise-target {
       font-size: 0.76rem;
@@ -192,6 +206,94 @@
       cursor: pointer;
     }
 
+    /* Embedded Video Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: #151e32;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      width: 100%;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0;
+    }
+    .modal-close {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .modal-target {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 10px;
+    }
+    .modal-tips {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+    .modal-tips li { margin-bottom: 5px; }
+
     /* History View */
     .history-entry {
       background: var(--card-bg);
@@ -265,6 +367,21 @@
 
   <div id="main-content"></div>
 
+  <!-- In-App Embedded Video Modal -->
+  <div id="guide-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">Liikkeen nimi</h3>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="video-wrapper">
+        <iframe id="modal-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div id="modal-target" class="modal-target"></div>
+      <ul id="modal-tips" class="modal-tips"></ul>
+    </div>
+  </div>
+
   <div id="timer" class="timer-bar">
     <span id="timer-text">Lepo: 2:00</span>
     <div>
@@ -274,7 +391,272 @@
   </div>
 
   <script>
-    // --- DATABASE ---
+    // --- EXERCISE GUIDES WITH DIRECT EMBEDDED YOUTUBE VIDEO IDS ---
+    const exerciseGuides = {
+      "Penkkipunnerrus": {
+        videoId: "vcBig73ojpE",
+        target: "Kohdelihakset: Rintalihakset, etuolkapäät, ojentajat",
+        tips: [
+          "Vedä lavat yhteen ja alas penkkiä vasten. Säilytä luonnollinen pieni kaari alaselässä.",
+          "Laske tanko hallitusti (2 s) rintalastan alaosalle kyynärpäiden ollessa n. 45–60° kyljistä.",
+          "Paina jaloilla maata vasten ja työnnä tanko takaisin ylös suoraan linjaan."
+        ]
+      },
+      "Vinopenkki KP (30°)": {
+        videoId: "8iPEnn-ltC8",
+        target: "Kohdelihakset: Ylärinta (clavicular head), etuolkapäät",
+        tips: [
+          "Aseta penkin kulma 30 asteeseen, jotta rasitus kohdistuu ylärintaan eikä karkaa olkapäille.",
+          "Vie käsipainot ala-asennossa syvälle rinnan viereen täyden venytyksen saavuttamiseksi.",
+          "Punnerra painot ylös hallitulla kaarella."
+        ]
+      },
+      "Rintaprässi / Taljaristikkäistalja": {
+        videoId: "Iwe6AmxVf7o",
+        target: "Kohdelihakset: Rintalihaksen kokonaisvaltainen hypertrofia",
+        tips: [
+          "Säädä istuinkorkeus siten, että kahvat ovat rinnan keskiosan tasalla.",
+          "Keskity viemään kyynärvarsia toisiaan kohti supistusvaiheessa maksimaalisen jännityksen saamiseksi.",
+          "Tee viimeisessä sarjassa 1 s puristus etuasennossa."
+        ]
+      },
+      "Vipunostot sivulle taljassa": {
+        videoId: "PPrzBWZDOhA",
+        target: "Kohdelihakset: Sivuolkapäät (lateral deltoid)",
+        tips: [
+          "Aseta talja ranteen/polven korkeudelle ja vie vaijeri jalkojen takaa tai edestä.",
+          "Nosta kyynärpääjohtoisesti noin 15–30° etuviistoon (lapaluun taso).",
+          "Hallitse laskuvaihe – älä anna taljan pudota vapaasti."
+        ]
+      },
+      "Ojentajapunnerrus pään yli taljassa": {
+        videoId: "ns-rgSbYeSk",
+        target: "Kohdelihakset: Ojentajan pitkä pää (venytyspainotus)",
+        tips: [
+          "Aseta talja alaselän korkeudelle narulla. Nojaa vartaloa kevyesti eteenpäin.",
+          "Anna kyynärvarsien taipua taakse pään taakse, kunnes tunnet voimakkaan venytyksen.",
+          "Ojenna kädet suoraksi etuviistoon pitäen olkavarret paikallaan."
+        ]
+      },
+      "Ylätalja lapiokahvalla": {
+        videoId: "CAwf7n6Luuc",
+        target: "Kohdelihakset: Leveä selkälihas (latsit), yläselkä",
+        tips: [
+          "Ota neutraali ote lapiokahvasta. Avaa rintakehä ylös.",
+          "Aloita liike vetämällä lapoja alas ja ohjaa kyynärpäitä suoraan kohti lattiaa ja kylkiä.",
+          "Pysäytä veto leuan alle ja päästä selkä hallittuun venytykseen ylhäällä."
+        ]
+      },
+      "Tuettu kulmasoutu": {
+        videoId: "0UBRfiO4zDs",
+        target: "Kohdelihakset: Keskiselkä, lapojen lähentäjät, takaolkapäät",
+        tips: [
+          "Pidä rintakehä tiukasti kiinni tuessa koko liikkeen ajan ilman repimistä.",
+          "Pidä kyynärpäät n. 45–60° auki kyljistä ja vedä lavat voimakkaasti yhteen takana.",
+          "Pidä 1 sekunnin huippusupistus ennen hallittua alaslaskua."
+        ]
+      },
+      "Yhden käden taljasoutu": {
+        videoId: "GZbfZ033f74",
+        target: "Kohdelihakset: Leveän selkälihaksen alaosa (lower lats)",
+        tips: [
+          "Aseta talja navan korkeudelle ja ota tukea toisella kädellä.",
+          "Vedä kyynärpää tiukasti kylkeä hipoen kohti lantiota.",
+          "Älä kierrä vartaloa – pidä rintakehä suorassa ja keskity latsin supistukseen."
+        ]
+      },
+      "Face Pull / Reverse Pec Deck": {
+        videoId: "rep-qVOkqgk",
+        target: "Kohdelihakset: Takaolkapäät, kiertäjäkalvosin, epäkäs",
+        tips: [
+          "Aseta naru silmien korkeudelle. Vedä narun päitä kohti ohimoita ja korvia.",
+          "Käännä ranteita ja kyynärpäitä taaksepäin ulkokiertoon (peukalot taaksepäin).",
+          "Erittäin tärkeä liike olkanivelen terveydelle ja ryhdille."
+        ]
+      },
+      "Incline DB Hauiskääntö": {
+        videoId: "soxrZlIl35U",
+        target: "Kohdelihakset: Hauiksen pitkä pää (stretch-mediated hypertrophy)",
+        tips: [
+          "Aseta vinopenkki 45–60 asteen kulmaan. Anna käsien roikkua suorana kohti lattiaa.",
+          "Pidä olkavarret pystysuorassa samalla kun käännät käsipainot ylös.",
+          "Laske painot hitaasti täyteen kyynärnivelen ojennukseen ja venytykseen."
+        ]
+      },
+      "Hammer-kääntö käsipainoilla": {
+        videoId: "TwD-YGVP4Bk",
+        target: "Kohdelihakset: Olkavarsilihas (brachialis) ja kyynärvarret",
+        tips: [
+          "Pidä kämmenet toisiaan kohti (neutraali ote) koko liikeradan ajan.",
+          "Käännä painot suoraan eteenpäin ilman olkavarsien heijausta.",
+          "Kasvattaa olkavarren paksuutta ja parantaa forkun voimaa."
+        ]
+      },
+      "Takakyykky tangolla": {
+        videoId: "bEv6CCg2BC8",
+        target: "Kohdelihakset: Etureidet, pakaralihakset, keskivartalon tuki",
+        tips: [
+          "Aseta tanko tukevasti epäkkäiden päälle. Ota happea vatsaan ja lukitse keskivartalo.",
+          "Kyykkää hallitusti alas viemällä polvia varpaiden suuntaan vähintään 90 asteen kulmaan.",
+          "Paina jalkapohjilla tasaisesti lattiaan noustessa."
+        ]
+      },
+      "Jalkaprässi / Hack-kyykky": {
+        videoId: "IZxyjW7MPJQ",
+        target: "Kohdelihakset: Etureidet ja pakarat",
+        tips: [
+          "Aseta jalat levyn ala- tai keskiosaan hartioiden leveydelle.",
+          "Laske kelkka niin syvälle kuin mahdollista ilman, että lantio pyöristyy irti selkänojasta.",
+          "Älä yliojenna polvia täyteen lukkoon yläasennossa."
+        ]
+      },
+      "Reidenkoukistus istuen": {
+        videoId: "1Tq3QdYUuHs",
+        target: "Kohdelihakset: Takareidet (hamstrings - venytyskuormitus)",
+        tips: [
+          "Istuen tehty koukistus asettaa takareiden venytykseen lantiosta käsin.",
+          "Lukitse reisipehmuste erittäin tiukasti reisiä vasten, jotta lantio pysyy penkissä.",
+          "Koukista kantapäät voimakkaasti penkin alle ja jarruta palautusta 2–3 sekuntia."
+        ]
+      },
+      "Reisiojennus laitteessa": {
+        videoId: "YyvSfV-77y0",
+        target: "Kohdelihakset: Suora reisilihas (rectus femoris)",
+        tips: [
+          "Säädä pehmuste nilkan alaosaan ja selkänoja siten, että polvinivel on laitteen kääntöpisteen kohdalla.",
+          "Ojenna jalat suoraksi ja pidä 1 sekunnin voimakas huippusupistus ylhäällä.",
+          "Laske paino rauhallisesti ilman painopakan pauketta."
+        ]
+      },
+      "Pohjenousu seisten": {
+        videoId: "-M4-G8p8fmc",
+        target: "Kohdelihakset: Kaksoiskantalihas (gastrocnemius)",
+        tips: [
+          "Laske kantapäät alas ja pidä venytyksessä 2 sekuntia (poistaa akillesjänteen elastisen pompun).",
+          "Nouse räjähtävästi päkiöille ja pidä 1 s puristus ylhäällä.",
+          "Pidä polvet lähes suorana koko liikkeen ajan."
+        ]
+      },
+      "Vatsarutistus taljassa": {
+        videoId: "2fO43i8x5vU",
+        target: "Kohdelihakset: Suora vatsalihas (rectus abdominis)",
+        tips: [
+          "Asetu polvilleen taljan eteen naru pään molemmilla puolilla.",
+          "Lukitse lantio paikalleen ja pyöristä selkärankaa viemällä rintakehää kohti lantiota.",
+          "Älä tee liikettä lonkankoukistajilla istumalla taaksepäin."
+        ]
+      },
+      "Pystypunnerrus KP istuen": {
+        videoId: "qEwKCR5JCog",
+        target: "Kohdelihakset: Etu- ja sivuolkapäät, ojentajat",
+        tips: [
+          "Aseta selkänoja pykälää vaille pystyasentoon (n. 75–80°), jotta olkanivel liikkuu vapaasti.",
+          "Laske käsipainot korvien tasolle kyynärpäiden osoittaessa hieman etuviistoon.",
+          "Punnerra painot suoraan pään päälle ilman alaselän notkistamista."
+        ]
+      },
+      "Alataljasoutu kapealla": {
+        videoId: "UCXxvVItLoM",
+        target: "Kohdelihakset: Keskiselkä, leveä selkälihas",
+        tips: [
+          "Pidä selkä suorana ja polvissa pieni jousto.",
+          "Vedä kahva napaa kohti ja purista lapaluut tiukasti yhteen.",
+          "Anna selän venyä etuasennossa hallitusti."
+        ]
+      },
+      "Vinopenkkikone / Tasapenkki KP": {
+        videoId: "5Y3hM44c8hE",
+        target: "Kohdelihakset: Rintalihakset",
+        tips: [
+          "Säädä laitteen kahvat rinnan alareunan tasolle.",
+          "Punnerra rinnalla ja pidä lavat painettuna penkkiä vasten koko liikkeen ajan.",
+          "Hallittu 2 sekunnin laskuvaihe."
+        ]
+      },
+      "Ylätalja leveällä otteella": {
+        videoId: "CAwf7n6Luuc",
+        target: "Kohdelihakset: Yläselkä ja leveä selkälihas",
+        tips: [
+          "Ota hieman hartioita leveämpi myötäote tangosta.",
+          "Vedä tanko rinnan yläosaan samalla kun viet rintakehää kevyesti tankoa kohti.",
+          "Hallitse palautus ylös ilman olkapäiden nousua korviin."
+        ]
+      },
+      "Ojentajapunnerrus taljassa": {
+        videoId: "2-LAMcpzODU",
+        target: "Kohdelihakset: Ojentajan sivu- ja keskiosa",
+        tips: [
+          "Lukitse kyynärpäät kiinni kylkiin.",
+          "Ojenna kyynärvarret suoraksi ja levitä narun päitä hieman erilleen ala-asennossa.",
+          "Älä anna olkavarsien liikkua eteen ja taakse."
+        ]
+      },
+      "Hauiskääntö tangolla": {
+        videoId: "ykJmrZ5v0Oo",
+        target: "Kohdelihakset: Hauislihaksen molemmat päät",
+        tips: [
+          "Ota hartioiden levyinen ote tangosta.",
+          "Pidä kyynärpäät tiukasti kylkien tasalla ja käännä tanko leuan alle.",
+          "Laske tanko rauhallisesti alas täyteen ojennukseen."
+        ]
+      },
+      "Maastaveto (perinteinen)": {
+        videoId: "op9kVnSso6Q",
+        target: "Kohdelihakset: Koko takaketju (pakarat, takareidet, selän ojentajat)",
+        tips: [
+          "Asetu tangon alle siten, että tanko on n. 2–3 cm sääristä jalkaterän keskellä.",
+          "Vedä rinta auki, lapaluut taakse ja poista löysät tangosta ennen nostoa.",
+          "Paina lattiaa poispäin jaloilla ja ojenna lantio ja polvet yhtäaikaisesti."
+        ]
+      },
+      "Romanialainen mave (RDL)": {
+        videoId: "_oyxCn2iSjU",
+        target: "Kohdelihakset: Takareidet ja pakaralihakset (venytyspainotus)",
+        tips: [
+          "Pidä polvissa vain pieni kiinteä jousto. Työnnä lantiota suoraan taaksepäin.",
+          "Liu'uta painoja aivan sääriä pitkin alaspäin, kunnes tunnet voimakkaan venytyksen takareisissä.",
+          "Ojenna lantio eteen puristamalla pakaroilla."
+        ]
+      },
+      "Lantionnosto (Hip Thrust)": {
+        videoId: "SEdqd1n0cvg",
+        target: "Kohdelihakset: Pakaralihakset (gluteus maximus)",
+        tips: [
+          "Aseta lapaluiden alareuna penkin reunaan ja tanko lantion päälle pehmusteella.",
+          "Paina kantapäillä maata vasten ja nosta lantio suoraksi vartalon tasolle.",
+          "Pidä leuka rinnassa ja katse eteenpäin noston ajan."
+        ]
+      },
+      "Askelkyykky taakse KP": {
+        videoId: "QE_hUruX_e0",
+        target: "Kohdelihakset: Pakarat ja etureidet",
+        tips: [
+          "Astu rauhallisesti taaksepäin siten, että etummainen polvi on n. 90 asteen kulmassa.",
+          "Kallista ylävartaloa kevyesti eteenpäin korostaaksesi pakara-aktivaatiota.",
+          "Ponnista etummaisella kantapäällä takaisin seisomaan."
+        ]
+      },
+      "Pohjenousu istuen": {
+        videoId: "JbyjNymZOt0",
+        target: "Kohdelihakset: Leveä kantalihas (soleus)",
+        tips: [
+          "Istuma-asennon polvikulma kohdistaa rasituksen suoraan soleus-lihakseen.",
+          "Laske kantapäät syvään venytykseen ja pysäytä 1–2 sekunniksi.",
+          "Nouse täyteen supistukseen päkiöiden varaan."
+        ]
+      },
+      "Roikkuvat jalannostot": {
+        videoId: "hdng3Nm1x_E",
+        target: "Kohdelihakset: Suora vatsalihas ja lonkankoukistajat",
+        tips: [
+          "Roiku tangosta aktiivisilla olkapäillä.",
+          "Nosta polvia kohti rintakehää kääntämällä lantiota eteenpäin.",
+          "Laske jalat hallitusti ilman heijausta."
+        ]
+      }
+    };
+
+    // --- PROGRAM DATA ---
     const programData = {
       "5day": [
         {
@@ -338,20 +720,20 @@
           name: "Koko keho A (Kyykky & Penkki)",
           exercises: [
             { name: "Takakyykky tangolla", defaultWeight: 50, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
-            { name: "Penkkipunnerrus tangolla", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
+            { name: "Penkkipunnerrus", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
             { name: "Tuettu kulmasoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Reidenkoukistus istuen", defaultWeight: 6, step: 1, defaultReps: 10, sets: 3, rest: 90, isLevel: true },
-            { name: "Vipunostot sivulle", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajapunnerrus pään yli", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            { name: "Vipunostot sivulle taljassa", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Ojentajapunnerrus pään yli taljassa", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
           ]
         },
         {
           name: "Koko keho B (Mave & Pystypunnerrus)",
           exercises: [
-            { name: "Maastaveto", defaultWeight: 100, step: 2.5, defaultReps: 5, sets: 3, rest: 180 },
+            { name: "Maastaveto (perinteinen)", defaultWeight: 100, step: 2.5, defaultReps: 5, sets: 3, rest: 180 },
             { name: "Pystypunnerrus KP istuen", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
             { name: "Ylätalja lapiokahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Jalkaprässi / Askelkyykky", defaultWeight: 80, step: 5, defaultReps: 10, sets: 3, rest: 120 },
+            { name: "Jalkaprässi / Hack-kyykky", defaultWeight: 80, step: 5, defaultReps: 10, sets: 3, rest: 120 },
             { name: "Incline DB Hauiskääntö", defaultWeight: 12, step: 1, defaultReps: 10, sets: 3, rest: 90 },
             { name: "Pohjenousu seisten", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 }
           ]
@@ -363,7 +745,7 @@
             { name: "Vinopenkki KP (30°)", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Alataljasoutu kapealla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
             { name: "Reisiojennus laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Face Pull taljassa", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
+            { name: "Face Pull / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
             { name: "Vatsarutistus taljassa", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 }
           ]
         }
@@ -372,11 +754,10 @@
 
     // State
     let currentMode = localStorage.getItem("prog_mode") || "5day";
-    let currentTab = 0; // index or "history"
+    let currentTab = 0;
     let targetTimerEnd = null;
     let timerInterval = null;
 
-    // Request Notification permission
     function initNotifications() {
       if ("Notification" in window && Notification.permission === "default") {
         Notification.requestPermission();
@@ -435,7 +816,10 @@
       workout.exercises.forEach((ex, eIdx) => {
         html += `
           <div class="exercise-card">
-            <div class="exercise-title">${ex.name}</div>
+            <div class="exercise-title" onclick="openExerciseGuide('${ex.name}')">
+              <span>${ex.name}</span>
+              <span class="info-tag">Ohje & Video 🎥</span>
+            </div>
             <div class="exercise-target">${ex.sets} sarjaa | Lepo: ${ex.rest}s</div>
         `;
 
@@ -514,6 +898,39 @@
       }
     }
 
+    // --- EMBEDDED MODAL GUIDE SYSTEM ---
+    function openExerciseGuide(name) {
+      const guide = exerciseGuides[name] || {
+        videoId: "vcBig73ojpE",
+        target: "Kohdelihakset: Yleinen voima ja hypertrofia",
+        tips: ["Tee liike puhtaalla tekniikalla.", "Hallitse alaslaskuvaihe."]
+      };
+
+      document.getElementById("modal-title").innerText = name;
+      document.getElementById("modal-target").innerText = guide.target;
+
+      const tipsList = document.getElementById("modal-tips");
+      tipsList.innerHTML = guide.tips.map(t => `<li>${t}</li>`).join("");
+
+      // Set YouTube Embed URL inside the in-app player
+      const iframe = document.getElementById("modal-iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${guide.videoId}?autoplay=1&mute=1&playsinline=1`;
+
+      document.getElementById("guide-modal").classList.add("open");
+    }
+
+    function closeModal(e) {
+      if (e.target.id === "guide-modal") {
+        closeModalDirect();
+      }
+    }
+
+    function closeModalDirect() {
+      // Clear iframe src to stop video and audio immediately
+      document.getElementById("modal-iframe").src = "";
+      document.getElementById("guide-modal").classList.remove("open");
+    }
+
     // --- SOUND & VIBRATION & NOTIFICATION TIMER ---
     function playBeep() {
       try {
@@ -521,7 +938,7 @@
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(880, ctx.currentTime); // A5 note
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
         gain.gain.setValueAtTime(0.3, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
         osc.connect(gain);
@@ -558,15 +975,12 @@
     function onTimerFinished() {
       document.getElementById("timer-text").innerText = "Lepo päättyi! Seuraava sarja!";
 
-      // 1. Vibrate
       if ("vibrate" in navigator) {
         navigator.vibrate([400, 150, 400, 150, 600]);
       }
 
-      // 2. Play sound
       playBeep();
 
-      // 3. Push notification if in background
       if ("Notification" in window && Notification.permission === "granted") {
         new Notification("Palautusaika päättyi! ⏱️", {
           body: "Aika aloittaa seuraava sarja.",
@@ -624,7 +1038,6 @@
           📜 Treenihistoria & Kehitys
         </div>
 
-        <!-- Benchmark Baseline -->
         <div class="history-entry" style="border-color:#3730a3; background:#11162b;">
           <div class="history-header" style="color:#a5b4fc;">
             <span>Lähtötaso (Vuosi sitten - Juho)</span>
