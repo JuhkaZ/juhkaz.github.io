@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Treeniloki Pro">
-  <title>Tieteellinen Treeniloki</title>
+  <meta name="apple-mobile-web-app-title" content="Vitun iso mörkö">
+  <title>Vitun iso mörkö</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #151e32;
+      --bg: #070a12;
+      --card-bg: #121a2d;
       --accent: #38bdf8;
-      --accent-dim: #0284c7;
+      --accent-purple: #a855f7;
       --text: #f8fafc;
       --text-dim: #94a3b8;
       --done: #22c55e;
-      --border: #23324d;
+      --border: #1e2c47;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
@@ -26,8 +26,33 @@
       background: var(--bg);
       color: var(--text);
     }
-    header { text-align: center; padding: 4px 0 10px 0; }
-    header h1 { margin: 0; font-size: 1.25rem; color: var(--accent); letter-spacing: 0.5px; }
+    header {
+      text-align: center;
+      padding: 6px 0 12px 0;
+    }
+    .main-title {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-block;
+      padding: 4px 12px;
+      background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(168,85,247,0.15));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: transform 0.1s ease;
+    }
+    .main-title:active {
+      transform: scale(0.96);
+    }
+    .title-sub {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
     
     /* Mode selector */
     .mode-container {
@@ -81,7 +106,7 @@
     }
     .tab-btn.active {
       background: var(--accent);
-      color: #0b0f19;
+      color: #070a12;
       border-color: var(--accent);
     }
     .tab-btn.history-tab {
@@ -91,7 +116,7 @@
     }
     .tab-btn.history-tab.active {
       background: #818cf8;
-      color: #0b0f19;
+      color: #070a12;
     }
 
     /* Exercise cards */
@@ -121,6 +146,9 @@
       font-size: 0.75rem;
       color: var(--accent);
       opacity: 0.85;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
     }
     .exercise-target {
       font-size: 0.76rem;
@@ -139,7 +167,7 @@
     .stepper {
       display: flex;
       align-items: center;
-      background: #0b0f19;
+      background: #070a12;
       border-radius: 8px;
       border: 1px solid var(--border);
       overflow: hidden;
@@ -177,7 +205,7 @@
       align-items: center;
       justify-content: center;
     }
-    .btn-done.completed { background: var(--done); color: #0b0f19; }
+    .btn-done.completed { background: var(--done); color: #070a12; }
 
     /* Action buttons */
     .footer-actions {
@@ -189,7 +217,7 @@
     .btn-save-workout {
       background: var(--done);
       border: none;
-      color: #0b0f19;
+      color: #070a12;
       font-weight: 700;
       padding: 12px;
       border-radius: 10px;
@@ -206,12 +234,12 @@
       cursor: pointer;
     }
 
-    /* Embedded Video Modal */
+    /* Visual 2-Step Guide Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -226,7 +254,7 @@
       pointer-events: auto;
     }
     .modal-card {
-      background: #151e32;
+      background: #121a2d;
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 16px;
@@ -234,17 +262,17 @@
       max-width: 440px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .modal-title {
-      font-size: 1.1rem;
-      font-weight: 700;
+      font-size: 1.15rem;
+      font-weight: 800;
       color: var(--accent);
       margin: 0;
     }
@@ -261,38 +289,92 @@
       align-items: center;
       justify-content: center;
     }
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
+    .motion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
     }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
+    .motion-box {
+      background: #070a12;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .motion-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    .motion-tag.start { background: rgba(56, 189, 248, 0.2); color: var(--accent); }
+    .motion-tag.end { background: rgba(34, 197, 94, 0.2); color: var(--done); }
+    .motion-desc {
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.35;
+      font-weight: 600;
     }
     .modal-target {
       font-size: 0.82rem;
-      font-weight: 600;
+      font-weight: 700;
       color: #e2e8f0;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .modal-tips {
-      margin: 0;
+      margin: 0 0 14px 0;
       padding-left: 18px;
       font-size: 0.8rem;
       color: var(--text-dim);
       line-height: 1.4;
     }
-    .modal-tips li { margin-bottom: 5px; }
+    .modal-tips li { margin-bottom: 4px; }
+    .btn-quick-video {
+      display: block;
+      width: 100%;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* Mörkö Easter Egg Modal */
+    .morko-card {
+      background: #110e24;
+      border: 2px solid var(--accent-purple);
+      text-align: center;
+      padding: 24px 16px;
+    }
+    .morko-svg {
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      margin: 0 auto 12px auto;
+      display: block;
+      filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));
+    }
+    .morko-quote {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--accent-purple);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .morko-sub {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
 
     /* History View */
     .history-entry {
@@ -355,7 +437,8 @@
 <body>
 
   <header>
-    <h1>HYPERTROFIA PRO</h1>
+    <div class="main-title" onclick="openMorkoModal()">VITUN ISO MÖRKÖ</div>
+    <div class="title-sub">Kosketa nimeä nähdäksesi Mörkö 💪</div>
   </header>
 
   <div class="mode-container">
@@ -367,18 +450,85 @@
 
   <div id="main-content"></div>
 
-  <!-- In-App Embedded Video Modal -->
+  <!-- Movement Guide Modal (2-Step Visual Trajectory) -->
   <div id="guide-modal" class="modal-overlay" onclick="closeModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h3 id="modal-title" class="modal-title">Liikkeen nimi</h3>
         <button class="modal-close" onclick="closeModalDirect()">✕</button>
       </div>
-      <div class="video-wrapper">
-        <iframe id="modal-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+      <div class="motion-grid">
+        <div class="motion-box">
+          <span class="motion-tag start">1. Lähtö / Venytys</span>
+          <div id="modal-step1" class="motion-desc"></div>
+        </div>
+        <div class="motion-box">
+          <span class="motion-tag end">2. Loppu / Supistus</span>
+          <div id="modal-step2" class="motion-desc"></div>
+        </div>
       </div>
+
       <div id="modal-target" class="modal-target"></div>
       <ul id="modal-tips" class="modal-tips"></ul>
+      <a id="modal-video-btn" class="btn-quick-video" href="#" target="_blank" rel="noopener">▶️ Katso 15s tekniikkavideo YouTubesta</a>
+    </div>
+  </div>
+
+  <!-- Mörkö Easter Egg Modal -->
+  <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
+    <div class="modal-card morko-card" onclick="event.stopPropagation()">
+      <svg class="morko-svg" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Aura / Ice glow -->
+        <circle cx="150" cy="160" r="140" fill="radial-gradient(circle, rgba(168,85,247,0.3) 0%, rgba(0,0,0,0) 70%)" />
+        
+        <!-- Massive Left Bicep & Arm -->
+        <g fill="#2e1065" stroke="#a855f7" stroke-width="3">
+          <!-- Forearm & Fist -->
+          <path d="M 40 160 C 20 130, 30 90, 60 85 C 75 80, 85 100, 75 130 Z" />
+          <!-- Massive Bicep Peak -->
+          <path d="M 65 110 C 60 70, 95 50, 115 80 C 130 100, 120 140, 95 150 Z" />
+          <!-- Veins on left bicep -->
+          <path d="M 85 75 Q 90 95, 80 115" stroke="#38bdf8" stroke-width="2" fill="none" />
+          <path d="M 95 85 Q 105 105, 95 125" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+        </g>
+
+        <!-- Massive Right Bicep & Arm -->
+        <g fill="#2e1065" stroke="#a855f7" stroke-width="3">
+          <!-- Forearm & Fist -->
+          <path d="M 260 160 C 280 130, 270 90, 240 85 C 225 80, 215 100, 225 130 Z" />
+          <!-- Massive Bicep Peak -->
+          <path d="M 235 110 C 240 70, 205 50, 185 80 C 170 100, 180 140, 205 150 Z" />
+          <!-- Veins on right bicep -->
+          <path d="M 215 75 Q 210 95, 220 115" stroke="#38bdf8" stroke-width="2" fill="none" />
+          <path d="M 205 85 Q 195 105, 205 125" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+        </g>
+
+        <!-- Mörkö Body (Pear silhouette) -->
+        <path d="M 150 70 C 110 70, 90 110, 85 170 C 80 230, 70 280, 60 300 C 110 310, 190 310, 240 300 C 230 280, 220 230, 215 170 C 210 110, 190 70, 150 70 Z" fill="#1e1b4b" stroke="#6366f1" stroke-width="3" />
+
+        <!-- Eyes (Glowing icy yellow/cyan) -->
+        <ellipse cx="130" cy="115" rx="10" ry="12" fill="#38bdf8" />
+        <ellipse cx="170" cy="115" rx="10" ry="12" fill="#38bdf8" />
+        <circle cx="130" cy="115" r="4" fill="#030712" />
+        <circle cx="170" cy="115" r="4" fill="#030712" />
+
+        <!-- Nose -->
+        <path d="M 146 125 Q 150 135, 154 125" stroke="#6366f1" stroke-width="3" fill="none" />
+
+        <!-- Teeth / Grin -->
+        <path d="M 125 145 Q 150 155, 175 145" stroke="#38bdf8" stroke-width="2" fill="none" />
+        <rect x="130" y="146" width="7" height="8" fill="#fff" rx="1" />
+        <rect x="140" y="148" width="7" height="8" fill="#fff" rx="1" />
+        <rect x="153" y="148" width="7" height="8" fill="#fff" rx="1" />
+        <rect x="163" y="146" width="7" height="8" fill="#fff" rx="1" />
+
+        <!-- Lat flare / Traps -->
+        <path d="M 115 85 Q 150 65, 185 85" stroke="#a855f7" stroke-width="3" fill="none" />
+      </svg>
+      <div class="morko-quote">VITUN ISO MÖRKÖ</div>
+      <div class="morko-sub">"Kylmää rautaa, tulisia sarjoja."</div>
+      <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
     </div>
   </div>
 
@@ -391,268 +541,210 @@
   </div>
 
   <script>
-    // --- EXERCISE GUIDES WITH DIRECT EMBEDDED YOUTUBE VIDEO IDS ---
+    // --- 2-STEP VISUAL TRAJECTORIES & CUES ---
     const exerciseGuides = {
       "Penkkipunnerrus": {
-        videoId: "vcBig73ojpE",
-        target: "Kohdelihakset: Rintalihakset, etuolkapäät, ojentajat",
-        tips: [
-          "Vedä lavat yhteen ja alas penkkiä vasten. Säilytä luonnollinen pieni kaari alaselässä.",
-          "Laske tanko hallitusti (2 s) rintalastan alaosalle kyynärpäiden ollessa n. 45–60° kyljistä.",
-          "Paina jaloilla maata vasten ja työnnä tanko takaisin ylös suoraan linjaan."
-        ]
+        step1: "Tanko suorilla käsillä rinnan yläpuolella. Lavat tiukasti yhdessä penkissä.",
+        step2: "Laske tanko rintalastan alaosaan (kyynärpäät 45°), punnerra voimalla ylös.",
+        target: "Kohde: Rintalihakset, etuolkapäät, ojentajat",
+        tips: ["Pidä lavat yhdessä koko liikkeen ajan.", "Paina jaloilla maata vasten."],
+        query: "bench press form 15 seconds"
       },
       "Vinopenkki KP (30°)": {
-        videoId: "8iPEnn-ltC8",
-        target: "Kohdelihakset: Ylärinta (clavicular head), etuolkapäät",
-        tips: [
-          "Aseta penkin kulma 30 asteeseen, jotta rasitus kohdistuu ylärintaan eikä karkaa olkapäille.",
-          "Vie käsipainot ala-asennossa syvälle rinnan viereen täyden venytyksen saavuttamiseksi.",
-          "Punnerra painot ylös hallitulla kaarella."
-        ]
+        step1: "Käsipainot rinnan sivuilla syvässä venytyksessä, penkki 30 asteen kulmassa.",
+        step2: "Punnerrus ylös kevyessä kaaressa rinnan yläosan päälle.",
+        target: "Kohde: Ylärintalihas ja etuolkapäät",
+        tips: ["Älä kolauta painoja yhteen ylhäällä.", "Hallittu 2 sekunnin lasku."],
+        query: "incline dumbbell press form quick"
       },
       "Rintaprässi / Taljaristikkäistalja": {
-        videoId: "Iwe6AmxVf7o",
-        target: "Kohdelihakset: Rintalihaksen kokonaisvaltainen hypertrofia",
-        tips: [
-          "Säädä istuinkorkeus siten, että kahvat ovat rinnan keskiosan tasalla.",
-          "Keskity viemään kyynärvarsia toisiaan kohti supistusvaiheessa maksimaalisen jännityksen saamiseksi.",
-          "Tee viimeisessä sarjassa 1 s puristus etuasennossa."
-        ]
+        step1: "Kahvat rinnan tasolla, rintakehä auki ja selkä kiinni tuessa.",
+        step2: "Purista kädet suoraksi eteen ja pidä 1 sekunnin huippusupistus.",
+        target: "Kohde: Rintalihaksen kokonaisvaltainen eristys",
+        tips: ["Vie kyynärvarsia toisiaan kohti.", "Viimeinen sarja täyteen uupumukseen."],
+        query: "chest press machine form"
       },
       "Vipunostot sivulle taljassa": {
-        videoId: "PPrzBWZDOhA",
-        target: "Kohdelihakset: Sivuolkapäät (lateral deltoid)",
-        tips: [
-          "Aseta talja ranteen/polven korkeudelle ja vie vaijeri jalkojen takaa tai edestä.",
-          "Nosta kyynärpääjohtoisesti noin 15–30° etuviistoon (lapaluun taso).",
-          "Hallitse laskuvaihe – älä anna taljan pudota vapaasti."
-        ]
+        step1: "Vaijeri jalkojen takana, käsi alhaalla kevyesti kyljen edessä.",
+        step2: "Nosta kyynärpääjohtoisesti 30° etuviistoon hartiatasoon asti.",
+        target: "Kohde: Sivuolkapäät (lateral deltoid)",
+        tips: ["Kyynärpää johtaa liikettä, ei ranne.", "Jarruta alasvienti."],
+        query: "cable lateral raise form short"
       },
       "Ojentajapunnerrus pään yli taljassa": {
-        videoId: "ns-rgSbYeSk",
-        target: "Kohdelihakset: Ojentajan pitkä pää (venytyspainotus)",
-        tips: [
-          "Aseta talja alaselän korkeudelle narulla. Nojaa vartaloa kevyesti eteenpäin.",
-          "Anna kyynärvarsien taipua taakse pään taakse, kunnes tunnet voimakkaan venytyksen.",
-          "Ojenna kädet suoraksi etuviistoon pitäen olkavarret paikallaan."
-        ]
+        step1: "Naru pään takana, kyynärvarret täysin koukussa (voimakas venytys).",
+        step2: "Ojenna kädet suoraksi etuviistoon pitäen olkavarret paikallaan.",
+        target: "Kohde: Ojentajan pitkä pää (stretch-hypertrophy)",
+        tips: ["Pidä kyynärpäät lähellä päätä.", "Täysi ojennus etuasennossa."],
+        query: "overhead cable tricep extension form"
       },
       "Ylätalja lapiokahvalla": {
-        videoId: "CAwf7n6Luuc",
-        target: "Kohdelihakset: Leveä selkälihas (latsit), yläselkä",
-        tips: [
-          "Ota neutraali ote lapiokahvasta. Avaa rintakehä ylös.",
-          "Aloita liike vetämällä lapoja alas ja ohjaa kyynärpäitä suoraan kohti lattiaa ja kylkiä.",
-          "Pysäytä veto leuan alle ja päästä selkä hallittuun venytykseen ylhäällä."
-        ]
+        step1: "Kädet suorana ylhäällä, latsit täydessä venytyksessä, rinta auki.",
+        step2: "Vedä kyynärpäät suoraan kohti lattiaa ja kylkiä leuan alle.",
+        target: "Kohde: Leveä selkälihas (latsit) ja yläselkä",
+        tips: ["Aloita liike lapojen alaspainamisella.", "Älä heijaa vartaloa taakse."],
+        query: "lat pulldown form short"
       },
       "Tuettu kulmasoutu": {
-        videoId: "0UBRfiO4zDs",
-        target: "Kohdelihakset: Keskiselkä, lapojen lähentäjät, takaolkapäät",
-        tips: [
-          "Pidä rintakehä tiukasti kiinni tuessa koko liikkeen ajan ilman repimistä.",
-          "Pidä kyynärpäät n. 45–60° auki kyljistä ja vedä lavat voimakkaasti yhteen takana.",
-          "Pidä 1 sekunnin huippusupistus ennen hallittua alaslaskua."
-        ]
+        step1: "Kädet ojennettuna eteen, rinta tiukasti kiinni pehmusteessa.",
+        step2: "Vedä kyynärpäät taakse 45° kulmassa ja purista lavat yhteen.",
+        target: "Kohde: Keskiselkä, lapojen lähentäjät, takaolkapäät",
+        tips: ["Pidä rinta tuessa koko ajan.", "1 s stoppi takaosassa."],
+        query: "chest supported row form short"
       },
       "Yhden käden taljasoutu": {
-        videoId: "GZbfZ033f74",
-        target: "Kohdelihakset: Leveän selkälihaksen alaosa (lower lats)",
-        tips: [
-          "Aseta talja navan korkeudelle ja ota tukea toisella kädellä.",
-          "Vedä kyynärpää tiukasti kylkeä hipoen kohti lantiota.",
-          "Älä kierrä vartaloa – pidä rintakehä suorassa ja keskity latsin supistukseen."
-        ]
+        step1: "Käsi ojennettuna eteen, latsin alaosa pitkässä venytyksessä.",
+        step2: "Vedä kyynärpää tiukasti kylkeä hipoen kohti lonkkaluuta.",
+        target: "Kohde: Latsien alaosa",
+        tips: ["Älä kierrä rintakehää.", "Keskity kyynärpään vetoon."],
+        query: "single arm lat pulldown cable form"
       },
       "Face Pull / Reverse Pec Deck": {
-        videoId: "rep-qVOkqgk",
-        target: "Kohdelihakset: Takaolkapäät, kiertäjäkalvosin, epäkäs",
-        tips: [
-          "Aseta naru silmien korkeudelle. Vedä narun päitä kohti ohimoita ja korvia.",
-          "Käännä ranteita ja kyynärpäitä taaksepäin ulkokiertoon (peukalot taaksepäin).",
-          "Erittäin tärkeä liike olkanivelen terveydelle ja ryhdille."
-        ]
+        step1: "Naru ojennettuna silmien korkeudella eteen.",
+        step2: "Vedä naru kohti ohimoita ja käännä peukalot taaksepäin ulkokiertoon.",
+        target: "Kohde: Takaolkapäät ja kiertäjäkalvosin",
+        tips: ["Kyynärpäät pysyvät korkealla.", "Tärkeä olkapään ryhdille."],
+        query: "face pull form short"
       },
       "Incline DB Hauiskääntö": {
-        videoId: "soxrZlIl35U",
-        target: "Kohdelihakset: Hauiksen pitkä pää (stretch-mediated hypertrophy)",
-        tips: [
-          "Aseta vinopenkki 45–60 asteen kulmaan. Anna käsien roikkua suorana kohti lattiaa.",
-          "Pidä olkavarret pystysuorassa samalla kun käännät käsipainot ylös.",
-          "Laske painot hitaasti täyteen kyynärnivelen ojennukseen ja venytykseen."
-        ]
+        step1: "Kädet roikkuvat vapaana vinopenkissä suoraan kohti maata.",
+        step2: "Käännä käsipainot ylös pitäen kyynärpäät tiukasti takana.",
+        target: "Kohde: Hauiksen pitkä pää (stretch-mediated hypertrophy)",
+        tips: ["Hidas laskuvaihe täyteen kyynärvarren ojennukseen."],
+        query: "incline bicep curl form short"
       },
       "Hammer-kääntö käsipainoilla": {
-        videoId: "TwD-YGVP4Bk",
-        target: "Kohdelihakset: Olkavarsilihas (brachialis) ja kyynärvarret",
-        tips: [
-          "Pidä kämmenet toisiaan kohti (neutraali ote) koko liikeradan ajan.",
-          "Käännä painot suoraan eteenpäin ilman olkavarsien heijausta.",
-          "Kasvattaa olkavarren paksuutta ja parantaa forkun voimaa."
-        ]
+        step1: "Käsipainot sivuilla kämmenet toisiaan kohti (neutraali ote).",
+        step2: "Nosta painot eteen kyynärvarsia ja brachialis-lihasta puristaen.",
+        target: "Kohde: Brachialis ja kyynärvarret",
+        tips: ["Ei heiluria lantiosta."],
+        query: "hammer curl form short"
       },
       "Takakyykky tangolla": {
-        videoId: "bEv6CCg2BC8",
-        target: "Kohdelihakset: Etureidet, pakaralihakset, keskivartalon tuki",
-        tips: [
-          "Aseta tanko tukevasti epäkkäiden päälle. Ota happea vatsaan ja lukitse keskivartalo.",
-          "Kyykkää hallitusti alas viemällä polvia varpaiden suuntaan vähintään 90 asteen kulmaan.",
-          "Paina jalkapohjilla tasaisesti lattiaan noustessa."
-        ]
+        step1: "Tanko tukevasti epäkkäillä, happea vatsaan ja keskivartalo lukkoon.",
+        step2: "Kyykky vähintään 90° syvyyteen polvet varvaslinjassa, nousu voimalla.",
+        target: "Kohde: Etureidet, pakarat ja keskivartalo",
+        tips: ["Paina koko jalkapohjalla lattiaan.", "Pidä rinta pystyssä."],
+        query: "barbell squat form short"
       },
       "Jalkaprässi / Hack-kyykky": {
-        videoId: "IZxyjW7MPJQ",
-        target: "Kohdelihakset: Etureidet ja pakarat",
-        tips: [
-          "Aseta jalat levyn ala- tai keskiosaan hartioiden leveydelle.",
-          "Laske kelkka niin syvälle kuin mahdollista ilman, että lantio pyöristyy irti selkänojasta.",
-          "Älä yliojenna polvia täyteen lukkoon yläasennossa."
-        ]
+        step1: "Jalat hartioiden leveydellä kelkan keskellä, polvet suorana.",
+        step2: "Laske kelkka syvälle ilman alaselän irtoamista selkänojasta, työnnä ylös.",
+        target: "Kohde: Etureidet ja pakarat",
+        tips: ["Älä lukitse polvia tärähtäen ylhäällä."],
+        query: "leg press form short"
       },
       "Reidenkoukistus istuen": {
-        videoId: "1Tq3QdYUuHs",
-        target: "Kohdelihakset: Takareidet (hamstrings - venytyskuormitus)",
-        tips: [
-          "Istuen tehty koukistus asettaa takareiden venytykseen lantiosta käsin.",
-          "Lukitse reisipehmuste erittäin tiukasti reisiä vasten, jotta lantio pysyy penkissä.",
-          "Koukista kantapäät voimakkaasti penkin alle ja jarruta palautusta 2–3 sekuntia."
-        ]
+        step1: "Jalat suorana eteen pehmuste nilkoilla, reisituki kiristetty tiukasti.",
+        step2: "Koukista kantapäät voimalla penkin alle ja jarruta palautusta 2 s.",
+        target: "Kohde: Takareidet (hamstrings)",
+        tips: ["Istuma-asento venyttää takareittä tehokkaasti."],
+        query: "seated leg curl form short"
       },
       "Reisiojennus laitteessa": {
-        videoId: "YyvSfV-77y0",
-        target: "Kohdelihakset: Suora reisilihas (rectus femoris)",
-        tips: [
-          "Säädä pehmuste nilkan alaosaan ja selkänoja siten, että polvinivel on laitteen kääntöpisteen kohdalla.",
-          "Ojenna jalat suoraksi ja pidä 1 sekunnin voimakas huippusupistus ylhäällä.",
-          "Laske paino rauhallisesti ilman painopakan pauketta."
-        ]
+        step1: "Polvet koukussa 90°, pehmuste nilkan alaosaan säädettynä.",
+        step2: "Ojenna jalat suoraksi ja pidä 1 s kova puristus yläasennossa.",
+        target: "Kohde: Suora reisilihas (rectus femoris)",
+        tips: ["Laske paino rauhallisesti alas."],
+        query: "leg extension form short"
       },
       "Pohjenousu seisten": {
-        videoId: "-M4-G8p8fmc",
-        target: "Kohdelihakset: Kaksoiskantalihas (gastrocnemius)",
-        tips: [
-          "Laske kantapäät alas ja pidä venytyksessä 2 sekuntia (poistaa akillesjänteen elastisen pompun).",
-          "Nouse räjähtävästi päkiöille ja pidä 1 s puristus ylhäällä.",
-          "Pidä polvet lähes suorana koko liikkeen ajan."
-        ]
+        step1: "Kantapäät laskettuina syvälle tason alapuolelle (2 s venytys).",
+        step2: "Ponnista räjähtävästi päkiöille täyteen pohjesupistukseen.",
+        target: "Kohde: Kaksoiskantalihas (gastrocnemius)",
+        tips: ["Pysäytä pohjassa – älä pomputa akillesjänteellä."],
+        query: "standing calf raise form short"
       },
       "Vatsarutistus taljassa": {
-        videoId: "2fO43i8x5vU",
-        target: "Kohdelihakset: Suora vatsalihas (rectus abdominis)",
-        tips: [
-          "Asetu polvilleen taljan eteen naru pään molemmilla puolilla.",
-          "Lukitse lantio paikalleen ja pyöristä selkärankaa viemällä rintakehää kohti lantiota.",
-          "Älä tee liikettä lonkankoukistajilla istumalla taaksepäin."
-        ]
+        step1: "Polvillaan naru pään sivuilla, lantio lukittuna paikalleen.",
+        step2: "Pyöristä selkärankaa viemällä kyynärpäitä kohti reisiä.",
+        target: "Kohde: Suora vatsalihas",
+        tips: ["Älä istu taaksepäin – tee liike vatsalla."],
+        query: "cable crunch form short"
       },
       "Pystypunnerrus KP istuen": {
-        videoId: "qEwKCR5JCog",
-        target: "Kohdelihakset: Etu- ja sivuolkapäät, ojentajat",
-        tips: [
-          "Aseta selkänoja pykälää vaille pystyasentoon (n. 75–80°), jotta olkanivel liikkuu vapaasti.",
-          "Laske käsipainot korvien tasolle kyynärpäiden osoittaessa hieman etuviistoon.",
-          "Punnerra painot suoraan pään päälle ilman alaselän notkistamista."
-        ]
+        step1: "Käsipainot korvien tasolla, kyynärpäät hieman etuviistossa.",
+        step2: "Punnerra suoraan pään päälle ilman alaselän notkistamista.",
+        target: "Kohde: Olkapäät ja ojentajat",
+        tips: ["Selkänoja n. 75–80° kulmassa."],
+        query: "seated dumbbell shoulder press short"
       },
       "Alataljasoutu kapealla": {
-        videoId: "UCXxvVItLoM",
-        target: "Kohdelihakset: Keskiselkä, leveä selkälihas",
-        tips: [
-          "Pidä selkä suorana ja polvissa pieni jousto.",
-          "Vedä kahva napaa kohti ja purista lapaluut tiukasti yhteen.",
-          "Anna selän venyä etuasennossa hallitusti."
-        ]
+        step1: "Kädet ojennettuna eteen, rinta auki ja polvissa pieni jousto.",
+        step2: "Vedä kahva napaan ja purista lapaluut tiukasti yhteen.",
+        target: "Kohde: Keskiselkä ja leveä selkälihas",
+        tips: ["Pidä vartalo vakaana."],
+        query: "seated cable row form short"
       },
       "Vinopenkkikone / Tasapenkki KP": {
-        videoId: "5Y3hM44c8hE",
-        target: "Kohdelihakset: Rintalihakset",
-        tips: [
-          "Säädä laitteen kahvat rinnan alareunan tasolle.",
-          "Punnerra rinnalla ja pidä lavat painettuna penkkiä vasten koko liikkeen ajan.",
-          "Hallittu 2 sekunnin laskuvaihe."
-        ]
+        step1: "Kahvat/painot rinnan tasolla lavat kiinni penkissä.",
+        step2: "Punnerra eteen rintalihaksilla puristaen.",
+        target: "Kohde: Rintalihakset",
+        tips: ["Hallittu 2 sekunnin laskuvaihe."],
+        query: "incline chest press machine form"
       },
       "Ylätalja leveällä otteella": {
-        videoId: "CAwf7n6Luuc",
-        target: "Kohdelihakset: Yläselkä ja leveä selkälihas",
-        tips: [
-          "Ota hieman hartioita leveämpi myötäote tangosta.",
-          "Vedä tanko rinnan yläosaan samalla kun viet rintakehää kevyesti tankoa kohti.",
-          "Hallitse palautus ylös ilman olkapäiden nousua korviin."
-        ]
+        step1: "Leveä myötäote, kädet suorana ylhäällä.",
+        step2: "Vedä tanko rinnan yläosaan lapoja alaspäin ohjaten.",
+        target: "Kohde: Yläselkä ja leveä selkälihas",
+        tips: ["Tuo rintakehää kevyesti tankoa kohti."],
+        query: "lat pulldown form short"
       },
       "Ojentajapunnerrus taljassa": {
-        videoId: "2-LAMcpzODU",
-        target: "Kohdelihakset: Ojentajan sivu- ja keskiosa",
-        tips: [
-          "Lukitse kyynärpäät kiinni kylkiin.",
-          "Ojenna kyynärvarret suoraksi ja levitä narun päitä hieman erilleen ala-asennossa.",
-          "Älä anna olkavarsien liikkua eteen ja taakse."
-        ]
+        step1: "Kyynärpäät lukittuna kylkiin, kyynärvarret 90 asteen kulmassa.",
+        step2: "Ojenna kädet alas suoraksi ja levitä narua ala-asennossa.",
+        target: "Kohde: Ojentajan ulko- ja keskiosa",
+        tips: ["Älä anna olkavarsien liikkua."],
+        query: "tricep pushdown cable short"
       },
       "Hauiskääntö tangolla": {
-        videoId: "ykJmrZ5v0Oo",
-        target: "Kohdelihakset: Hauislihaksen molemmat päät",
-        tips: [
-          "Ota hartioiden levyinen ote tangosta.",
-          "Pidä kyynärpäät tiukasti kylkien tasalla ja käännä tanko leuan alle.",
-          "Laske tanko rauhallisesti alas täyteen ojennukseen."
-        ]
+        step1: "Tanko suorilla käsillä reisien edessä, lavat taakse lukittuina.",
+        step2: "Käännä tanko leuan alle pitäen kyynärpäät kylkien tasalla.",
+        target: "Kohde: Hauislihaksen molemmat päät",
+        tips: ["Laske tanko rauhallisesti alas."],
+        query: "barbell curl form short"
       },
       "Maastaveto (perinteinen)": {
-        videoId: "op9kVnSso6Q",
-        target: "Kohdelihakset: Koko takaketju (pakarat, takareidet, selän ojentajat)",
-        tips: [
-          "Asetu tangon alle siten, että tanko on n. 2–3 cm sääristä jalkaterän keskellä.",
-          "Vedä rinta auki, lapaluut taakse ja poista löysät tangosta ennen nostoa.",
-          "Paina lattiaa poispäin jaloilla ja ojenna lantio ja polvet yhtäaikaisesti."
-        ]
+        step1: "Tanko 2 cm säärissä, rinta auki, lapaluut lukittuina ja tanko jännitettynä.",
+        step2: "Paina jaloilla lattiaa poispäin ja ojenna vartalo suoraksi tangon noustessa.",
+        target: "Kohde: Koko takaketju (pakarat, takareidet, selkä)",
+        tips: ["Tanko kulkee koko matkan ihoa hipoen."],
+        query: "deadlift form short 15 seconds"
       },
       "Romanialainen mave (RDL)": {
-        videoId: "_oyxCn2iSjU",
-        target: "Kohdelihakset: Takareidet ja pakaralihakset (venytyspainotus)",
-        tips: [
-          "Pidä polvissa vain pieni kiinteä jousto. Työnnä lantiota suoraan taaksepäin.",
-          "Liu'uta painoja aivan sääriä pitkin alaspäin, kunnes tunnet voimakkaan venytyksen takareisissä.",
-          "Ojenna lantio eteen puristamalla pakaroilla."
-        ]
+        step1: "Seiso suorana painot reisillä, polvissa pieni lukittu kulma.",
+        step2: "Työnnä lantiota suoraan taaksepäin sääriä hipoen, kunnes takareisi venyy.",
+        target: "Kohde: Takareidet ja pakarat (venytyspainotus)",
+        tips: ["Liike tapahtuu lonkasta, ei alaselkää pyöristämällä."],
+        query: "romanian deadlift form short"
       },
       "Lantionnosto (Hip Thrust)": {
-        videoId: "SEdqd1n0cvg",
-        target: "Kohdelihakset: Pakaralihakset (gluteus maximus)",
-        tips: [
-          "Aseta lapaluiden alareuna penkin reunaan ja tanko lantion päälle pehmusteella.",
-          "Paina kantapäillä maata vasten ja nosta lantio suoraksi vartalon tasolle.",
-          "Pidä leuka rinnassa ja katse eteenpäin noston ajan."
-        ]
+        step1: "Yläselkä penkin reunassa, tanko lantion päällä, polvet 90° kulmassa.",
+        step2: "Paina kantapäillä ja nosta lantio suoraksi linjaksi pakaroita puristaen.",
+        target: "Kohde: Pakaralihas (gluteus maximus)",
+        tips: ["Leuka rinnassa ja katse eteenpäin."],
+        query: "hip thrust form short"
       },
       "Askelkyykky taakse KP": {
-        videoId: "QE_hUruX_e0",
-        target: "Kohdelihakset: Pakarat ja etureidet",
-        tips: [
-          "Astu rauhallisesti taaksepäin siten, että etummainen polvi on n. 90 asteen kulmassa.",
-          "Kallista ylävartaloa kevyesti eteenpäin korostaaksesi pakara-aktivaatiota.",
-          "Ponnista etummaisella kantapäällä takaisin seisomaan."
-        ]
+        step1: "Seiso suorana käsipainot sivuilla.",
+        step2: "Astu taakse ja laske polvi lähelle lattiaa, ponnista etujalalla ylös.",
+        target: "Kohde: Pakarat ja etureidet",
+        tips: ["Kallista ylävartaloa kevyesti eteenpäin."],
+        query: "reverse lunge form short"
       },
       "Pohjenousu istuen": {
-        videoId: "JbyjNymZOt0",
-        target: "Kohdelihakset: Leveä kantalihas (soleus)",
-        tips: [
-          "Istuma-asennon polvikulma kohdistaa rasituksen suoraan soleus-lihakseen.",
-          "Laske kantapäät syvään venytykseen ja pysäytä 1–2 sekunniksi.",
-          "Nouse täyteen supistukseen päkiöiden varaan."
-        ]
+        step1: "Pehmuste reisien päällä, kantapäät laskettuna syvään venytykseen.",
+        step2: "Nouse päkiöille täyteen supistukseen ja pysäytä 1 sekunniksi.",
+        target: "Kohde: Leveä kantalihas (soleus)",
+        tips: ["Istuma-asento kohdistaa työn soleukseen."],
+        query: "seated calf raise form short"
       },
       "Roikkuvat jalannostot": {
-        videoId: "hdng3Nm1x_E",
-        target: "Kohdelihakset: Suora vatsalihas ja lonkankoukistajat",
-        tips: [
-          "Roiku tangosta aktiivisilla olkapäillä.",
-          "Nosta polvia kohti rintakehää kääntämällä lantiota eteenpäin.",
-          "Laske jalat hallitusti ilman heijausta."
-        ]
+        step1: "Roiku tangosta aktiivisilla olkapäillä.",
+        step2: "Nosta polvia/jalkoja kohti rintakehää lantiota kääntäen.",
+        target: "Kohde: Suora vatsalihas",
+        tips: ["Älä heijaa vartaloa."],
+        query: "hanging leg raise form short"
       }
     };
 
@@ -818,7 +910,7 @@
           <div class="exercise-card">
             <div class="exercise-title" onclick="openExerciseGuide('${ex.name}')">
               <span>${ex.name}</span>
-              <span class="info-tag">Ohje & Video 🎥</span>
+              <span class="info-tag">Liikerata ℹ️</span>
             </div>
             <div class="exercise-target">${ex.sets} sarjaa | Lepo: ${ex.rest}s</div>
         `;
@@ -898,37 +990,46 @@
       }
     }
 
-    // --- EMBEDDED MODAL GUIDE SYSTEM ---
+    // --- 2-STEP GUIDE MODAL ---
     function openExerciseGuide(name) {
       const guide = exerciseGuides[name] || {
-        videoId: "vcBig73ojpE",
-        target: "Kohdelihakset: Yleinen voima ja hypertrofia",
-        tips: ["Tee liike puhtaalla tekniikalla.", "Hallitse alaslaskuvaihe."]
+        step1: "Ota tukeva alkuasento.",
+        step2: "Tee hallittu supistus ja nosto.",
+        target: "Kohdelihakset: Voima & Hypertrofia",
+        tips: ["Tee toistot puhtaalla tekniikalla."],
+        query: name + " form tutorial"
       };
 
       document.getElementById("modal-title").innerText = name;
+      document.getElementById("modal-step1").innerText = guide.step1;
+      document.getElementById("modal-step2").innerText = guide.step2;
       document.getElementById("modal-target").innerText = guide.target;
 
       const tipsList = document.getElementById("modal-tips");
       tipsList.innerHTML = guide.tips.map(t => `<li>${t}</li>`).join("");
 
-      // Set YouTube Embed URL inside the in-app player
-      const iframe = document.getElementById("modal-iframe");
-      iframe.src = `https://www.youtube-nocookie.com/embed/${guide.videoId}?autoplay=1&mute=1&playsinline=1`;
+      const videoBtn = document.getElementById("modal-video-btn");
+      videoBtn.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`;
 
       document.getElementById("guide-modal").classList.add("open");
     }
 
     function closeModal(e) {
-      if (e.target.id === "guide-modal") {
-        closeModalDirect();
-      }
+      if (e.target.id === "guide-modal") closeModalDirect();
+    }
+    function closeModalDirect() {
+      document.getElementById("guide-modal").classList.remove("open");
     }
 
-    function closeModalDirect() {
-      // Clear iframe src to stop video and audio immediately
-      document.getElementById("modal-iframe").src = "";
-      document.getElementById("guide-modal").classList.remove("open");
+    // --- MÖRKÖ EASTER EGG ---
+    function openMorkoModal() {
+      document.getElementById("morko-modal").classList.add("open");
+    }
+    function closeMorkoModal(e) {
+      if (e.target.id === "morko-modal") closeMorkoModalDirect();
+    }
+    function closeMorkoModalDirect() {
+      document.getElementById("morko-modal").classList.remove("open");
     }
 
     // --- SOUND & VIBRATION & NOTIFICATION TIMER ---
