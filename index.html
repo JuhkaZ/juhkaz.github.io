@@ -17,19 +17,17 @@
       --text-dim: #94a3b8;
       --done: #22c55e;
       --border: #1e2c47;
+      --gold: #fbbf24;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      padding: 12px 12px 100px 12px;
+      padding: 12px 12px 110px 12px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
     }
-    header {
-      text-align: center;
-      padding: 8px 0 14px 0;
-    }
+    header { text-align: center; padding: 6px 0 14px 0; }
     .main-title {
       margin: 0;
       font-size: 1.4rem;
@@ -45,10 +43,8 @@
       border-radius: 12px;
       transition: transform 0.1s ease;
     }
-    .main-title:active {
-      transform: scale(0.96);
-    }
-    
+    .main-title:active { transform: scale(0.96); }
+
     /* Mode selector */
     .mode-container {
       display: flex;
@@ -120,43 +116,83 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
     }
     .exercise-title {
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 700;
-      margin-bottom: 3px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       color: #f8fafc;
-    }
-    .exercise-title span {
+      cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
     }
     .info-tag {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--accent);
-      opacity: 0.85;
       background: rgba(56, 189, 248, 0.1);
       padding: 2px 6px;
       border-radius: 6px;
     }
-    .exercise-target {
-      font-size: 0.76rem;
-      color: var(--accent);
-      margin-bottom: 8px;
+
+    /* Equipment variant buttons */
+    .variant-selector {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
     }
+    .variant-btn {
+      background: #070a12;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .variant-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Target badge & Progressive Overload alert */
+    .target-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      margin-bottom: 10px;
+      padding: 4px 8px;
+      background: #070a12;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .target-text { color: var(--accent); font-weight: 600; }
+    .overload-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .overload-ready { background: rgba(34, 197, 94, 0.2); color: var(--done); border: 1px solid var(--done); }
+    .overload-wait { color: var(--text-dim); }
+
+    /* Set rows */
     .set-row {
       display: grid;
-      grid-template-columns: 26px 1fr 1fr 42px;
+      grid-template-columns: 28px 1fr 1fr;
       align-items: center;
       gap: 8px;
-      padding: 5px 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4px 0;
     }
     .set-label { color: var(--text-dim); font-size: 0.8rem; font-weight: 700; }
     .stepper {
@@ -174,7 +210,7 @@
       font-size: 1.15rem;
       font-weight: bold;
       width: 32px;
-      height: 34px;
+      height: 32px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -187,49 +223,69 @@
       font-weight: 600;
       color: var(--text);
     }
-    .btn-done {
-      background: var(--border);
-      border: none;
-      color: var(--text-dim);
-      height: 34px;
+
+    /* Single Progress Action Button */
+    .set-action-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 11px;
       border-radius: 8px;
-      font-size: 1.05rem;
-      font-weight: bold;
+      border: none;
+      font-weight: 800;
+      font-size: 0.88rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 6px;
+      background: #1e293b;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      transition: background 0.15s ease;
     }
-    .btn-done.completed { background: var(--done); color: #070a12; }
+    .set-action-btn.active-step { background: var(--accent); color: #070a12; }
+    .set-action-btn.finished-step { background: var(--done); color: #070a12; border-color: var(--done); }
 
-    /* Action buttons */
-    .footer-actions {
+    /* Flash screen notification when silent */
+    .flash-alert {
+      position: fixed;
+      inset: 0;
+      background: rgba(56, 189, 248, 0.95);
+      color: #070a12;
+      z-index: 300;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-top: 15px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
-    .btn-save-workout {
-      background: var(--done);
+    .flash-alert.active {
+      opacity: 1;
+      pointer-events: auto;
+      animation: pulseScreen 1s infinite alternate;
+    }
+    @keyframes pulseScreen {
+      from { background: rgba(56, 189, 248, 0.95); }
+      to { background: rgba(34, 197, 94, 0.95); }
+    }
+    .flash-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; }
+    .flash-sub { font-size: 1.1rem; font-weight: 700; margin-bottom: 24px; }
+    .btn-dismiss-flash {
+      background: #070a12;
+      color: #fff;
       border: none;
-      color: #070a12;
-      font-weight: 700;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    .btn-reset {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.78rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 14px 28px;
+      border-radius: 12px;
       cursor: pointer;
     }
 
-    /* Modals */
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -244,10 +300,7 @@
       pointer-events: none;
       transition: opacity 0.2s ease;
     }
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
     .modal-card {
       background: #121a2d;
       border: 1px solid var(--border);
@@ -257,7 +310,6 @@
       max-width: 440px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
     .modal-header {
       display: flex;
@@ -265,12 +317,7 @@
       align-items: center;
       margin-bottom: 12px;
     }
-    .modal-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--accent);
-      margin: 0;
-    }
+    .modal-title { font-size: 1.15rem; font-weight: 800; color: var(--accent); margin: 0; }
     .modal-close {
       background: rgba(255,255,255,0.1);
       border: none;
@@ -280,54 +327,15 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .motion-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .motion-box {
-      background: #070a12;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-    }
-    .motion-tag {
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 2px 6px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
+    .motion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .motion-box { background: #070a12; border: 1px solid var(--border); border-radius: 10px; padding: 10px; text-align: center; }
+    .motion-tag { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
     .motion-tag.start { background: rgba(56, 189, 248, 0.2); color: var(--accent); }
     .motion-tag.end { background: rgba(34, 197, 94, 0.2); color: var(--done); }
-    .motion-desc {
-      font-size: 0.78rem;
-      color: var(--text);
-      line-height: 1.35;
-      font-weight: 600;
-    }
-    .modal-target {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      margin-bottom: 8px;
-    }
-    .modal-tips {
-      margin: 0 0 14px 0;
-      padding-left: 18px;
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      line-height: 1.4;
-    }
-    .modal-tips li { margin-bottom: 4px; }
+    .motion-desc { font-size: 0.78rem; color: var(--text); line-height: 1.35; font-weight: 600; }
+    .modal-target { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+    .modal-tips { margin: 0 0 14px 0; padding-left: 18px; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
     .btn-quick-video {
       display: block;
       width: 100%;
@@ -342,67 +350,15 @@
       font-size: 0.8rem;
     }
 
-    /* Mörkö Modal with Official Image */
-    .morko-card {
-      background: #0d0b1a;
-      border: 2px solid var(--accent-purple);
-      text-align: center;
-      padding: 20px 16px;
-    }
-    .morko-img-container {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 12px;
-    }
-    .morko-real-img {
-      width: 100%;
-      max-width: 270px;
-      height: auto;
-      border-radius: 12px;
-      border: 2px solid var(--accent-purple);
-      box-shadow: 0 0 25px rgba(192, 132, 252, 0.45);
-      display: block;
-    }
-    .morko-quote {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: var(--accent-purple);
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 6px;
-    }
-    .morko-sub {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      margin-bottom: 16px;
-    }
+    /* Mörkö Easter Egg */
+    .morko-card { background: #0d0b1a; border: 2px solid var(--accent-purple); text-align: center; padding: 20px 16px; }
+    .morko-real-img { width: 100%; max-width: 270px; height: auto; border-radius: 12px; border: 2px solid var(--accent-purple); display: block; margin: 0 auto 12px auto; }
+    .morko-quote { font-size: 1.25rem; font-weight: 900; color: var(--accent-purple); text-transform: uppercase; margin-bottom: 6px; }
 
-    /* History View */
-    .history-entry {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .history-header {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 6px;
-      margin-bottom: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .history-item {
-      font-size: 0.82rem;
-      padding: 3px 0;
-      display: flex;
-      justify-content: space-between;
-      color: var(--text);
-    }
-    .history-date { color: var(--text-dim); font-size: 0.75rem; }
+    /* Action buttons */
+    .footer-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+    .btn-save-workout { background: var(--done); border: none; color: #070a12; font-weight: 700; padding: 12px; border-radius: 10px; font-size: 0.9rem; cursor: pointer; }
+    .btn-reset { background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 8px 16px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; }
 
     /* Timer bar */
     .timer-bar {
@@ -418,21 +374,15 @@
       align-items: center;
       font-weight: bold;
       font-size: 0.95rem;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
       transform: translateY(100%);
       transition: transform 0.25s ease;
       z-index: 100;
     }
     .timer-bar.show { transform: translateY(0); }
-    .timer-btn {
-      background: rgba(0,0,0,0.25);
-      border: none;
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 4px;
-    }
+    .timer-btn { background: rgba(0,0,0,0.25); border: none; color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-left: 4px; }
+    .history-entry { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .history-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+    .history-item { font-size: 0.82rem; padding: 3px 0; display: flex; justify-content: space-between; color: var(--text); }
   </style>
 </head>
 <body>
@@ -450,14 +400,20 @@
 
   <div id="main-content"></div>
 
-  <!-- Movement Guide Modal (2-Step Visual Trajectory) -->
+  <!-- Screen Flash Alert for Silent Mode -->
+  <div id="flash-alert" class="flash-alert">
+    <div class="flash-title">⏱️ TAUON AIKA TÄYNNÄ!</div>
+    <div class="flash-sub">Kylmä rauta kutsuu. Seuraava sarja käyntiin!</div>
+    <button class="btn-dismiss-flash" onclick="dismissFlash()">Kuittaa & Aloita sarja</button>
+  </div>
+
+  <!-- Movement Guide Modal -->
   <div id="guide-modal" class="modal-overlay" onclick="closeModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h3 id="modal-title" class="modal-title">Liikkeen nimi</h3>
         <button class="modal-close" onclick="closeModalDirect()">✕</button>
       </div>
-
       <div class="motion-grid">
         <div class="motion-box">
           <span class="motion-tag start">1. Lähtö / Venytys</span>
@@ -468,26 +424,23 @@
           <div id="modal-step2" class="motion-desc"></div>
         </div>
       </div>
-
       <div id="modal-target" class="modal-target"></div>
       <ul id="modal-tips" class="modal-tips"></ul>
       <a id="modal-video-btn" class="btn-quick-video" href="#" target="_blank" rel="noopener">▶️ Katso 15s tekniikkavideo YouTubesta</a>
     </div>
   </div>
 
-  <!-- Authentic Mörkö Modal -->
+  <!-- Mörkö Modal -->
   <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
     <div class="modal-card morko-card" onclick="event.stopPropagation()">
-      <div class="morko-img-container">
-        <img 
-          src="morko.png" 
-          onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/fi/thumb/b/be/Morko_muumilaaksosta.png/400px-Morko_muumilaaksosta.png'" 
-          alt="Mörkö" 
-          class="morko-real-img"
-        />
-      </div>
+      <img 
+        src="morko.png" 
+        onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/fi/thumb/b/be/Morko_muumilaaksosta.png/400px-Morko_muumilaaksosta.png'" 
+        alt="Mörkö" 
+        class="morko-real-img"
+      />
       <div class="morko-quote">VITUN ISO MÖRKÖ</div>
-      <div class="morko-sub">"Gym08:n kylmintä rautaa ja kuuminta pumppia."</div>
+      <div style="color:var(--text-dim); font-size:0.82rem; margin-bottom:14px;">"Gym08:n kylmintä rautaa ja hemo hauikset."</div>
       <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
     </div>
   </div>
@@ -501,269 +454,278 @@
   </div>
 
   <script>
-    // --- GYM08-OPTIMIZED GUIDES & CUES ---
-    const exerciseGuides = {
-      "Penkkipunnerrus": {
-        step1: "Tanko rinnan yläpuolella, lavat lukittuna penkkiin ja jalkapohjat maassa.",
-        step2: "Laske rintalastan alaosaan (kyynärpäät 45°), räjähtävä työntö ylös.",
-        target: "Kohde: Rintalihakset, etuolkapäät, ojentajat",
-        tips: ["Käytä salin jämäkkää kisapenkkiä.", "Pidä lavat yhdessä koko noston ajan."],
-        query: "bench press form 15 seconds"
-      },
-      "Vipuvarsivinopenkki / Vinopenkki KP": {
-        step1: "Säädä Gym08:n vipuvarsikoneen istuin siten, että kahvat ovat ylärinnan tasolla.",
-        step2: "Paina kyynärvarsilla rintalihaksen yläosaa supistaen suoraan yläviistoon.",
-        target: "Kohde: Ylärintalihas (clavicular head)",
-        tips: ["Vipuvarsikone antaa turvallisen maksimikuormituksen.", "Hallittu 2s alaslasku."],
-        query: "incline chest press machine form"
-      },
-      "Rintaprässi / Taljaristikkäistalja": {
-        step1: "Kahvat rinnan tasolla, rintakehä auki ja selkä kiinni tuessa.",
-        step2: "Purista kädet suoraksi eteen ja pidä 1 sekunnin huippusupistus.",
-        target: "Kohde: Rintalihaksen eristys ja venytys",
-        tips: ["Gym08:n ristikkäistaljassa vie vaijerit hieman ristiin.", "Viimeinen sarja RIR 0."],
-        query: "cable crossover chest form"
-      },
-      "Vipunostot taljassa / Sivuvipuvarsikone": {
-        step1: "Kädet alhaalla kyljen tasalla, niska rentona.",
-        step2: "Nosta kyynärpäät hartialinjalle 30° etuviistoon ja pysäytä 1 sekunniksi.",
-        target: "Kohde: Sivuolkapäät (lateral deltoid)",
-        tips: ["Gym08:n vipunostokone tai säädettävä talja takaa jatkuvan vastuksen."],
-        query: "cable lateral raise form short"
-      },
-      "Ojentajat taljassa pään yli (pitkä köysi)": {
-        step1: "Talja alaselän tasolla, naru pään taakse vietynä täyteen venytykseen.",
-        step2: "Ojenna kyynärvarret suoraksi eteenpäin pitäen olkavarret paikallaan.",
-        target: "Kohde: Ojentajan pitkä pää (stretch-hypertrophy)",
-        tips: ["Käytä pitkää narua täyden liikeradan saamiseksi."],
-        query: "overhead cable tricep extension form"
-      },
-      "Ylätalja lapiokahvalla / MAG-kahvalla": {
-        step1: "Ota Gym08:n MAG- tai lapiokahvasta ote. Rintakehä auki, latsit venytyksessä.",
-        step2: "Vedä kyynärpäät suoraan alas kohti kylkiä ja taskuja leuan alle.",
-        target: "Kohde: Leveä selkälihas (latsit)",
-        tips: ["MAG-kahva poistaa forkkujen väsymisen ja kohdistaa vedon suoraan latseihin."],
-        query: "mag grip lat pulldown form"
-      },
-      "Rintatuettu T-kulmasoutu / Vipuvarsisoutu": {
-        step1: "Asetu Gym08:n rintatuettuun T-tankoon tai vipuvarsilaitteeseen rinta kiinni pehmusteessa.",
-        step2: "Vedä kyynärpäät taakse ja purista lavat tiukasti yhteen selän takana.",
-        target: "Kohde: Keskiselkä, lapojen lähentäjät, takaolkapäät",
-        tips: ["Rintatuki säästää alaselkää kyykkyä ja maastavetoa varten."],
-        query: "chest supported t bar row form"
-      },
-      "Yhden käden taljasoutu (Lats-fokus)": {
-        step1: "Aseta talja navan korkeudelle. Ota tuki toisella kädellä ja anna latsin venyä.",
-        step2: "Vedä kyynärpää kylkeä hipoen kohti lonkkaluuta ilman vartalon kiertoa.",
-        target: "Kohde: Latsien alaosa",
-        tips: ["Pysäytä 1 sekunniksi supistuksessa lonkan vieressä."],
-        query: "single arm cable row for lats"
-      },
-      "Face Pull taljassa / Reverse Pec Deck": {
-        step1: "Naru silmien tasolla tai asetu Gym08:n Reverse Pec Deck -koneeseen.",
-        step2: "Vedä kädet auki taakse ohimoiden tasalle peukalot taaksepäin kääntäen.",
-        target: "Kohde: Takaolkapäät ja ulkokiertäjät",
-        tips: ["Takaolkapääkoneessa pidä rinta kiinni pehmusteessa."],
-        query: "face pull form short"
-      },
-      "Incline DB Hauiskääntö": {
-        step1: "Asetu Gym08:n säädettävään vinopenkkiin (45–60°). Kädet roikkuvat vapaana alas.",
-        step2: "Käännä käsipainot ylös pitäen kyynärpäät vartalon takana.",
-        target: "Kohde: Hauiksen pitkä pää (stretch-hypertrophy)",
-        tips: ["Laske painot hitaasti täyteen kyynärvarren ojennukseen."],
-        query: "incline bicep curl form short"
-      },
-      "Hammer-kääntö taljassa köydellä / KP": {
-        step1: "Naru alataljassa tai käsipainot sivuilla kämmenet toisiaan kohti.",
-        step2: "Nosta painot ylös puristaen kyynärvarsia ja brachialis-lihasta.",
-        target: "Kohde: Brachialis ja kyynärvarret",
-        tips: ["Taljalla tehty versio antaa tasaisen kuormituksen läpi koko liikeradan."],
-        query: "hammer curl cable form"
-      },
-      "Takakyykky (tai Gym08 Hack-kyykky)": {
-        step1: "Tanko tukevasti epäkkäillä (tai asetu Hack-kyykkyyn selkä kiinni kelkassa).",
-        step2: "Kyykkää hallitusti syvälle vähintään 90 asteen kulmaan ja ponnista ylös.",
-        target: "Kohde: Etureidet ja pakarat",
-        tips: ["Gym08:n Hack-kyykky on loistava vaihtoehto etureisien maksimaaliseen eristykseen."],
-        query: "hack squat form short"
-      },
-      "Jalkaprässi / V-Kyykky": {
-        step1: "Jalat kelkan keskellä hartialeveydellä selkänojassa tukevasti kiinni.",
-        step2: "Laske kelkka niin syvälle kuin mahdollista ilman lantion pyöristymistä ja työnnä ylös.",
-        target: "Kohde: Etureisien kokonaisvolyymi",
-        tips: ["Älä yliojenna polvia lukkoon yläasennossa."],
-        query: "leg press form short"
-      },
-      "Reidenkoukistus istuen (Gymleco/Prime)": {
-        step1: "Asetu Gym08:n istuvaan koukistuslaitteeseen ja kiristä reisituki erittäin tiukasti.",
-        step2: "Koukista kantapäät penkin alle ja jarruta palautusvaihetta 2–3 sekuntia.",
-        target: "Kohde: Takareidet (venytyspainotus)",
-        tips: ["Istuma-asento venyttää takareittä lantiosta ja tuo maksimaalisen hypertrofian."],
-        query: "seated leg curl form short"
-      },
-      "Reisiojennus laitteessa": {
-        step1: "Nilkkapehmuste säädettynä, polven kääntöpiste laitteen akselin kohdalla.",
-        step2: "Ojenna jalat suoraksi ja pidä 1 sekunnin kova huippusupistus ylhäällä.",
-        target: "Kohde: Suora reisilihas (rectus femoris)",
-        tips: ["Laske paino rauhallisesti alas."],
-        query: "leg extension form short"
-      },
-      "Pohjenousu seisten / Prässissä": {
-        step1: "Päkiät laitteen reunalla, kantapäät laskettuna syvään 2 sekunnin venytykseen.",
-        step2: "Ponnista räjähtävästi suoraan päkiöille täyteen supistukseen.",
-        target: "Kohde: Kaksoiskantalihas (gastrocnemius)",
-        tips: ["Tee 2s stoppi pohjassa akillesjänteen pompun poistamiseksi."],
-        query: "standing calf raise form short"
-      },
-      "Vatsarutistus taljassa": {
-        step1: "Polvillaan taljan edessä naru pään sivuilla, lantio lukittuna.",
-        step2: "Pyöristä selkärankaa viemällä rintakehää kohti lantiota.",
-        target: "Kohde: Suora vatsalihas",
-        tips: ["Älä istu taaksepäin – tee työ vatsalla."],
-        query: "cable crunch form short"
-      },
-      "Pystypunnerrus KP / Vipuvarsikone": {
-        step1: "Käsipainot tai Gym08:n pystypunnerruskoneen kahvat korvien tasolla.",
-        step2: "Punnerra suoraan pään päälle ilman alaselän voimakasta notkistamista.",
-        target: "Kohde: Etu- ja sivuolkapäät, ojentajat",
-        tips: ["Vipuvarsipystypunnerrus sallii kovat sarjat ilman käsipainojen tasapainottelua."],
-        query: "seated shoulder press machine form"
-      },
-      "Alataljasoutu kapealla kahvalla": {
-        step1: "Kädet ojennettuna eteen, rinta auki ja polvissa pieni jousto.",
-        step2: "Vedä kahva napaan ja purista lavat tiukasti yhteen.",
-        target: "Kohde: Keskiselkä ja leveä selkälihas",
-        tips: ["Pidä vartalo vakaana ilman liiallista heijausta."],
-        query: "seated cable row form short"
-      },
-      "Vinopenkkikone / Tasapenkki KP": {
-        step1: "Asetu Gym08:n rintalaitteeseen tai penkille lavat kiinni tuessa.",
-        step2: "Punnerra rintalihaksilla puristaen ja pidä hallittu 2s laskuvaihe.",
-        target: "Kohde: Rintalihakset",
-        tips: ["Koneversio mahdollistaa turvallisen RIR 0 -uupumuksen."],
-        query: "incline chest press machine form"
-      },
-      "Ylätalja leveällä otteella": {
-        step1: "Leveä myötäote tangosta, kädet suorana ylhäällä.",
-        step2: "Vedä tanko rinnan yläosaan lapoja alaspäin ohjaten.",
-        target: "Kohde: Yläselkä ja latsit",
-        tips: ["Tuo rintakehää kevyesti tankoa kohti."],
-        query: "lat pulldown form short"
-      },
-      "Ojentajapunnerrus taljassa (suora tanko/naru)": {
-        step1: "Kyynärpäät lukittuina kylkiin, kyynärvarret 90 asteen kulmassa.",
-        step2: "Ojenna kädet alas suoraksi ja purista ojentajaa 1 sekunti.",
-        target: "Kohde: Ojentajan ulko- ja keskiosa",
-        tips: ["Älä päästä olkavarsia liikkumaan eteen-taakse."],
-        query: "tricep pushdown cable short"
-      },
-      "Hauiskääntö mutkatangolla / Scott-penkissä": {
-        step1: "Ota ote Gym08:n mutkatangosta tai asetu Scott-penkkiin olkavarret tuettuna.",
-        step2: "Käännä tanko ylös ja laske rauhallisesti alas täyteen ojennukseen.",
-        target: "Kohde: Hauislihaksen molemmat päät",
-        tips: ["Scott-penkki eristää hauiksen täysin ilman heijausta."],
-        query: "preacher curl form short"
-      },
-      "Maastaveto (Gym08 nostolavalla)": {
-        step1: "Asetu nostolavalle tanko 2 cm säärissä, rinta auki ja lapaluut lukittuina.",
-        step2: "Paina lattiaa jaloilla ja ojenna vartalo suoraksi tangon noustessa.",
-        target: "Kohde: Koko takaketju (pakarat, takareidet, selkä)",
-        tips: ["Käytä tarvittaessa magnesiumia ja vetoremmejä."],
-        query: "deadlift form short 15 seconds"
-      },
-      "Romanialainen mave (RDL)": {
-        step1: "Seiso suorana painot reisillä, polvissa pieni lukittu kulma.",
-        step2: "Työnnä lantiota suoraan taaksepäin sääriä hipoen, kunnes takareisi venyy.",
-        target: "Kohde: Takareidet ja pakarat (venytyspainotus)",
-        tips: ["Liike tapahtuu lonkasta, ei alaselkää pyöristämällä."],
-        query: "romanian deadlift form short"
-      },
-      "Lantionnosto (Booty Builder / Glute Drive)": {
-        step1: "Kiinnitä Gym08:n Glute Drive / Booty Builder -laitteen vyö tiukasti lantion yli.",
-        step2: "Paina kantapäillä ja nosta lantio ylös voimakkaaseen pakarasupistukseen.",
-        target: "Kohde: Pakaralihas (gluteus maximus)",
-        tips: ["Glute Drive -kone on huomattavasti nopeampi ja tehokkaampi kuin irtotangon virittäminen."],
-        query: "glute drive machine form"
-      },
-      "Askelkyykky taakse KP": {
-        step1: "Seiso suorana käsipainot sivuilla.",
-        step2: "Astu taakse ja laske polvi lähelle lattiaa, ponnista etujalalla ylös.",
-        target: "Kohde: Pakarat ja etureidet",
-        tips: ["Kallista ylävartaloa kevyesti eteenpäin pakara-aktivaation korostamiseksi."],
-        query: "reverse lunge form short"
-      },
-      "Pohjenousu istuen laitteessa": {
-        step1: "Pehmuste reisien päällä, kantapäät laskettuna syvään venytykseen.",
-        step2: "Nouse päkiöille täyteen supistukseen ja pysäytä 1 sekunniksi.",
-        target: "Kohde: Leveä kantalihas (soleus)",
-        tips: ["Istuma-asennon polvikulma kohdistaa työn suoraan soleus-lihakseen."],
-        query: "seated calf raise form short"
-      },
-      "Roikkuvat jalannostot / Voimapyörä": {
-        step1: "Roiku tangosta aktiivisilla olkapäillä (tai ota Gym08:n voimapyörä).",
-        step2: "Nosta polvia kohti rintakehää lantiota kääntäen hallitusti.",
-        target: "Kohde: Suora vatsalihas ja syvä tuki",
-        tips: ["Älä heijaa vartaloa."],
-        query: "hanging leg raise form short"
-      }
-    };
-
-    // --- PROGRAM DATA ---
+    // --- GYM08 DATABASE WITH EQUIPMENT VARIANTS & SCIENTIFIC TARGET RANGES ---
     const programData = {
       "5day": [
         {
           name: "Push (Työntävät)",
           exercises: [
-            { name: "Penkkipunnerrus", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Vipuvarsivinopenkki / Vinopenkki KP", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Rintaprässi / Taljaristikkäistalja", defaultWeight: 45, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Vipunostot taljassa / Sivuvipuvarsikone", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajat taljassa pään yli (pitkä köysi)", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            {
+              name: "Penkkipunnerrus",
+              targetMin: 6, targetMax: 8, rest: 150,
+              variants: [
+                { id: "tanko", name: "Levytanko", defaultWeight: 52.5, step: 2.5 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 20, step: 2 },
+                { id: "kone", name: "Vipuvarsipenkki", defaultWeight: 50, step: 2.5 }
+              ]
+            },
+            {
+              name: "Vinopenkki",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "kp", name: "Käsipainot", defaultWeight: 16, step: 2 },
+                { id: "kone", name: "Gym08 Vipuvarsikone", defaultWeight: 40, step: 2.5 },
+                { id: "tanko", name: "Vinopenkki tanko", defaultWeight: 40, step: 2.5 }
+              ]
+            },
+            {
+              name: "Rintaprässi / Taljaristikkäistalja",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "talja", name: "Ristikkäistalja", defaultWeight: 15, step: 2.5 },
+                { id: "kone", name: "Rintaprässikone", defaultWeight: 45, step: 2.5 }
+              ]
+            },
+            {
+              name: "Vipunostot sivulle",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa", defaultWeight: 8, step: 1 },
+                { id: "kone", name: "Vipuvarsikone", defaultWeight: 30, step: 2.5 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 8, step: 1 }
+              ]
+            },
+            {
+              name: "Ojentajat pään yli",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "koyni", name: "Taljassa köydellä", defaultWeight: 20, step: 2.5 },
+                { id: "kp", name: "Ranskalainen KP", defaultWeight: 10, step: 1 }
+              ]
+            }
           ]
         },
         {
           name: "Pull (Vetävät)",
           exercises: [
-            { name: "Ylätalja lapiokahvalla / MAG-kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 6, sets: 3, rest: 120 },
-            { name: "Rintatuettu T-kulmasoutu / Vipuvarsisoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Yhden käden taljasoutu (Lats-fokus)", defaultWeight: 25, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Face Pull taljassa / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Incline DB Hauiskääntö", defaultWeight: 12, step: 1, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Hammer-kääntö taljassa köydellä / KP", defaultWeight: 15, step: 2.5, defaultReps: 10, sets: 2, rest: 90 }
+            {
+              name: "Ylätalja",
+              targetMin: 6, targetMax: 8, rest: 120,
+              variants: [
+                { id: "lapio", name: "Lapiokahva", defaultWeight: 45, step: 2.5 },
+                { id: "mag", name: "Gym08 MAG-kahva", defaultWeight: 45, step: 2.5 },
+                { id: "leuka", name: "Leuanveto (omapaino)", defaultWeight: 0, step: 2.5 }
+              ]
+            },
+            {
+              name: "Tuettu kulmasoutu",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "ttanko", name: "Rintatuettu T-tanko", defaultWeight: 35, step: 2.5 },
+                { id: "kone", name: "Vipuvarsisoutu", defaultWeight: 40, step: 2.5 },
+                { id: "kp", name: "Tuettu KP", defaultWeight: 16, step: 2 }
+              ]
+            },
+            {
+              name: "Yhden käden taljasoutu (Lats)",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "talja", name: "Alataljassa", defaultWeight: 25, step: 2.5 },
+                { id: "kone", name: "Vipuvarsi 1-käsi", defaultWeight: 30, step: 2.5 }
+              ]
+            },
+            {
+              name: "Face Pull / Takaolkapäät",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa narulla", defaultWeight: 20, step: 2.5 },
+                { id: "pecdeck", name: "Reverse Pec Deck", defaultWeight: 30, step: 2.5 }
+              ]
+            },
+            {
+              name: "Hauiskääntö",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "incline", name: "Incline KP", defaultWeight: 12, step: 1 },
+                { id: "scott", name: "Scott-penkki mutkatanko", defaultWeight: 25, step: 2.5 },
+                { id: "talja", name: "Taljassa tangolla", defaultWeight: 20, step: 2.5 }
+              ]
+            },
+            {
+              name: "Hammer-kääntö",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa narulla", defaultWeight: 15, step: 2.5 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 12, step: 1 }
+              ]
+            }
           ]
         },
         {
-          name: "Legs (Etureidet & Kyykky)",
+          name: "Legs (Kyykky & Etureidet)",
           exercises: [
-            { name: "Takakyykky (tai Gym08 Hack-kyykky)", defaultWeight: 50, step: 2.5, defaultReps: 8, sets: 3, rest: 180 },
-            { name: "Jalkaprässi / V-Kyykky", defaultWeight: 90, step: 5, defaultReps: 8, sets: 3, rest: 150 },
-            { name: "Reidenkoukistus istuen (Gymleco/Prime)", defaultWeight: 6, step: 1, defaultReps: 12, sets: 3, rest: 90, isLevel: true },
-            { name: "Reisiojennus laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Pohjenousu seisten / Prässissä", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Vatsarutistus taljassa", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 }
+            {
+              name: "Kyykky",
+              targetMin: 6, targetMax: 8, rest: 180,
+              variants: [
+                { id: "tanko", name: "Takakyykky tanko", defaultWeight: 50, step: 2.5 },
+                { id: "hack", name: "Gym08 Hack-kyykky", defaultWeight: 60, step: 5 },
+                { id: "vkyykky", name: "V-Kyykky", defaultWeight: 50, step: 5 }
+              ]
+            },
+            {
+              name: "Jalkaprässi",
+              targetMin: 8, targetMax: 10, rest: 150,
+              variants: [
+                { id: "prassi", name: "45° Kelkkaprässi", defaultWeight: 90, step: 5 },
+                { id: "istumaprassi", name: "Istumaprässi", defaultWeight: 80, step: 5 }
+              ]
+            },
+            {
+              name: "Reidenkoukistus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "istuen", name: "Istuen (Gymleco)", defaultWeight: 6, step: 1, isLevel: true },
+                { id: "maaten", name: "Maaten laitteessa", defaultWeight: 5, step: 1, isLevel: true }
+              ]
+            },
+            {
+              name: "Reisiojennus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "kone", name: "Reisiojennuslaite", defaultWeight: 35, step: 2.5 }
+              ]
+            },
+            {
+              name: "Pohkeet seisten",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "kone", name: "Pohjekone seisten", defaultWeight: 40, step: 5 },
+                { id: "prassi", name: "Prässissä päkiöillä", defaultWeight: 60, step: 5 }
+              ]
+            },
+            {
+              name: "Vatsarutistus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa narulla", defaultWeight: 30, step: 2.5 },
+                { id: "kone", name: "Vatsakone", defaultWeight: 35, step: 2.5 }
+              ]
+            }
           ]
         },
         {
           name: "Upper (Yläkroppa B)",
           exercises: [
-            { name: "Pystypunnerrus KP / Vipuvarsikone", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Alataljasoutu kapealla kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Vinopenkkikone / Tasapenkki KP", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Ylätalja leveällä otteella", defaultWeight: 45, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Vipunostot taljassa / Sivuvipuvarsikone", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajapunnerrus taljassa (suora tanko/naru)", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Hauiskääntö mutkatangolla / Scott-penkissä", defaultWeight: 25, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            {
+              name: "Pystypunnerrus",
+              targetMin: 6, targetMax: 8, rest: 150,
+              variants: [
+                { id: "kone", name: "Vipuvarsipystypunnerrus", defaultWeight: 35, step: 2.5 },
+                { id: "kp", name: "Käsipainot istuen", defaultWeight: 16, step: 2 },
+                { id: "tanko", name: "Pystypunnerrus tanko", defaultWeight: 30, step: 2.5 }
+              ]
+            },
+            {
+              name: "Alataljasoutu",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "kapea", name: "Kapea kahva", defaultWeight: 45, step: 2.5 },
+                { id: "levea", name: "Leveä lapiokahva", defaultWeight: 40, step: 2.5 }
+              ]
+            },
+            {
+              name: "Rintapunnerrus",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "kone", name: "Vinopenkkikone", defaultWeight: 45, step: 2.5 },
+                { id: "kp", name: "Tasapenkki KP", defaultWeight: 18, step: 2 }
+              ]
+            },
+            {
+              name: "Ylätalja leveä",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "tanko", name: "Suora tanko eteen", defaultWeight: 45, step: 2.5 },
+                { id: "mag", name: "Leveä MAG-kahva", defaultWeight: 45, step: 2.5 }
+              ]
+            },
+            {
+              name: "Vipunostot sivulle",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa", defaultWeight: 8, step: 1 },
+                { id: "kone", name: "Koneessa", defaultWeight: 30, step: 2.5 }
+              ]
+            },
+            {
+              name: "Ojentajapunnerrus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "tanko", name: "Suora tanko taljassa", defaultWeight: 20, step: 2.5 },
+                { id: "koyni", name: "Köysi taljassa", defaultWeight: 17.5, step: 2.5 }
+              ]
+            },
+            {
+              name: "Hauiskääntö",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "tanko", name: "Mutkatanko seisten", defaultWeight: 25, step: 2.5 },
+                { id: "talja", name: "Taljassa tangolla", defaultWeight: 20, step: 2.5 }
+              ]
+            }
           ]
         },
         {
-          name: "Lower (Takaketju & Mave)",
+          name: "Lower (Mave & Takaketju)",
           exercises: [
-            { name: "Maastaveto (Gym08 nostolavalla)", defaultWeight: 100, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
-            { name: "Romanialainen mave (RDL)", defaultWeight: 60, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Lantionnosto (Booty Builder / Glute Drive)", defaultWeight: 70, step: 5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Askelkyykky taakse KP", defaultWeight: 14, step: 2, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Pohjenousu istuen laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Roikkuvat jalannostot / Voimapyörä", defaultWeight: 0, step: 1, defaultReps: 10, sets: 3, rest: 90 }
+            {
+              name: "Maastaveto",
+              targetMin: 5, targetMax: 6, rest: 180,
+              variants: [
+                { id: "tanko", name: "Perinteinen tanko", defaultWeight: 100, step: 2.5 },
+                { id: "trapbar", name: "Trap bar (Hex bar)", defaultWeight: 105, step: 5 }
+              ]
+            },
+            {
+              name: "Romanialainen mave (RDL)",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "tanko", name: "Levytanko", defaultWeight: 60, step: 2.5 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 22, step: 2 }
+              ]
+            },
+            {
+              name: "Lantionnosto",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "booty", name: "Gym08 Glute Drive / Booty Builder", defaultWeight: 70, step: 5 },
+                { id: "tanko", name: "Vapaa tanko", defaultWeight: 60, step: 5 }
+              ]
+            },
+            {
+              name: "Askelkyykky taakse",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "kp", name: "Käsipainot", defaultWeight: 14, step: 2 },
+                { id: "smith", name: "Smith-kone", defaultWeight: 30, step: 2.5 }
+              ]
+            },
+            {
+              name: "Pohkeet istuen",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "kone", name: "Istumapohjekone", defaultWeight: 35, step: 2.5 }
+              ]
+            },
+            {
+              name: "Keskivartalo",
+              targetMin: 10, targetMax: 15, rest: 90,
+              variants: [
+                { id: "voimapyora", name: "Voimapyörä", defaultWeight: 0, step: 1 },
+                { id: "jalannosto", name: "Roikkuvat jalannostot", defaultWeight: 0, step: 1 }
+              ]
+            }
           ]
         }
       ],
@@ -771,34 +733,153 @@
         {
           name: "Koko keho A (Kyykky & Penkki)",
           exercises: [
-            { name: "Takakyykky (tai Gym08 Hack-kyykky)", defaultWeight: 50, step: 2.5, defaultReps: 6, sets: 3, rest: 180 },
-            { name: "Penkkipunnerrus", defaultWeight: 52.5, step: 2.5, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Rintatuettu T-kulmasoutu / Vipuvarsisoutu", defaultWeight: 35, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Reidenkoukistus istuen (Gymleco/Prime)", defaultWeight: 6, step: 1, defaultReps: 10, sets: 3, rest: 90, isLevel: true },
-            { name: "Vipunostot taljassa / Sivuvipuvarsikone", defaultWeight: 8, step: 1, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Ojentajat taljassa pään yli (pitkä köysi)", defaultWeight: 20, step: 2.5, defaultReps: 10, sets: 3, rest: 90 }
+            {
+              name: "Kyykky",
+              targetMin: 6, targetMax: 8, rest: 180,
+              variants: [
+                { id: "tanko", name: "Takakyykky tanko", defaultWeight: 50, step: 2.5 },
+                { id: "hack", name: "Gym08 Hack-kyykky", defaultWeight: 60, step: 5 }
+              ]
+            },
+            {
+              name: "Penkkipunnerrus",
+              targetMin: 6, targetMax: 8, rest: 150,
+              variants: [
+                { id: "tanko", name: "Levytanko", defaultWeight: 52.5, step: 2.5 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 20, step: 2 }
+              ]
+            },
+            {
+              name: "Tuettu kulmasoutu",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "ttanko", name: "Rintatuettu T-tanko", defaultWeight: 35, step: 2.5 },
+                { id: "kone", name: "Vipuvarsisoutu", defaultWeight: 40, step: 2.5 }
+              ]
+            },
+            {
+              name: "Reidenkoukistus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "istuen", name: "Istuen (Gymleco)", defaultWeight: 6, step: 1, isLevel: true }
+              ]
+            },
+            {
+              name: "Vipunostot sivulle",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa", defaultWeight: 8, step: 1 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 8, step: 1 }
+              ]
+            },
+            {
+              name: "Ojentajat taljassa",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "koyni", name: "Pään yli köydellä", defaultWeight: 20, step: 2.5 }
+              ]
+            }
           ]
         },
         {
           name: "Koko keho B (Mave & Pystypunnerrus)",
           exercises: [
-            { name: "Maastaveto (Gym08 nostolavalla)", defaultWeight: 100, step: 2.5, defaultReps: 5, sets: 3, rest: 180 },
-            { name: "Pystypunnerrus KP / Vipuvarsikone", defaultWeight: 16, step: 2, defaultReps: 6, sets: 3, rest: 150 },
-            { name: "Ylätalja lapiokahvalla / MAG-kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Jalkaprässi / V-Kyykky", defaultWeight: 80, step: 5, defaultReps: 10, sets: 3, rest: 120 },
-            { name: "Incline DB Hauiskääntö", defaultWeight: 12, step: 1, defaultReps: 10, sets: 3, rest: 90 },
-            { name: "Pohjenousu seisten / Prässissä", defaultWeight: 40, step: 5, defaultReps: 12, sets: 3, rest: 90 }
+            {
+              name: "Maastaveto",
+              targetMin: 5, targetMax: 6, rest: 180,
+              variants: [
+                { id: "tanko", name: "Perinteinen tanko", defaultWeight: 100, step: 2.5 },
+                { id: "trapbar", name: "Trap bar", defaultWeight: 105, step: 5 }
+              ]
+            },
+            {
+              name: "Pystypunnerrus",
+              targetMin: 6, targetMax: 8, rest: 150,
+              variants: [
+                { id: "kone", name: "Vipuvarsikone", defaultWeight: 35, step: 2.5 },
+                { id: "kp", name: "Käsipainot istuen", defaultWeight: 16, step: 2 }
+              ]
+            },
+            {
+              name: "Ylätalja",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "lapio", name: "Lapiokahva", defaultWeight: 45, step: 2.5 },
+                { id: "mag", name: "MAG-kahva", defaultWeight: 45, step: 2.5 }
+              ]
+            },
+            {
+              name: "Jalkaprässi / Hack",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "prassi", name: "Prässi", defaultWeight: 80, step: 5 },
+                { id: "hack", name: "Hack-kyykky", defaultWeight: 55, step: 5 }
+              ]
+            },
+            {
+              name: "Hauiskääntö",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "incline", name: "Incline KP", defaultWeight: 12, step: 1 },
+                { id: "scott", name: "Scott-penkki", defaultWeight: 25, step: 2.5 }
+              ]
+            },
+            {
+              name: "Pohkeet seisten",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "kone", name: "Pohjekone", defaultWeight: 40, step: 5 }
+              ]
+            }
           ]
         },
         {
-          name: "Koko keho C (Hypertrofia & Yläkeho)",
+          name: "Koko keho C (RDL & Yläkeho)",
           exercises: [
-            { name: "Romanialainen mave (RDL)", defaultWeight: 60, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Vipuvarsivinopenkki / Vinopenkki KP", defaultWeight: 16, step: 2, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Alataljasoutu kapealla kahvalla", defaultWeight: 45, step: 2.5, defaultReps: 8, sets: 3, rest: 120 },
-            { name: "Reisiojennus laitteessa", defaultWeight: 35, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Face Pull taljassa / Reverse Pec Deck", defaultWeight: 20, step: 2.5, defaultReps: 12, sets: 3, rest: 90 },
-            { name: "Vatsarutistus taljassa", defaultWeight: 30, step: 2.5, defaultReps: 12, sets: 3, rest: 90 }
+            {
+              name: "Romanialainen mave (RDL)",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "tanko", name: "Levytanko", defaultWeight: 60, step: 2.5 },
+                { id: "kp", name: "Käsipainot", defaultWeight: 22, step: 2 }
+              ]
+            },
+            {
+              name: "Vinopenkki",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "kp", name: "Käsipainot", defaultWeight: 16, step: 2 },
+                { id: "kone", name: "Vipuvarsikone", defaultWeight: 40, step: 2.5 }
+              ]
+            },
+            {
+              name: "Alataljasoutu",
+              targetMin: 8, targetMax: 10, rest: 120,
+              variants: [
+                { id: "kapea", name: "Kapea kahva", defaultWeight: 45, step: 2.5 }
+              ]
+            },
+            {
+              name: "Reisiojennus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "kone", name: "Reisiojennuslaite", defaultWeight: 35, step: 2.5 }
+              ]
+            },
+            {
+              name: "Face Pull",
+              targetMin: 12, targetMax: 15, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa", defaultWeight: 20, step: 2.5 }
+              ]
+            },
+            {
+              name: "Vatsarutistus",
+              targetMin: 10, targetMax: 12, rest: 90,
+              variants: [
+                { id: "talja", name: "Taljassa", defaultWeight: 30, step: 2.5 }
+              ]
+            }
           ]
         }
       ]
@@ -809,8 +890,19 @@
     let currentTab = 0;
     let targetTimerEnd = null;
     let timerInterval = null;
+    let wakeLock = null;
+
+    // Screen Wake Lock API (keeps screen on during workout)
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+        }
+      } catch (e) {}
+    }
 
     function initNotifications() {
+      requestWakeLock();
       if ("Notification" in window && Notification.permission === "default") {
         Notification.requestPermission();
       }
@@ -830,12 +922,10 @@
       const container = document.getElementById("tabs-container");
       const list = programData[currentMode];
       let html = "";
-
       list.forEach((w, idx) => {
         const shortName = w.name.split(" ")[0];
         html += `<button class="tab-btn ${currentTab === idx ? 'active' : ''}" onclick="switchTab(${idx})">${shortName}</button>`;
       });
-
       html += `<button class="tab-btn history-tab ${currentTab === 'history' ? 'active' : ''}" onclick="switchTab('history')">📜 Historia</button>`;
       container.innerHTML = html;
     }
@@ -846,167 +936,218 @@
       renderContent();
     }
 
-    function getKey(mode, wIdx, eIdx, sIdx, field) {
-      return `tp_${mode}_w${wIdx}_e${eIdx}_s${sIdx}_${field}`;
+    // Storage Key Helpers
+    function getSelectedVariant(eIdx) {
+      return localStorage.getItem(`var_sel_${currentMode}_${currentTab}_${eIdx}`) || 0;
+    }
+    function setSelectedVariant(eIdx, vIdx) {
+      localStorage.setItem(`var_sel_${currentMode}_${currentTab}_${eIdx}`, vIdx);
+      renderContent();
+    }
+
+    function getWeightKey(eIdx, vId, sIdx) {
+      return `val_w_${currentMode}_${currentTab}_${eIdx}_${vId}_s${sIdx}`;
+    }
+    function getRepsKey(eIdx, sIdx) {
+      return `val_r_${currentMode}_${currentTab}_${eIdx}_s${sIdx}`;
+    }
+    function getProgStepKey(eIdx) {
+      return `prog_step_${currentMode}_${currentTab}_${eIdx}`;
     }
 
     function renderContent() {
       const main = document.getElementById("main-content");
-
       if (currentTab === "history") {
         renderHistory(main);
         return;
       }
 
       const workout = programData[currentMode][currentTab];
-      let html = `
-        <div style="font-size:0.9rem; font-weight:700; color:var(--text-dim); margin-bottom:8px;">
-          ${workout.name}
-        </div>
-      `;
+      const totalExercises = workout.exercises.length;
+      let html = `<div style="font-size:0.9rem; font-weight:700; color:var(--text-dim); margin-bottom:8px;">${workout.name}</div>`;
 
       workout.exercises.forEach((ex, eIdx) => {
+        const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
+        const currentVariant = ex.variants[selectedVIdx] || ex.variants[0];
+        const stepStatus = parseInt(localStorage.getItem(getProgStepKey(eIdx)) || "0"); // 0 = 0/3, 1 = 1/3, 2 = 2/3, 3 = 3/3 done
+
+        // Determine if Double Progression target is achieved
+        let allHitTarget = true;
+        for (let s = 0; s < 3; s++) {
+          const rKey = getRepsKey(eIdx, s);
+          const currentReps = localStorage.getItem(rKey) !== null ? parseInt(localStorage.getItem(rKey)) : ex.targetMin;
+          if (currentReps < ex.targetMax) allHitTarget = false;
+        }
+
         html += `
           <div class="exercise-card">
-            <div class="exercise-title" onclick="openExerciseGuide('${ex.name}')">
-              <span>${ex.name}</span>
-              <span class="info-tag">Liikerata ℹ️</span>
+            <div class="exercise-header">
+              <div class="exercise-title" onclick="openExerciseGuide('${ex.name}')">
+                <span>${ex.name}</span>
+                <span class="info-tag">Ohje ℹ️</span>
+              </div>
             </div>
-            <div class="exercise-target">${ex.sets} sarjaa | Lepo: ${ex.rest}s</div>
+
+            <!-- Equipment Variants Selector -->
+            ${ex.variants.length > 1 ? `
+              <div class="variant-selector">
+                ${ex.variants.map((v, vIdx) => `
+                  <button class="variant-btn ${vIdx === selectedVIdx ? 'active' : ''}" onclick="setSelectedVariant(${eIdx}, ${vIdx})">
+                    ${v.name}
+                  </button>
+                `).join("")}
+              </div>
+            ` : ''}
+
+            <!-- Target & Progression Badge -->
+            <div class="target-bar">
+              <span class="target-text">Tavoite: 3 × ${ex.targetMin}–${ex.targetMax} toistoa</span>
+              <span class="overload-badge ${allHitTarget ? 'overload-ready' : 'overload-wait'}">
+                ${allHitTarget ? '🔥 Tavoite täynnä! (+2.5 kg)' : `Jatka kunnes 3 × ${ex.targetMax}`}
+              </span>
+            </div>
         `;
 
-        for (let s = 0; s < ex.sets; s++) {
-          const wKey = getKey(currentMode, currentTab, eIdx, s, "w");
-          const rKey = getKey(currentMode, currentTab, eIdx, s, "r");
-          const dKey = getKey(currentMode, currentTab, eIdx, s, "done");
+        // 3 Sets Rows
+        for (let s = 0; s < 3; s++) {
+          const wKey = getWeightKey(eIdx, currentVariant.id, s);
+          const rKey = getRepsKey(eIdx, s);
 
-          const savedW = localStorage.getItem(wKey) !== null ? parseFloat(localStorage.getItem(wKey)) : ex.defaultWeight;
-          const savedR = localStorage.getItem(rKey) !== null ? parseInt(localStorage.getItem(rKey)) : ex.defaultReps;
-          const isDone = localStorage.getItem(dKey) === "true";
-          const unit = ex.isLevel ? "taso" : "kg";
+          // Fallback to legacy keys if exists
+          const legacyWeight = localStorage.getItem(`tp_${currentMode}_w${currentTab}_e${eIdx}_s${s}_w`);
+          const savedW = localStorage.getItem(wKey) !== null ? parseFloat(localStorage.getItem(wKey)) : (legacyWeight ? parseFloat(legacyWeight) : currentVariant.defaultWeight);
+          const savedR = localStorage.getItem(rKey) !== null ? parseInt(localStorage.getItem(rKey)) : ex.targetMin;
+          const unit = currentVariant.isLevel ? "taso" : "kg";
 
           html += `
             <div class="set-row">
               <span class="set-label">S${s + 1}</span>
               <div class="stepper">
-                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'w', -${ex.step})">-</button>
+                <button class="step-btn" onclick="changeVal(${eIdx}, '${currentVariant.id}', ${s}, 'w', -${currentVariant.step})">-</button>
                 <span class="step-value" id="val_w_${eIdx}_${s}">${savedW} ${unit}</span>
-                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'w', ${ex.step})">+</button>
+                <button class="step-btn" onclick="changeVal(${eIdx}, '${currentVariant.id}', ${s}, 'w', ${currentVariant.step})">+</button>
               </div>
               <div class="stepper">
-                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'r', -1)">-</button>
-                <span class="step-value" id="val_r_${eIdx}_${s}">${savedR} t</span>
-                <button class="step-btn" onclick="changeVal(${eIdx}, ${s}, 'r', 1)">+</button>
+                <button class="step-btn" onclick="changeVal(${eIdx}, '${currentVariant.id}', ${s}, 'r', -1)">-</button>
+                <span class="step-value" id="val_r_${eIdx}_${s}">${savedR} toistoa</span>
+                <button class="step-btn" onclick="changeVal(${eIdx}, '${currentVariant.id}', ${s}, 'r', 1)">+</button>
               </div>
-              <button id="btn_done_${eIdx}_${s}" class="btn-done ${isDone ? 'completed' : ''}" onclick="toggleDone(${eIdx}, ${s}, ${ex.rest})">
-                ${isDone ? '✓' : ''}
-              </button>
             </div>
           `;
         }
 
-        html += `</div>`;
+        // Single Sequential Set Action Button (1/3 -> 2/3 -> 3/3 / Finish)
+        const isLastExercise = (eIdx === totalExercises - 1);
+        let buttonText = "Kuittaa sarja 1/3 ▶ (Aloita tauko)";
+        let buttonClass = "";
+
+        if (stepStatus === 1) {
+          buttonText = "Kuittaa sarja 2/3 ▶ (Aloita tauko)";
+          buttonClass = "active-step";
+        } else if (stepStatus === 2) {
+          buttonText = isLastExercise ? "Päätä treeni & Tallenna 🏆" : "Kuittaa sarja 3/3 ✓ (Valmis!)";
+          buttonClass = "active-step";
+        } else if (stepStatus >= 3) {
+          buttonText = isLastExercise ? "Treeni valmis! 🏆 (Nollaa)" : "Liike suoritettu (3/3) ✓ (Nollaa)";
+          buttonClass = "finished-step";
+        }
+
+        html += `
+          <button class="set-action-btn ${buttonClass}" onclick="handleSetProgress(${eIdx}, ${ex.rest}, ${isLastExercise})">
+            ${buttonText}
+          </button>
+        </div>`;
       });
 
       html += `
         <div class="footer-actions">
           <button class="btn-save-workout" onclick="saveCurrentToHistory()">💾 Tallenna treeni historiaan</button>
-          <button class="btn-reset" onclick="resetCurrentWorkout()">Nollaa tämän päivän rastit</button>
+          <button class="btn-reset" onclick="resetCurrentWorkout()">Nollaa tämän päivän sarjamerkinnät</button>
         </div>
       `;
 
       main.innerHTML = html;
     }
 
-    function changeVal(eIdx, sIdx, type, delta) {
+    function changeVal(eIdx, vId, sIdx, type, delta) {
       const ex = programData[currentMode][currentTab].exercises[eIdx];
-      const key = getKey(currentMode, currentTab, eIdx, sIdx, type);
-      let val = localStorage.getItem(key) !== null ? parseFloat(localStorage.getItem(key)) : (type === 'w' ? ex.defaultWeight : ex.defaultReps);
+      const key = type === 'w' ? getWeightKey(eIdx, vId, sIdx) : getRepsKey(eIdx, sIdx);
+      let val = localStorage.getItem(key) !== null ? parseFloat(localStorage.getItem(key)) : (type === 'w' ? ex.variants.find(v => v.id === vId).defaultWeight : ex.targetMin);
 
       val = Math.max(0, val + delta);
       val = Math.round(val * 10) / 10;
-
       localStorage.setItem(key, val);
-      const unit = type === 'w' ? (ex.isLevel ? "taso" : "kg") : "t";
-      document.getElementById(`val_${type}_${eIdx}_${sIdx}`).innerText = `${val} ${unit}`;
+
+      renderContent();
     }
 
-    function toggleDone(eIdx, sIdx, restSec) {
+    // --- SEQUENTIAL 1/3, 2/3, 3/3 HANDLER ---
+    function handleSetProgress(eIdx, restSeconds, isLastExercise) {
       initNotifications();
-      const key = getKey(currentMode, currentTab, eIdx, sIdx, "done");
-      const isDone = localStorage.getItem(key) === "true";
-      const newStatus = !isDone;
+      const stepKey = getProgStepKey(eIdx);
+      let currentStep = parseInt(localStorage.getItem(stepKey) || "0");
 
-      localStorage.setItem(key, newStatus);
-      const btn = document.getElementById(`btn_done_${eIdx}_${sIdx}`);
-
-      if (newStatus) {
-        btn.classList.add("completed");
-        btn.innerText = "✓";
-        startTimer(restSec);
+      if (currentStep === 0) {
+        // Set 1 complete -> Start rest timer
+        localStorage.setItem(stepKey, "1");
+        startTimer(restSeconds);
+      } else if (currentStep === 1) {
+        // Set 2 complete -> Start rest timer
+        localStorage.setItem(stepKey, "2");
+        startTimer(restSeconds);
+      } else if (currentStep === 2) {
+        // Set 3 complete -> DO NOT START TIMER! Finish exercise or workout
+        localStorage.setItem(stepKey, "3");
+        stopTimer();
+        if (isLastExercise) {
+          saveCurrentToHistory();
+          alert("Upea treeni takana! Kaikki liikkeet suoritettu ja treeni tallennettu historiaan. 🔥");
+        }
       } else {
-        btn.classList.remove("completed");
-        btn.innerText = "";
+        // Reset this exercise if clicked when already finished
+        localStorage.setItem(stepKey, "0");
       }
+
+      renderContent();
     }
 
-    // --- 2-STEP GUIDE MODAL ---
-    function openExerciseGuide(name) {
-      const guide = exerciseGuides[name] || {
-        step1: "Ota tukeva alkuasento laitteessa.",
-        step2: "Tee hallittu supistus ja nosto.",
-        target: "Kohdelihakset: Voima & Hypertrofia",
-        tips: ["Tee toistot puhtaalla tekniikalla."],
-        query: name + " form tutorial"
-      };
+    // --- SOUND & SILENT-MODE SCREEN FLASH ALERT ---
+    function triggerSilentAlarm() {
+      // 1. Strong Vibration Pattern
+      if ("vibrate" in navigator) {
+        navigator.vibrate([600, 200, 600, 200, 1000]);
+      }
 
-      document.getElementById("modal-title").innerText = name;
-      document.getElementById("modal-step1").innerText = guide.step1;
-      document.getElementById("modal-step2").innerText = guide.step2;
-      document.getElementById("modal-target").innerText = guide.target;
-
-      const tipsList = document.getElementById("modal-tips");
-      tipsList.innerHTML = guide.tips.map(t => `<li>${t}</li>`).join("");
-
-      const videoBtn = document.getElementById("modal-video-btn");
-      videoBtn.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`;
-
-      document.getElementById("guide-modal").classList.add("open");
-    }
-
-    function closeModal(e) {
-      if (e.target.id === "guide-modal") closeModalDirect();
-    }
-    function closeModalDirect() {
-      document.getElementById("guide-modal").classList.remove("open");
-    }
-
-    // --- MÖRKÖ MODAL ---
-    function openMorkoModal() {
-      document.getElementById("morko-modal").classList.add("open");
-    }
-    function closeMorkoModal(e) {
-      if (e.target.id === "morko-modal") closeMorkoModalDirect();
-    }
-    function closeMorkoModalDirect() {
-      document.getElementById("morko-modal").classList.remove("open");
-    }
-
-    // --- SOUND & VIBRATION & NOTIFICATION TIMER ---
-    function playBeep() {
+      // 2. Audible Beep (works if sound is on)
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
         osc.frequency.setValueAtTime(880, ctx.currentTime);
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.0);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.8);
+        osc.stop(ctx.currentTime + 1.0);
       } catch (e) {}
+
+      // 3. Flashing visual overlay on screen (critical for silent mode!)
+      document.getElementById("flash-alert").classList.add("active");
+
+      // 4. Push notification
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("Palautusaika päättyi! ⏱️", {
+          body: "Aika aloittaa seuraava sarja!",
+          requireInteraction: true,
+          vibrate: [600, 200, 600, 200, 1000]
+        });
+      }
+    }
+
+    function dismissFlash() {
+      document.getElementById("flash-alert").classList.remove("active");
     }
 
     function startTimer(seconds) {
@@ -1019,7 +1160,8 @@
         const remaining = Math.round((targetTimerEnd - Date.now()) / 1000);
         if (remaining <= 0) {
           clearInterval(timerInterval);
-          onTimerFinished();
+          document.getElementById("timer-text").innerText = "Aika täynnä!";
+          triggerSilentAlarm();
         } else {
           updateTimerUI();
         }
@@ -1031,23 +1173,6 @@
       const m = Math.floor(remaining / 60);
       const s = remaining % 60;
       document.getElementById("timer-text").innerText = `Lepo: ${m}:${s < 10 ? '0' : ''}${s}`;
-    }
-
-    function onTimerFinished() {
-      document.getElementById("timer-text").innerText = "Lepo päättyi! Seuraava sarja!";
-
-      if ("vibrate" in navigator) {
-        navigator.vibrate([400, 150, 400, 150, 600]);
-      }
-
-      playBeep();
-
-      if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("Palautusaika päättyi! ⏱️", {
-          body: "Aika aloittaa seuraava sarja.",
-          icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>"
-        });
-      }
     }
 
     function addTimer(sec) {
@@ -1062,6 +1187,64 @@
       document.getElementById("timer").classList.remove("show");
     }
 
+    // --- MODALS & GUIDES ---
+    const exerciseGuides = {
+      "Penkkipunnerrus": {
+        step1: "Tanko suorilla käsillä rinnan yläpuolella. Lavat tiukasti yhdessä penkissä.",
+        step2: "Laske rintalastan alaosaan (kyynärpäät 45°), räjähtävä työntö ylös.",
+        target: "Kohde: Rintalihakset, etuolkapäät, ojentajat",
+        tips: ["Käytä jalkavoimaa (leg drive).", "Pidä ranteet suorana."],
+        query: "bench press form 15 seconds"
+      },
+      "Vinopenkki": {
+        step1: "Käsipainot/kahvat ylärinnan tasolla syvässä venytyksessä.",
+        step2: "Punnerra yläviistoon rintalihaksen yläosaa supistaen.",
+        target: "Kohde: Ylärinta ja etuolkapäät",
+        tips: ["Penkin kulma n. 30 astetta."],
+        query: "incline chest press form short"
+      },
+      "Kyykky": {
+        step1: "Tukeva asento, happea vatsaan ja keskivartalo lukkoon.",
+        step2: "Kyykky vähintään 90° syvyyteen polvet varvaslinjassa, nousu voimalla.",
+        target: "Kohde: Etureidet ja pakarat",
+        tips: ["Hack-kyykyssä paina alaselkä tiukasti selkänojaan."],
+        query: "squat form short 15 seconds"
+      },
+      "Maastaveto": {
+        step1: "Tanko 2 cm säärissä, rinta auki, lapaluut lukittuina.",
+        step2: "Paina jaloilla maata poispäin ja ojenna vartalo suoraksi.",
+        target: "Kohde: Koko takaketju (pakarat, takareidet, selkä)",
+        tips: ["Trap bar sallii suoremman selkäasennon."],
+        query: "deadlift form short"
+      }
+    };
+
+    function openExerciseGuide(name) {
+      const guide = exerciseGuides[name] || {
+        step1: "Ota tukeva alkuasento ja hallitse liikerata.",
+        step2: "Tee voimakas supistus ja jarruta alasvienti.",
+        target: "Kohdelihakset: Voima & Hypertrofia",
+        tips: ["Tee sarjat puhtaalla tekniikalla."],
+        query: name + " form short"
+      };
+
+      document.getElementById("modal-title").innerText = name;
+      document.getElementById("modal-step1").innerText = guide.step1;
+      document.getElementById("modal-step2").innerText = guide.step2;
+      document.getElementById("modal-target").innerText = guide.target;
+      document.getElementById("modal-tips").innerHTML = guide.tips.map(t => `<li>${t}</li>`).join("");
+      document.getElementById("modal-video-btn").href = `https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`;
+
+      document.getElementById("guide-modal").classList.add("open");
+    }
+
+    function closeModalDirect() { document.getElementById("guide-modal").classList.remove("open"); }
+    function closeModal(e) { if (e.target.id === "guide-modal") closeModalDirect(); }
+
+    function openMorkoModal() { document.getElementById("morko-modal").classList.add("open"); }
+    function closeMorkoModalDirect() { document.getElementById("morko-modal").classList.remove("open"); }
+    function closeMorkoModal(e) { if (e.target.id === "morko-modal") closeMorkoModalDirect(); }
+
     // --- HISTORY SYSTEM ---
     function saveCurrentToHistory() {
       const workout = programData[currentMode][currentTab];
@@ -1074,21 +1257,23 @@
       };
 
       workout.exercises.forEach((ex, eIdx) => {
+        const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
+        const currentVariant = ex.variants[selectedVIdx] || ex.variants[0];
         const setsData = [];
-        for (let s = 0; s < ex.sets; s++) {
-          const w = localStorage.getItem(getKey(currentMode, currentTab, eIdx, s, "w")) || ex.defaultWeight;
-          const r = localStorage.getItem(getKey(currentMode, currentTab, eIdx, s, "r")) || ex.defaultReps;
-          const d = localStorage.getItem(getKey(currentMode, currentTab, eIdx, s, "done")) === "true";
-          setsData.push({ weight: w, reps: r, done: d, unit: ex.isLevel ? "taso" : "kg" });
+
+        for (let s = 0; s < 3; s++) {
+          const wKey = getWeightKey(eIdx, currentVariant.id, s);
+          const rKey = getRepsKey(eIdx, s);
+          const w = localStorage.getItem(wKey) || currentVariant.defaultWeight;
+          const r = localStorage.getItem(rKey) || ex.targetMin;
+          setsData.push({ weight: w, reps: r, unit: currentVariant.isLevel ? "taso" : "kg" });
         }
-        entry.exercises.push({ name: ex.name, sets: setsData });
+        entry.exercises.push({ name: `${ex.name} (${currentVariant.name})`, sets: setsData });
       });
 
       let history = JSON.parse(localStorage.getItem("workout_history") || "[]");
       history.unshift(entry);
       localStorage.setItem("workout_history", JSON.stringify(history));
-
-      alert("Treeni tallennettu onnistuneesti historiaan!");
     }
 
     function renderHistory(container) {
@@ -1101,8 +1286,8 @@
 
         <div class="history-entry" style="border-color:#3730a3; background:#11162b;">
           <div class="history-header" style="color:#a5b4fc;">
-            <span>Lähtötaso (Vuosi sitten - Juho)</span>
-            <span class="history-date">Alkuarvot</span>
+            <span>Lähtötaso (Juho - Gym08)</span>
+            <span style="font-size:0.75rem; color:var(--text-dim);">Alkuarvot</span>
           </div>
           <div class="history-item"><span>Penkkipunnerrus</span> <b>52.5 kg (3 × 6)</b></div>
           <div class="history-item"><span>Vinopenkki KP</span> <b>16 kg (2 × 6) + 14 kg (1 × 8)</b></div>
@@ -1113,14 +1298,14 @@
       `;
 
       if (history.length === 0) {
-        html += `<p style="color:var(--text-dim); text-align:center; margin-top:20px;">Ei vielä tallennettuja treenejä. Kun teet treenin ja painat "Tallenna treeni historiaan", merkinnät näkyvät tässä.</p>`;
+        html += `<p style="color:var(--text-dim); text-align:center; margin-top:20px;">Ei vielä tallennettuja treenejä. Kun saat treenin valmiiksi, tiedot tallentuvat tähän.</p>`;
       } else {
-        history.forEach((h, idx) => {
+        history.forEach(h => {
           html += `
             <div class="history-entry">
               <div class="history-header">
                 <span>${h.name}</span>
-                <span class="history-date">${h.date}</span>
+                <span style="font-size:0.75rem; color:var(--text-dim);">${h.date}</span>
               </div>
           `;
           h.exercises.forEach(ex => {
@@ -1140,12 +1325,10 @@
     }
 
     function resetCurrentWorkout() {
-      if (confirm("Nollataanko tämän päivän suoritetut rastit? Painot ja toistot säilyvät.")) {
+      if (confirm("Nollataanko tämän päivän suoritetut sarjat? Painot ja toistomäärät säilyvät muistissa.")) {
         const workout = programData[currentMode][currentTab];
         workout.exercises.forEach((ex, eIdx) => {
-          for (let s = 0; s < ex.sets; s++) {
-            localStorage.setItem(getKey(currentMode, currentTab, eIdx, s, "done"), "false");
-          }
+          localStorage.setItem(getProgStepKey(eIdx), "0");
         });
         renderContent();
       }
