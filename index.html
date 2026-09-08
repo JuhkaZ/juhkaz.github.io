@@ -352,7 +352,7 @@
       max-width: 290px;
       border-radius: 12px;
       border: 2px solid var(--accent-purple);
-      margin: 0 auto 10px auto;
+      margin: 0 auto 12px auto;
       overflow: hidden;
       box-shadow: 0 0 25px rgba(192, 132, 252, 0.35);
       background: #a4c4e8;
@@ -367,16 +367,8 @@
       font-weight: 900;
       color: var(--accent);
       letter-spacing: 4px;
-      margin: 6px 0 10px 0;
+      margin: 8px 0 14px 0;
       font-family: monospace;
-    }
-    .morko-quote {
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: var(--accent-purple);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-      letter-spacing: 1px;
     }
 
     .footer-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
@@ -497,7 +489,7 @@
     </div>
   </div>
 
-  <!-- Mörkö Easter Egg Modal with Embedded Scene -->
+  <!-- Mörkö Easter Egg Modal -->
   <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
     <div class="modal-card morko-card" onclick="event.stopPropagation()">
       <div class="morko-scene-container">
@@ -541,31 +533,29 @@
             <path d="M 375 135 Q 385 120, 380 95" />
           </g>
 
-          <!-- Shadow / Ice freeze on ground directly under Groke -->
+          <!-- Shadow under Groke -->
           <ellipse cx="200" cy="298" rx="120" ry="14" fill="#a4bed6" opacity="0.75" />
 
-          <!-- MÖRKÖ (THE GROKE) AUTHENTIC CLASSIC SILHOUETTE -->
-          <!-- Main Body -->
+          <!-- Mörkö Silhouette -->
           <path d="M 200 45 C 160 45, 142 80, 130 140 C 118 200, 105 260, 85 288 C 135 304, 265 304, 315 288 C 295 260, 282 200, 270 140 C 258 80, 240 45, 200 45 Z" fill="#7a5592" stroke="#2b1a3d" stroke-width="3" />
 
           <!-- Arms / Side Fringes -->
           <path d="M 125 185 C 110 220, 102 260, 92 278 C 98 274, 108 268, 115 258 C 120 252, 126 230, 128 215 Z" fill="#583972" stroke="#2b1a3d" stroke-width="2" />
           <path d="M 275 185 C 290 220, 298 260, 308 278 C 302 274, 292 268, 285 258 C 280 252, 274 230, 272 215 Z" fill="#583972" stroke="#2b1a3d" stroke-width="2" />
 
-          <!-- Bottom Hem Pleats / Ruffles -->
+          <!-- Bottom Hem Pleats -->
           <path d="M 85 288 Q 105 300, 125 290 Q 145 302, 165 292 Q 185 303, 200 293 Q 215 303, 235 292 Q 255 302, 275 290 Q 295 300, 315 288 L 310 304 C 250 318, 150 318, 90 304 Z" fill="#65427d" stroke="#2b1a3d" stroke-width="2.2" />
 
-          <!-- Nostril / Dark Snout Wedge -->
+          <!-- Nostril / Snout -->
           <polygon points="200,68 180,110 220,110" fill="#20223c" stroke="#121324" stroke-width="2" />
 
-          <!-- Round White Eyes above Snout -->
+          <!-- Eyes -->
           <ellipse cx="186" cy="65" rx="8" ry="9.5" fill="#ffffff" stroke="#121324" stroke-width="2" />
           <ellipse cx="214" cy="65" rx="8" ry="9.5" fill="#ffffff" stroke="#121324" stroke-width="2" />
-          <!-- Black Pupils staring directly forward -->
           <circle cx="187" cy="65" r="3.2" fill="#030712" />
           <circle cx="213" cy="65" r="3.2" fill="#030712" />
 
-          <!-- Iconic Mouth Grin with row of square white teeth -->
+          <!-- Mouth Grin with teeth -->
           <rect x="168" y="118" width="64" height="12" rx="4" fill="#20223c" stroke="#121324" stroke-width="1.8" />
           <g fill="#ffffff">
             <rect x="171" y="120" width="5" height="8" rx="0.8" />
@@ -581,14 +571,11 @@
       </div>
 
       <div class="raw-code">56743</div>
-
-      <div class="morko-quote">VITUN ISO MÖRKÖ</div>
-      <div style="color:var(--text-dim); font-size:0.82rem; margin-bottom:14px;">"Gym08:n kylmintä rautaa ja hemo hauikset."</div>
       <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
     </div>
   </div>
 
-  <!-- Timer Bar with -5s, +30s and Close -->
+  <!-- Timer Bar -->
   <div id="timer" class="timer-bar">
     <span id="timer-text">Lepo: 2:00</span>
     <div class="timer-controls">
@@ -599,7 +586,6 @@
   </div>
 
   <script>
-    // --- DATABASE WITH VARIANT-SPECIFIC MOVEMENT GUIDES ---
     const programData = {
       "5day": [
         {
@@ -634,7 +620,7 @@
                 {
                   id: "kone", name: "Vipuvarsipenkki", defaultWeight: 50, step: 2.5,
                   guide: {
-                    title: "Gym08 Vipuvarsipunnerrus",
+                    title: "Vipuvarsipunnerrus",
                     step1: "Istu tukevasti selkä kiinni selkänojassa, kahvat rinnan alaosan tasolla.",
                     step2: "Punnerra kahvat suoraksi eteen keskittyen viemään kyynärvarsia toisiaan kohti.",
                     target: "Rintalihaksen eristetty kuormitus",
@@ -660,7 +646,7 @@
                   }
                 },
                 {
-                  id: "kone", name: "Gym08 Vipuvarsikone", defaultWeight: 40, step: 2.5,
+                  id: "kone", name: "Vipuvarsikone", defaultWeight: 40, step: 2.5,
                   guide: {
                     title: "Vinopenkkikone (Vipuvarsi)",
                     step1: "Säädä penkki siten, että kahvat alkavat solisluiden alapuolelta.",
@@ -755,7 +741,7 @@
               targetMin: 6, targetMax: 8, rest: 120,
               variants: [
                 {
-                  id: "mag", name: "Gym08 MAG-kahva", defaultWeight: 45, step: 2.5,
+                  id: "mag", name: "MAG-kahva", defaultWeight: 45, step: 2.5,
                   guide: {
                     title: "Ylätalja MAG-kahvalla",
                     step1: "Ota ote MAG-kahvan muotoilluista pinnoista ilman puristamista. Rinta auki.",
@@ -917,9 +903,9 @@
                   }
                 },
                 {
-                  id: "hack", name: "Gym08 Hack-kyykky", defaultWeight: 60, step: 5,
+                  id: "hack", name: "Hack-kyykky", defaultWeight: 60, step: 5,
                   guide: {
-                    title: "Gym08 Hack-kyykky",
+                    title: "Hack-kyykky",
                     step1: "Selkä ja lantio tiukasti kiinni pehmusteessa, jalat kelkan keskellä.",
                     step2: "Laske kelkka syvälle polvia koukistaen ja työnnä kantapäillä ylös.",
                     target: "Etureisien maksimaalinen eristys",
@@ -1204,7 +1190,7 @@
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
                 {
-                  id: "booty", name: "Gym08 Glute Drive / Booty Builder", defaultWeight: 70, step: 5,
+                  id: "booty", name: "Glute Drive / Booty Builder", defaultWeight: 70, step: 5,
                   guide: {
                     title: "Glute Drive / Booty Builder -laite",
                     step1: "Kiinnitä laitteen pehmustettu vyö tiukasti lantion yli, yläselkä tuessa.",
@@ -1964,7 +1950,7 @@
 
         <div class="history-card" style="border-color:#3730a3; background:#101328;">
           <div class="history-header-box">
-            <span class="history-badge" style="background:#272758; color:#c7d2fe;">Lähtötaso (Juho - Gym08)</span>
+            <span class="history-badge" style="background:#272758; color:#c7d2fe;">Lähtötaso (Juho)</span>
             <span class="history-time">Alkuarvot</span>
           </div>
           <div class="history-item-row">
@@ -2029,7 +2015,6 @@
       }
     }
 
-    // Init with state persistence
     setProgramMode(currentMode);
     checkActiveTimerOnLoad();
   </script>
