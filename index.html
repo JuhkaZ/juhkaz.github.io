@@ -17,7 +17,6 @@
       --text-dim: #94a3b8;
       --done: #22c55e;
       --border: #1e2c47;
-      --gold: #fbbf24;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
@@ -45,7 +44,6 @@
     }
     .main-title:active { transform: scale(0.96); }
 
-    /* Mode selector */
     .mode-container {
       display: flex;
       background: #060911;
@@ -71,7 +69,6 @@
       border: 1px solid var(--border);
     }
 
-    /* Tabs */
     .tabs {
       display: flex;
       gap: 5px;
@@ -110,7 +107,6 @@
       color: #070a12;
     }
 
-    /* Exercise cards */
     .exercise-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -141,7 +137,6 @@
       border-radius: 6px;
     }
 
-    /* Equipment variant buttons */
     .variant-selector {
       display: flex;
       gap: 6px;
@@ -164,14 +159,13 @@
       border-color: var(--accent);
     }
 
-    /* Target badge & Progressive Overload alert */
     .target-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.75rem;
       margin-bottom: 10px;
-      padding: 4px 8px;
+      padding: 5px 8px;
       background: #070a12;
       border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.05);
@@ -186,7 +180,6 @@
     .overload-ready { background: rgba(34, 197, 94, 0.2); color: var(--done); border: 1px solid var(--done); }
     .overload-wait { color: var(--text-dim); }
 
-    /* Set rows */
     .set-row {
       display: grid;
       grid-template-columns: 28px 1fr 1fr;
@@ -224,7 +217,6 @@
       color: var(--text);
     }
 
-    /* Single Progress Action Button */
     .set-action-btn {
       width: 100%;
       margin-top: 10px;
@@ -246,7 +238,6 @@
     .set-action-btn.active-step { background: var(--accent); color: #070a12; }
     .set-action-btn.finished-step { background: var(--done); color: #070a12; border-color: var(--done); }
 
-    /* Flash screen notification when silent */
     .flash-alert {
       position: fixed;
       inset: 0;
@@ -285,7 +276,6 @@
       cursor: pointer;
     }
 
-    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -317,7 +307,7 @@
       align-items: center;
       margin-bottom: 12px;
     }
-    .modal-title { font-size: 1.15rem; font-weight: 800; color: var(--accent); margin: 0; }
+    .modal-title { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin: 0; }
     .modal-close {
       background: rgba(255,255,255,0.1);
       border: none;
@@ -350,17 +340,49 @@
       font-size: 0.8rem;
     }
 
-    /* Mörkö Easter Egg */
-    .morko-card { background: #0d0b1a; border: 2px solid var(--accent-purple); text-align: center; padding: 20px 16px; }
-    .morko-real-img { width: 100%; max-width: 270px; height: auto; border-radius: 12px; border: 2px solid var(--accent-purple); display: block; margin: 0 auto 12px auto; }
-    .morko-quote { font-size: 1.25rem; font-weight: 900; color: var(--accent-purple); text-transform: uppercase; margin-bottom: 6px; }
+    /* Mörkö Easter Egg Modal */
+    .morko-card {
+      background: #0d0b1a;
+      border: 2px solid var(--accent-purple);
+      text-align: center;
+      padding: 20px 16px;
+    }
+    .morko-scene-container {
+      width: 100%;
+      max-width: 290px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-purple);
+      margin: 0 auto 10px auto;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(192, 132, 252, 0.35);
+      background: #a4c4e8;
+    }
+    .morko-svg-scene {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .raw-code {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 4px;
+      margin: 6px 0 10px 0;
+      font-family: monospace;
+    }
+    .morko-quote {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--accent-purple);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
 
-    /* Action buttons */
     .footer-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
     .btn-save-workout { background: var(--done); border: none; color: #070a12; font-weight: 700; padding: 12px; border-radius: 10px; font-size: 0.9rem; cursor: pointer; }
     .btn-reset { background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 8px 16px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; }
 
-    /* Timer bar */
     .timer-bar {
       position: fixed;
       bottom: 0;
@@ -368,7 +390,7 @@
       right: 0;
       background: #0284c7;
       color: #fff;
-      padding: 12px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -377,12 +399,57 @@
       transform: translateY(100%);
       transition: transform 0.25s ease;
       z-index: 100;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
     }
     .timer-bar.show { transform: translateY(0); }
-    .timer-btn { background: rgba(0,0,0,0.25); border: none; color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-left: 4px; }
-    .history-entry { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
-    .history-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: var(--accent); }
-    .history-item { font-size: 0.82rem; padding: 3px 0; display: flex; justify-content: space-between; color: var(--text); }
+    .timer-controls { display: flex; align-items: center; gap: 4px; }
+    .timer-btn { background: rgba(0,0,0,0.25); border: none; color: #fff; padding: 7px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700; }
+    .timer-btn.close { background: rgba(0,0,0,0.5); }
+
+    /* Structured History Layout */
+    .history-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .history-header-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .history-badge {
+      background: rgba(56,189,248,0.15);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .history-time { font-size: 0.75rem; color: var(--text-dim); }
+    .history-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.82rem;
+    }
+    .history-item-name { font-weight: 600; color: #f1f5f9; }
+    .history-sets-pills { display: flex; gap: 4px; flex-wrap: wrap; }
+    .history-pill {
+      background: #070a12;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -400,14 +467,14 @@
 
   <div id="main-content"></div>
 
-  <!-- Screen Flash Alert for Silent Mode -->
+  <!-- Screen Flash Alert -->
   <div id="flash-alert" class="flash-alert">
     <div class="flash-title">⏱️ TAUON AIKA TÄYNNÄ!</div>
     <div class="flash-sub">Kylmä rauta kutsuu. Seuraava sarja käyntiin!</div>
     <button class="btn-dismiss-flash" onclick="dismissFlash()">Kuittaa & Aloita sarja</button>
   </div>
 
-  <!-- Movement Guide Modal -->
+  <!-- Dynamic Guide Modal -->
   <div id="guide-modal" class="modal-overlay" onclick="closeModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
@@ -430,31 +497,109 @@
     </div>
   </div>
 
-  <!-- Mörkö Modal -->
+  <!-- Mörkö Easter Egg Modal with Embedded Scene -->
   <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
     <div class="modal-card morko-card" onclick="event.stopPropagation()">
-      <img 
-        src="morko.png" 
-        onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/fi/thumb/b/be/Morko_muumilaaksosta.png/400px-Morko_muumilaaksosta.png'" 
-        alt="Mörkö" 
-        class="morko-real-img"
-      />
+      <div class="morko-scene-container">
+        <svg class="morko-svg-scene" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="winterSky" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#8bb1db"/>
+              <stop offset="65%" stop-color="#bed6ec"/>
+              <stop offset="100%" stop-color="#eaf2f9"/>
+            </linearGradient>
+            <linearGradient id="snowGround" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#eaf2fa"/>
+              <stop offset="100%" stop-color="#cfdfef"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Sky & Snowy Mountain Horizon -->
+          <rect width="400" height="220" fill="url(#winterSky)" />
+          <path d="M 0 200 Q 80 150, 160 190 T 320 180 T 400 195 L 400 320 L 0 320 Z" fill="url(#snowGround)" />
+
+          <!-- Distant Pale Mountain Peak -->
+          <polygon points="100,165 130,110 160,165" fill="#d0e2f2" opacity="0.85" />
+          <polygon points="120,165 130,110 145,165" fill="#ffffff" opacity="0.9" />
+
+          <!-- Frozen White Trees on Left -->
+          <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9">
+            <path d="M 40 240 L 40 130" stroke-width="4.5" />
+            <path d="M 40 180 Q 15 150, 5 110" />
+            <path d="M 40 160 Q 65 140, 75 105" />
+            <path d="M 20 155 Q 10 135, 12 115" />
+            <path d="M 55 145 Q 65 130, 60 110" />
+            <path d="M 40 140 Q 30 115, 35 95" />
+          </g>
+
+          <!-- Frozen White Trees on Right -->
+          <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9">
+            <path d="M 360 240 L 360 120" stroke-width="4.5" />
+            <path d="M 360 170 Q 335 145, 325 105" />
+            <path d="M 360 150 Q 380 130, 390 100" />
+            <path d="M 345 150 Q 335 125, 340 105" />
+            <path d="M 375 135 Q 385 120, 380 95" />
+          </g>
+
+          <!-- Shadow / Ice freeze on ground directly under Groke -->
+          <ellipse cx="200" cy="298" rx="120" ry="14" fill="#a4bed6" opacity="0.75" />
+
+          <!-- MÖRKÖ (THE GROKE) AUTHENTIC CLASSIC SILHOUETTE -->
+          <!-- Main Body -->
+          <path d="M 200 45 C 160 45, 142 80, 130 140 C 118 200, 105 260, 85 288 C 135 304, 265 304, 315 288 C 295 260, 282 200, 270 140 C 258 80, 240 45, 200 45 Z" fill="#7a5592" stroke="#2b1a3d" stroke-width="3" />
+
+          <!-- Arms / Side Fringes -->
+          <path d="M 125 185 C 110 220, 102 260, 92 278 C 98 274, 108 268, 115 258 C 120 252, 126 230, 128 215 Z" fill="#583972" stroke="#2b1a3d" stroke-width="2" />
+          <path d="M 275 185 C 290 220, 298 260, 308 278 C 302 274, 292 268, 285 258 C 280 252, 274 230, 272 215 Z" fill="#583972" stroke="#2b1a3d" stroke-width="2" />
+
+          <!-- Bottom Hem Pleats / Ruffles -->
+          <path d="M 85 288 Q 105 300, 125 290 Q 145 302, 165 292 Q 185 303, 200 293 Q 215 303, 235 292 Q 255 302, 275 290 Q 295 300, 315 288 L 310 304 C 250 318, 150 318, 90 304 Z" fill="#65427d" stroke="#2b1a3d" stroke-width="2.2" />
+
+          <!-- Nostril / Dark Snout Wedge -->
+          <polygon points="200,68 180,110 220,110" fill="#20223c" stroke="#121324" stroke-width="2" />
+
+          <!-- Round White Eyes above Snout -->
+          <ellipse cx="186" cy="65" rx="8" ry="9.5" fill="#ffffff" stroke="#121324" stroke-width="2" />
+          <ellipse cx="214" cy="65" rx="8" ry="9.5" fill="#ffffff" stroke="#121324" stroke-width="2" />
+          <!-- Black Pupils staring directly forward -->
+          <circle cx="187" cy="65" r="3.2" fill="#030712" />
+          <circle cx="213" cy="65" r="3.2" fill="#030712" />
+
+          <!-- Iconic Mouth Grin with row of square white teeth -->
+          <rect x="168" y="118" width="64" height="12" rx="4" fill="#20223c" stroke="#121324" stroke-width="1.8" />
+          <g fill="#ffffff">
+            <rect x="171" y="120" width="5" height="8" rx="0.8" />
+            <rect x="178" y="120" width="5" height="8" rx="0.8" />
+            <rect x="185" y="120" width="5" height="8" rx="0.8" />
+            <rect x="192" y="120" width="5" height="8" rx="0.8" />
+            <rect x="199" y="120" width="5" height="8" rx="0.8" />
+            <rect x="206" y="120" width="5" height="8" rx="0.8" />
+            <rect x="213" y="120" width="5" height="8" rx="0.8" />
+            <rect x="220" y="120" width="5" height="8" rx="0.8" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="raw-code">56743</div>
+
       <div class="morko-quote">VITUN ISO MÖRKÖ</div>
       <div style="color:var(--text-dim); font-size:0.82rem; margin-bottom:14px;">"Gym08:n kylmintä rautaa ja hemo hauikset."</div>
       <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
     </div>
   </div>
 
+  <!-- Timer Bar with -5s, +30s and Close -->
   <div id="timer" class="timer-bar">
     <span id="timer-text">Lepo: 2:00</span>
-    <div>
+    <div class="timer-controls">
+      <button class="timer-btn" onclick="addTimer(-5)">-5s</button>
       <button class="timer-btn" onclick="addTimer(30)">+30s</button>
-      <button class="timer-btn" onclick="stopTimer()">Sulje</button>
+      <button class="timer-btn close" onclick="stopTimer()">Sulje</button>
     </div>
   </div>
 
   <script>
-    // --- GYM08 DATABASE WITH EQUIPMENT VARIANTS & SCIENTIFIC TARGET RANGES ---
+    // --- DATABASE WITH VARIANT-SPECIFIC MOVEMENT GUIDES ---
     const programData = {
       "5day": [
         {
@@ -464,43 +609,140 @@
               name: "Penkkipunnerrus",
               targetMin: 6, targetMax: 8, rest: 150,
               variants: [
-                { id: "tanko", name: "Levytanko", defaultWeight: 52.5, step: 2.5 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 20, step: 2 },
-                { id: "kone", name: "Vipuvarsipenkki", defaultWeight: 50, step: 2.5 }
+                {
+                  id: "tanko", name: "Levytanko", defaultWeight: 52.5, step: 2.5,
+                  guide: {
+                    title: "Penkkipunnerrus (Levytanko)",
+                    step1: "Lavat yhdessä ja alas penkkiin puristettuina. Tanko suorilla käsillä rinnan päällä.",
+                    step2: "Laske tanko rintalastan alaosaan (kyynärpäät 45°). Työnnä jaloilla maata vasten ja punnerra ylös.",
+                    target: "Rintalihakset (keski/ala), etuolkapäät, ojentajat",
+                    tips: ["Pidä lavat yhdessä koko liikkeen ajan.", "Paina koko jalkapohjalla lattiaan."],
+                    query: "bench press form 15 seconds"
+                  }
+                },
+                {
+                  id: "kp", name: "Käsipainot", defaultWeight: 20, step: 2,
+                  guide: {
+                    title: "Tasapenkki käsipainoilla",
+                    step1: "Käsipainot rinnan sivuilla syvässä venytyksessä, kämmenet kevyesti viistossa.",
+                    step2: "Punnerra käsipainot ylös suoraan kaareen rinnan päälle kolauttamatta niitä yhteen.",
+                    target: "Rintalihakset ja stabiloivat lihakset",
+                    tips: ["Syvempi venytys kuin tangolla.", "Hallittu 2 sekunnin alaslasku."],
+                    query: "dumbbell bench press form short"
+                  }
+                },
+                {
+                  id: "kone", name: "Vipuvarsipenkki", defaultWeight: 50, step: 2.5,
+                  guide: {
+                    title: "Gym08 Vipuvarsipunnerrus",
+                    step1: "Istu tukevasti selkä kiinni selkänojassa, kahvat rinnan alaosan tasolla.",
+                    step2: "Punnerra kahvat suoraksi eteen keskittyen viemään kyynärvarsia toisiaan kohti.",
+                    target: "Rintalihaksen eristetty kuormitus",
+                    tips: ["Voit viedä turvallisesti sarjan loppuun ilman varmistajaa."],
+                    query: "converging chest press machine form"
+                  }
+                }
               ]
             },
             {
               name: "Vinopenkki",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "kp", name: "Käsipainot", defaultWeight: 16, step: 2 },
-                { id: "kone", name: "Gym08 Vipuvarsikone", defaultWeight: 40, step: 2.5 },
-                { id: "tanko", name: "Vinopenkki tanko", defaultWeight: 40, step: 2.5 }
+                {
+                  id: "kp", name: "Käsipainot", defaultWeight: 16, step: 2,
+                  guide: {
+                    title: "Vinopenkki käsipainoilla (30°)",
+                    step1: "Penkki 30 asteen kulmassa. Painot rinnan yläosan sivuilla täydessä venytyksessä.",
+                    step2: "Punnerra ylös hieman toisiaan kohti ylärintaa puristaen.",
+                    target: "Ylärinta (clavicular head) ja etuolkapäät",
+                    tips: ["30 asteen kulma pitää rasituksen rinnalla eikä karkaa olkapäille."],
+                    query: "incline dumbbell press form short"
+                  }
+                },
+                {
+                  id: "kone", name: "Gym08 Vipuvarsikone", defaultWeight: 40, step: 2.5,
+                  guide: {
+                    title: "Vinopenkkikone (Vipuvarsi)",
+                    step1: "Säädä penkki siten, että kahvat alkavat solisluiden alapuolelta.",
+                    step2: "Työnnä kahvat yläviistoon ja supista ylärinta huippuasennossa.",
+                    target: "Ylärintalihas",
+                    tips: ["Pysäytä 1 sekunniksi yläasennossa."],
+                    query: "incline chest press machine form"
+                  }
+                }
               ]
             },
             {
               name: "Rintaprässi / Taljaristikkäistalja",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "talja", name: "Ristikkäistalja", defaultWeight: 15, step: 2.5 },
-                { id: "kone", name: "Rintaprässikone", defaultWeight: 45, step: 2.5 }
+                {
+                  id: "talja", name: "Ristikkäistalja", defaultWeight: 15, step: 2.5,
+                  guide: {
+                    title: "Ristikkäistalja rintalihaksille",
+                    step1: "Kahvat sivuilla rintakehä auki, kyynärpäissä pieni kiinteä jousto.",
+                    step2: "Tuo kädet rinnan eteen ristiin ja purista rintalihaksia maksimaalisesti.",
+                    target: "Rintalihaksen sisä- ja keskiosa",
+                    tips: ["Tee liike vain olkanivelestä, älä koukista kyynärvarsia."],
+                    query: "cable crossover chest form"
+                  }
+                },
+                {
+                  id: "kone", name: "Rintaprässikone", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Rintaprässi istuen",
+                    step1: "Kahvat rinnan keskiosan tasalla, lavat painettuna tukeen.",
+                    step2: "Työnnä kädet suoraksi eteen rinnalla puristaen.",
+                    target: "Rintalihaksen kokonaisvolyymi",
+                    tips: ["Viimeisessä sarjassa tee toistot täyteen uupumukseen."],
+                    query: "seated chest press form"
+                  }
+                }
               ]
             },
             {
               name: "Vipunostot sivulle",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa", defaultWeight: 8, step: 1 },
-                { id: "kone", name: "Vipuvarsikone", defaultWeight: 30, step: 2.5 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 8, step: 1 }
+                {
+                  id: "talja", name: "Taljassa", defaultWeight: 8, step: 1,
+                  guide: {
+                    title: "Sivuvipunostot taljassa",
+                    step1: "Talja nilkan/polven tasolla vartalon takana tai edessä.",
+                    step2: "Nosta kyynärpääjohtoisesti 30° etuviistoon hartialinjalle asti.",
+                    target: "Sivuolkapää (lateral deltoid)",
+                    tips: ["Talja takaa jatkuvan jännityksen myös ala-asennossa."],
+                    query: "cable lateral raise form short"
+                  }
+                },
+                {
+                  id: "kone", name: "Vipuvarsikone", defaultWeight: 30, step: 2.5,
+                  guide: {
+                    title: "Vipunostokone istuen",
+                    step1: "Asetu koneeseen pehmusteet kyynärvarsien ulkosyrjällä.",
+                    step2: "Nosta kyynärpäät vaakatasoon ja pysäytä 1 sekunniksi.",
+                    target: "Sivuolkapäät eristettynä",
+                    tips: ["Kone poistaa forkkujen ja ranteen jännityksen kokonaan."],
+                    query: "lateral raise machine form"
+                  }
+                }
               ]
             },
             {
               name: "Ojentajat pään yli",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "koyni", name: "Taljassa köydellä", defaultWeight: 20, step: 2.5 },
-                { id: "kp", name: "Ranskalainen KP", defaultWeight: 10, step: 1 }
+                {
+                  id: "koyni", name: "Taljassa köydellä", defaultWeight: 20, step: 2.5,
+                  guide: {
+                    title: "Ojentajapunnerrus pään yli taljassa",
+                    step1: "Talja alaselän tasolla, nojaa eteenpäin, kädet koukussa pään takana venytyksessä.",
+                    step2: "Ojenna kyynärvarret suoraksi etuviistoon pitäen olkavarret liikkumatta.",
+                    target: "Ojentajan pitkä pää (stretch-mediated hypertrophy)",
+                    tips: ["Pitkä pää kasvaa parhaiten venytysasennossa."],
+                    query: "overhead cable tricep extension form"
+                  }
+                }
               ]
             }
           ]
@@ -512,51 +754,146 @@
               name: "Ylätalja",
               targetMin: 6, targetMax: 8, rest: 120,
               variants: [
-                { id: "lapio", name: "Lapiokahva", defaultWeight: 45, step: 2.5 },
-                { id: "mag", name: "Gym08 MAG-kahva", defaultWeight: 45, step: 2.5 },
-                { id: "leuka", name: "Leuanveto (omapaino)", defaultWeight: 0, step: 2.5 }
+                {
+                  id: "mag", name: "Gym08 MAG-kahva", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Ylätalja MAG-kahvalla",
+                    step1: "Ota ote MAG-kahvan muotoilluista pinnoista ilman puristamista. Rinta auki.",
+                    step2: "Vedä kyynärpäät suoraan alas kohti kylkiä ja taskuja.",
+                    target: "Leveä selkälihas (latsit)",
+                    tips: ["MAG-kahva eliminoi kyynärvarsien väsymisen ja kohdistaa vedon selkään."],
+                    query: "mag grip lat pulldown form"
+                  }
+                },
+                {
+                  id: "lapio", name: "Lapiokahva", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Ylätalja lapiokahvalla",
+                    step1: "Neutraali ote kahvasta, olkavarret täydessä venytyksessä ylhäällä.",
+                    step2: "Vedä rinnan yläosaan lapoja alaspäin ohjaten.",
+                    target: "Latsit ja yläselkä",
+                    tips: ["Älä heijaa vartaloa taaksepäin."],
+                    query: "lat pulldown form short"
+                  }
+                }
               ]
             },
             {
               name: "Tuettu kulmasoutu",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "ttanko", name: "Rintatuettu T-tanko", defaultWeight: 35, step: 2.5 },
-                { id: "kone", name: "Vipuvarsisoutu", defaultWeight: 40, step: 2.5 },
-                { id: "kp", name: "Tuettu KP", defaultWeight: 16, step: 2 }
+                {
+                  id: "ttanko", name: "Rintatuettu T-tanko", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Rintatuettu T-kulmasoutu",
+                    step1: "Rintakehä tukevasti kiinni pehmusteessa, kädet ojennettuna eteen.",
+                    step2: "Vedä kyynärpäät taakse 45–60° kulmassa ja purista lavat yhteen selässä.",
+                    target: "Keskiselkä, lavanlähentäjät, takaolkapäät",
+                    tips: ["Rintatuki säästää alaselkää ja mahdollistaa kovat sarjat."],
+                    query: "chest supported t bar row form"
+                  }
+                },
+                {
+                  id: "kone", name: "Vipuvarsisoutu", defaultWeight: 40, step: 2.5,
+                  guide: {
+                    title: "Vipuvarsisoutulaite istuen",
+                    step1: "Istu tukevasti rinta pehmusteessa, ota kahvoista kiinni.",
+                    step2: "Vedä kyynärpäät taakse lapoja puristaen.",
+                    target: "Keskiselän paksuus",
+                    tips: ["Pidä 1 sekunnin pito supistuksessa."],
+                    query: "machine row form short"
+                  }
+                }
               ]
             },
             {
-              name: "Yhden käden taljasoutu (Lats)",
+              name: "Yhden käden taljasoutu",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "talja", name: "Alataljassa", defaultWeight: 25, step: 2.5 },
-                { id: "kone", name: "Vipuvarsi 1-käsi", defaultWeight: 30, step: 2.5 }
+                {
+                  id: "talja", name: "Alataljassa", defaultWeight: 25, step: 2.5,
+                  guide: {
+                    title: "Yhden käden alataljasoutu",
+                    step1: "Asetu taljan eteen, ota toisella kädellä tukea, anna latsin venyä eteen.",
+                    step2: "Vedä kyynärpää tiukasti kylkeä hipoen kohti lonkkaa.",
+                    target: "Latsien alaosa",
+                    tips: ["Älä kierrä rintakehää – pidä hartialinja suorassa."],
+                    query: "single arm cable row for lats"
+                  }
+                }
               ]
             },
             {
               name: "Face Pull / Takaolkapäät",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa narulla", defaultWeight: 20, step: 2.5 },
-                { id: "pecdeck", name: "Reverse Pec Deck", defaultWeight: 30, step: 2.5 }
+                {
+                  id: "pecdeck", name: "Reverse Pec Deck", defaultWeight: 30, step: 2.5,
+                  guide: {
+                    title: "Reverse Pec Deck (Takaolkapääkone)",
+                    step1: "Rintakehä kiinni pehmusteessa, kädet suorana kahvoilla olkapään tasolla.",
+                    step2: "Avaa kädet suoraan sivuille taakse takaolkapäillä puristaen.",
+                    target: "Takaolkapäät (posterior deltoid)",
+                    tips: ["Pidä ranteet rentoina, tee työ olkanivelestä."],
+                    query: "reverse pec deck form short"
+                  }
+                },
+                {
+                  id: "talja", name: "Taljassa narulla", defaultWeight: 20, step: 2.5,
+                  guide: {
+                    title: "Face Pull taljassa narulla",
+                    step1: "Naru silmien tasolla, ote narun päistä peukalot taaksepäin.",
+                    step2: "Vedä narun keskiosa otsaa kohti ja levitä päät ohimoille.",
+                    target: "Takaolkapäät ja kiertäjäkalvosin",
+                    tips: ["Kyynärpäät pysyvät korkealla koko vedon ajan."],
+                    query: "face pull form short"
+                  }
+                }
               ]
             },
             {
               name: "Hauiskääntö",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "incline", name: "Incline KP", defaultWeight: 12, step: 1 },
-                { id: "scott", name: "Scott-penkki mutkatanko", defaultWeight: 25, step: 2.5 },
-                { id: "talja", name: "Taljassa tangolla", defaultWeight: 20, step: 2.5 }
+                {
+                  id: "incline", name: "Incline KP", defaultWeight: 12, step: 1,
+                  guide: {
+                    title: "Incline käsipainohauiskääntö (Vinopenkki)",
+                    step1: "Penkki 45–60° kulmassa. Kädet roikkuvat vapaana suoraan lattiaa kohti.",
+                    step2: "Käännä käsipainot ylös pitäen kyynärpäät takana.",
+                    target: "Hauiksen pitkä pää (stretch-hypertrophy)",
+                    tips: ["Laske painot hitaasti täyteen kyynärvarren ojennukseen."],
+                    query: "incline bicep curl form short"
+                  }
+                },
+                {
+                  id: "scott", name: "Scott-penkki mutkatanko", defaultWeight: 25, step: 2.5,
+                  guide: {
+                    title: "Scott-hauiskääntö mutkatangolla",
+                    step1: "Olkavarret tuettuna pehmusteeseen, rinta tiukasti kiinni reunaan.",
+                    step2: "Käännä tanko leuan alle ja laske hallitusti alas.",
+                    target: "Hauislihaksen lyhyt pää",
+                    tips: ["Scott-tuki estää kaiken vartaloheilun."],
+                    query: "preacher curl form short"
+                  }
+                }
               ]
             },
             {
               name: "Hammer-kääntö",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa narulla", defaultWeight: 15, step: 2.5 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 12, step: 1 }
+                {
+                  id: "talja", name: "Taljassa köydellä", defaultWeight: 15, step: 2.5,
+                  guide: {
+                    title: "Hammer-kääntö taljassa köydellä",
+                    step1: "Alatalja narulla, kämmenet toisiaan kohti (neutraali ote).",
+                    step2: "Käännä kädet ylös kyynärvarsia ja brachialis-lihasta puristaen.",
+                    target: "Brachialis ja kyynärvarren lihakset",
+                    tips: ["Talja antaa jatkuvan tasaisen vastuksen läpi liikeradan."],
+                    query: "cable hammer curl form short"
+                  }
+                }
               ]
             }
           ]
@@ -568,48 +905,113 @@
               name: "Kyykky",
               targetMin: 6, targetMax: 8, rest: 180,
               variants: [
-                { id: "tanko", name: "Takakyykky tanko", defaultWeight: 50, step: 2.5 },
-                { id: "hack", name: "Gym08 Hack-kyykky", defaultWeight: 60, step: 5 },
-                { id: "vkyykky", name: "V-Kyykky", defaultWeight: 50, step: 5 }
+                {
+                  id: "tanko", name: "Takakyykky tanko", defaultWeight: 50, step: 2.5,
+                  guide: {
+                    title: "Takakyykky levytangolla",
+                    step1: "Tanko tukevasti epäkkäillä. Happea vatsaan ja keskivartalo tiukaksi.",
+                    step2: "Kyykkää vähintään 90 asteen kulmaan polvet varpaiden suuntaan ja ponnista ylös.",
+                    target: "Etureidet, pakarat ja keskivartalon tuki",
+                    tips: ["Paina koko jalkapohjalla tasaisesti lattiaan."],
+                    query: "squat form short 15 seconds"
+                  }
+                },
+                {
+                  id: "hack", name: "Gym08 Hack-kyykky", defaultWeight: 60, step: 5,
+                  guide: {
+                    title: "Gym08 Hack-kyykky",
+                    step1: "Selkä ja lantio tiukasti kiinni pehmusteessa, jalat kelkan keskellä.",
+                    step2: "Laske kelkka syvälle polvia koukistaen ja työnnä kantapäillä ylös.",
+                    target: "Etureisien maksimaalinen eristys",
+                    tips: ["Hack-laite poistaa tasapainoilun ja mahdollistaa syvän kyykyn."],
+                    query: "hack squat form short"
+                  }
+                }
               ]
             },
             {
               name: "Jalkaprässi",
               targetMin: 8, targetMax: 10, rest: 150,
               variants: [
-                { id: "prassi", name: "45° Kelkkaprässi", defaultWeight: 90, step: 5 },
-                { id: "istumaprassi", name: "Istumaprässi", defaultWeight: 80, step: 5 }
+                {
+                  id: "prassi", name: "45° Kelkkaprässi", defaultWeight: 90, step: 5,
+                  guide: {
+                    title: "45 asteen jalkaprässi",
+                    step1: "Jalat hartioiden leveydellä kelkan keskellä, alaselkä kiinni penkissä.",
+                    step2: "Laske paino syvälle ilman lantion pyöristymistä ja työnnä ylös.",
+                    target: "Etureidet ja pakaralihakset",
+                    tips: ["Älä ojenna polvia aivan lukkoon yläasennossa."],
+                    query: "leg press form short"
+                  }
+                }
               ]
             },
             {
               name: "Reidenkoukistus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "istuen", name: "Istuen (Gymleco)", defaultWeight: 6, step: 1, isLevel: true },
-                { id: "maaten", name: "Maaten laitteessa", defaultWeight: 5, step: 1, isLevel: true }
+                {
+                  id: "istuen", name: "Istuen (Gymleco)", defaultWeight: 6, step: 1, isLevel: true,
+                  guide: {
+                    title: "Reidenkoukistus istuen",
+                    step1: "Kiristä reisipehmuste erittäin tiukasti reisien päälle, nilkat tuella.",
+                    step2: "Koukista kantapäät voimakkaasti penkin alle ja jarruta palautusta 2–3 sekuntia.",
+                    target: "Takareidet (hamstrings - venytyskuormitus)",
+                    tips: ["Istuma-asento venyttää takareittä lantiosta ja tuo maksimaalisen hypertrofian."],
+                    query: "seated leg curl form short"
+                  }
+                }
               ]
             },
             {
               name: "Reisiojennus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "kone", name: "Reisiojennuslaite", defaultWeight: 35, step: 2.5 }
+                {
+                  id: "kone", name: "Reisiojennuslaite", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Reisiojennus istuen",
+                    step1: "Säädä pehmuste nilkoille, polvinivel laitteen akselin kohdalla.",
+                    step2: "Ojenna sääret suoraksi ja pidä 1 sekunnin kova supistus ylhäällä.",
+                    target: "Suora reisilihas (rectus femoris)",
+                    tips: ["Laske painopakka hallitusti alas ilman kolahtamista."],
+                    query: "leg extension form short"
+                  }
+                }
               ]
             },
             {
               name: "Pohkeet seisten",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "kone", name: "Pohjekone seisten", defaultWeight: 40, step: 5 },
-                { id: "prassi", name: "Prässissä päkiöillä", defaultWeight: 60, step: 5 }
+                {
+                  id: "kone", name: "Pohjekone seisten", defaultWeight: 40, step: 5,
+                  guide: {
+                    title: "Pohjenousu seisten",
+                    step1: "Päkiät korokkeella, kantapäät laskettuna alas täyteen 2 sekunnin venytykseen.",
+                    step2: "Ponnista räjähtävästi suoraan päkiöille ja purista pohjetta 1 sekunti.",
+                    target: "Kaksoiskantalihas (gastrocnemius)",
+                    tips: ["2 sekunnin stoppi alhaalla poistaa akillesjänteen kimmoisuuden."],
+                    query: "standing calf raise form short"
+                  }
+                }
               ]
             },
             {
               name: "Vatsarutistus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa narulla", defaultWeight: 30, step: 2.5 },
-                { id: "kone", name: "Vatsakone", defaultWeight: 35, step: 2.5 }
+                {
+                  id: "talja", name: "Taljassa narulla", defaultWeight: 30, step: 2.5,
+                  guide: {
+                    title: "Vatsarutistus taljassa polviltaan",
+                    step1: "Polvillaan taljan edessä, naru pään sivuilla, lantio lukittuna.",
+                    step2: "Pyöristä selkärankaa viemällä rintakehää kohti lantiota.",
+                    target: "Suora vatsalihas (rectus abdominis)",
+                    tips: ["Älä istu taaksepäin kantapäille – tee työ vatsalla."],
+                    query: "cable crunch form short"
+                  }
+                }
               ]
             }
           ]
@@ -621,57 +1023,130 @@
               name: "Pystypunnerrus",
               targetMin: 6, targetMax: 8, rest: 150,
               variants: [
-                { id: "kone", name: "Vipuvarsipystypunnerrus", defaultWeight: 35, step: 2.5 },
-                { id: "kp", name: "Käsipainot istuen", defaultWeight: 16, step: 2 },
-                { id: "tanko", name: "Pystypunnerrus tanko", defaultWeight: 30, step: 2.5 }
+                {
+                  id: "kone", name: "Vipuvarsipystypunnerrus", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Pystypunnerrus vipuvarsikoneessa",
+                    step1: "Istu tukevasti selkänojassa, kahvat korvien korkeudella.",
+                    step2: "Punnerra kädet suoraksi pään päälle ilman alaselän notkistamista.",
+                    target: "Etu- ja sivuolkapäät, ojentajat",
+                    tips: ["Vipuvarsilaite mahdollistaa kovan kuormituksen turvallisesti."],
+                    query: "seated shoulder press machine form"
+                  }
+                },
+                {
+                  id: "kp", name: "Käsipainot istuen", defaultWeight: 16, step: 2,
+                  guide: {
+                    title: "Pystypunnerrus käsipainoilla istuen",
+                    step1: "Penkin selkänoja yhtä pykälää vaille pystyasennossa (75–80°).",
+                    step2: "Punnerra käsipainot suoraan pään päälle kyynärpäät hieman etuviistossa.",
+                    target: "Olkapäät ja stabiloivat lihakset",
+                    tips: ["Hallittu lasku korvien tasolle."],
+                    query: "seated dumbbell shoulder press short"
+                  }
+                }
               ]
             },
             {
               name: "Alataljasoutu",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "kapea", name: "Kapea kahva", defaultWeight: 45, step: 2.5 },
-                { id: "levea", name: "Leveä lapiokahva", defaultWeight: 40, step: 2.5 }
+                {
+                  id: "kapea", name: "Kapea kahva", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Alataljasoutu kapealla kahvalla",
+                    step1: "Polvissa pieni jousto, rinta pystyssä, kädet ojennettuna eteen.",
+                    step2: "Vedä kahva napaan ja purista lapaluut tiukasti yhteen takana.",
+                    target: "Keskiselkä ja latsit",
+                    tips: ["Pidä vartalo vakaana ilman liiallista heilumista."],
+                    query: "seated cable row form short"
+                  }
+                }
               ]
             },
             {
               name: "Rintapunnerrus",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "kone", name: "Vinopenkkikone", defaultWeight: 45, step: 2.5 },
-                { id: "kp", name: "Tasapenkki KP", defaultWeight: 18, step: 2 }
+                {
+                  id: "kone", name: "Vinopenkkikone", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Vinopenkkikone",
+                    step1: "Asetu laitteeseen, kahvat ylärinnan korkeudella.",
+                    step2: "Punnerra eteen rintalihaksilla ja pidä 2 sekunnin jarruttava laskuvaihe.",
+                    target: "Ylärinta",
+                    tips: ["Koneversio mahdollistaa turvallisen uupumuksen."],
+                    query: "incline chest press machine form"
+                  }
+                }
               ]
             },
             {
               name: "Ylätalja leveä",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "tanko", name: "Suora tanko eteen", defaultWeight: 45, step: 2.5 },
-                { id: "mag", name: "Leveä MAG-kahva", defaultWeight: 45, step: 2.5 }
+                {
+                  id: "tanko", name: "Suora tanko eteen", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Ylätalja leveällä myötäotteella",
+                    step1: "Ota tankoa leveämpi ote, rintakehä koholla.",
+                    step2: "Vedä tanko leuan alle vieden rintakehää hieman tankoa kohti.",
+                    target: "Yläselkä ja leveä selkälihas",
+                    tips: ["Hallitse palautus ylös ilman hartioiden nousua korviin."],
+                    query: "lat pulldown form short"
+                  }
+                }
               ]
             },
             {
               name: "Vipunostot sivulle",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa", defaultWeight: 8, step: 1 },
-                { id: "kone", name: "Koneessa", defaultWeight: 30, step: 2.5 }
+                {
+                  id: "talja", name: "Taljassa", defaultWeight: 8, step: 1,
+                  guide: {
+                    title: "Sivuvipunostot taljassa",
+                    step1: "Vaijeri jalkojen takana, käsi alhaalla.",
+                    step2: "Nosta kyynärpääjohtoisesti hartiatasolle ja pysäytä 1 sekunniksi.",
+                    target: "Sivuolkapäät",
+                    tips: ["Jarruta alasvientiä."],
+                    query: "cable lateral raise form short"
+                  }
+                }
               ]
             },
             {
               name: "Ojentajapunnerrus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "tanko", name: "Suora tanko taljassa", defaultWeight: 20, step: 2.5 },
-                { id: "koyni", name: "Köysi taljassa", defaultWeight: 17.5, step: 2.5 }
+                {
+                  id: "tanko", name: "Suora tanko taljassa", defaultWeight: 20, step: 2.5,
+                  guide: {
+                    title: "Ojentajapunnerrus taljassa suoralla tangolla",
+                    step1: "Kyynärpäät lukittuina kiinni kylkiin, kyynärvarret 90° kulmassa.",
+                    step2: "Ojenna kädet suoraksi alas ja purista ojentajaa 1 sekunti.",
+                    target: "Ojentajan sivu- ja keskiosa",
+                    tips: ["Älä päästä olkavarsia liikkumaan eteen ja taakse."],
+                    query: "tricep pushdown cable short"
+                  }
+                }
               ]
             },
             {
               name: "Hauiskääntö",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "tanko", name: "Mutkatanko seisten", defaultWeight: 25, step: 2.5 },
-                { id: "talja", name: "Taljassa tangolla", defaultWeight: 20, step: 2.5 }
+                {
+                  id: "tanko", name: "Mutkatanko seisten", defaultWeight: 25, step: 2.5,
+                  guide: {
+                    title: "Hauiskääntö mutkatangolla seisten",
+                    step1: "Ota ote mutkatangon sisämutkista, lavat taakse lukittuina.",
+                    step2: "Käännä tanko ylös kyynärpäät kylkien tasalla pitäen.",
+                    target: "Hauislihaksen molemmat päät",
+                    tips: ["Laske tanko rauhallisesti alas täyteen ojennukseen."],
+                    query: "barbell curl form short"
+                  }
+                }
               ]
             }
           ]
@@ -683,47 +1158,113 @@
               name: "Maastaveto",
               targetMin: 5, targetMax: 6, rest: 180,
               variants: [
-                { id: "tanko", name: "Perinteinen tanko", defaultWeight: 100, step: 2.5 },
-                { id: "trapbar", name: "Trap bar (Hex bar)", defaultWeight: 105, step: 5 }
+                {
+                  id: "tanko", name: "Perinteinen tanko", defaultWeight: 100, step: 2.5,
+                  guide: {
+                    title: "Maastaveto nostolavalla",
+                    step1: "Tanko 2 cm sääristä jalan keskellä, rinta auki ja lapaluut lukittuina.",
+                    step2: "Paina lattiaa poispäin jaloilla ja ojenna vartalo suoraksi tangon noustessa.",
+                    target: "Koko takaketju (pakarat, takareidet, selkä)",
+                    tips: ["Tanko kulkee koko noston ajan sääriä ja reisiä pitkin."],
+                    query: "deadlift form short 15 seconds"
+                  }
+                },
+                {
+                  id: "trapbar", name: "Trap bar (Hex bar)", defaultWeight: 105, step: 5,
+                  guide: {
+                    title: "Trap bar -maastaveto",
+                    step1: "Asetu kehikon keskelle, selkä suorassa ja rintakehä auki.",
+                    step2: "Ponnista jaloilla lattian läpi ja nouse pystyasentoon.",
+                    target: "Takaketju ja etureidet nivelystävällisesti",
+                    tips: ["Trap bar vähentää alaselkään kohdistuvaa vääntömomenttia."],
+                    query: "trap bar deadlift form short"
+                  }
+                }
               ]
             },
             {
               name: "Romanialainen mave (RDL)",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "tanko", name: "Levytanko", defaultWeight: 60, step: 2.5 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 22, step: 2 }
+                {
+                  id: "tanko", name: "Levytanko", defaultWeight: 60, step: 2.5,
+                  guide: {
+                    title: "Romanialainen maastaveto tangolla",
+                    step1: "Seiso suorana tanko reisillä, polvissa pieni lukittu kulma.",
+                    step2: "Työnnä lantiota suoraan taaksepäin sääriä hipoen, kunnes takareisi venyy.",
+                    target: "Takareidet ja pakarat (venytyspainotus)",
+                    tips: ["Liike tapahtuu lonkasta, ei alaselkää pyöristämällä."],
+                    query: "romanian deadlift form short"
+                  }
+                }
               ]
             },
             {
               name: "Lantionnosto",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "booty", name: "Gym08 Glute Drive / Booty Builder", defaultWeight: 70, step: 5 },
-                { id: "tanko", name: "Vapaa tanko", defaultWeight: 60, step: 5 }
+                {
+                  id: "booty", name: "Gym08 Glute Drive / Booty Builder", defaultWeight: 70, step: 5,
+                  guide: {
+                    title: "Glute Drive / Booty Builder -laite",
+                    step1: "Kiinnitä laitteen pehmustettu vyö tiukasti lantion yli, yläselkä tuessa.",
+                    step2: "Paina kantapäillä ja nosta lantio ylös voimakkaaseen pakarasupistukseen.",
+                    target: "Pakaralihas (gluteus maximus)",
+                    tips: ["Laite mahdollistaa nopean ja turvallisen raskaiden painojen käytön."],
+                    query: "glute drive machine form"
+                  }
+                }
               ]
             },
             {
               name: "Askelkyykky taakse",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "kp", name: "Käsipainot", defaultWeight: 14, step: 2 },
-                { id: "smith", name: "Smith-kone", defaultWeight: 30, step: 2.5 }
+                {
+                  id: "kp", name: "Käsipainot", defaultWeight: 14, step: 2,
+                  guide: {
+                    title: "Askelkyykky taakse käsipainoilla",
+                    step1: "Seiso suorana käsipainot sivuilla.",
+                    step2: "Astu taakse ja laske polvi lähelle lattiaa, ponnista etujalalla ylös.",
+                    target: "Pakarat ja etureidet",
+                    tips: ["Kallista ylävartaloa kevyesti eteenpäin pakara-aktivaation lisäämiseksi."],
+                    query: "reverse lunge form short"
+                  }
+                }
               ]
             },
             {
               name: "Pohkeet istuen",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "kone", name: "Istumapohjekone", defaultWeight: 35, step: 2.5 }
+                {
+                  id: "kone", name: "Istumapohjekone", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Pohjenousu istuen koneessa",
+                    step1: "Pehmuste reisien päällä, kantapäät laskettuna syvään venytykseen.",
+                    step2: "Nouse päkiöille täyteen supistukseen ja pysäytä 1 sekunniksi.",
+                    target: "Leveä kantalihas (soleus)",
+                    tips: ["Istuma-asennon polvikulma kohdistaa työn suoraan soleus-lihakseen."],
+                    query: "seated calf raise form short"
+                  }
+                }
               ]
             },
             {
               name: "Keskivartalo",
               targetMin: 10, targetMax: 15, rest: 90,
               variants: [
-                { id: "voimapyora", name: "Voimapyörä", defaultWeight: 0, step: 1 },
-                { id: "jalannosto", name: "Roikkuvat jalannostot", defaultWeight: 0, step: 1 }
+                {
+                  id: "voimapyora", name: "Voimapyörä", defaultWeight: 0, step: 1,
+                  guide: {
+                    title: "Voimapyörä polviltaan",
+                    step1: "Asetu polvilleen, pyöristä selkä kevyesti ja lukitse vatsa.",
+                    step2: "Rullaa eteenpäin hallitusti ja vedä itsesi takaisin suoralla vatsalihaksella.",
+                    target: "Syvä keskivartalo ja suora vatsalihas",
+                    tips: ["Älä päästä alaselkää notkahtamaan notkolle."],
+                    query: "ab wheel rollout form short"
+                  }
+                }
               ]
             }
           ]
@@ -737,46 +1278,102 @@
               name: "Kyykky",
               targetMin: 6, targetMax: 8, rest: 180,
               variants: [
-                { id: "tanko", name: "Takakyykky tanko", defaultWeight: 50, step: 2.5 },
-                { id: "hack", name: "Gym08 Hack-kyykky", defaultWeight: 60, step: 5 }
+                {
+                  id: "tanko", name: "Takakyykky tanko", defaultWeight: 50, step: 2.5,
+                  guide: {
+                    title: "Takakyykky tangolla",
+                    step1: "Tanko epäkkäillä, happea vatsaan, kyykkää vähintään 90 asteen kulmaan.",
+                    step2: "Ponnista koko jalkapohjalla takaisin ylös.",
+                    target: "Etureidet ja pakarat",
+                    tips: ["Pidä rintakehä pystyssä."],
+                    query: "squat form short 15 seconds"
+                  }
+                }
               ]
             },
             {
               name: "Penkkipunnerrus",
               targetMin: 6, targetMax: 8, rest: 150,
               variants: [
-                { id: "tanko", name: "Levytanko", defaultWeight: 52.5, step: 2.5 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 20, step: 2 }
+                {
+                  id: "tanko", name: "Levytanko", defaultWeight: 52.5, step: 2.5,
+                  guide: {
+                    title: "Penkkipunnerrus tangolla",
+                    step1: "Lavat tiukasti yhdessä penkissä, laske tanko rintalastan alaosaan.",
+                    step2: "Punnerra ylös jalkoja lattiaan painaen.",
+                    target: "Rinta, ojentajat, olkapäät",
+                    tips: ["Hallittu alaslasku."],
+                    query: "bench press form 15 seconds"
+                  }
+                }
               ]
             },
             {
               name: "Tuettu kulmasoutu",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "ttanko", name: "Rintatuettu T-tanko", defaultWeight: 35, step: 2.5 },
-                { id: "kone", name: "Vipuvarsisoutu", defaultWeight: 40, step: 2.5 }
+                {
+                  id: "ttanko", name: "Rintatuettu T-tanko", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Rintatuettu kulmasoutu",
+                    step1: "Rinta tuessa kiinni, vedä kyynärpäät taakse.",
+                    step2: "Purista lavat yhteen selän takana.",
+                    target: "Keskiselkä ja latsit",
+                    tips: ["1s pito supistuksessa."],
+                    query: "chest supported t bar row form"
+                  }
+                }
               ]
             },
             {
               name: "Reidenkoukistus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "istuen", name: "Istuen (Gymleco)", defaultWeight: 6, step: 1, isLevel: true }
+                {
+                  id: "istuen", name: "Istuen (Gymleco)", defaultWeight: 6, step: 1, isLevel: true,
+                  guide: {
+                    title: "Reidenkoukistus istuen",
+                    step1: "Reisituki tiukalla, koukista jalat penkin alle.",
+                    step2: "Jarruta palautusta rauhallisesti.",
+                    target: "Takareidet",
+                    tips: ["Istuma-asento venyttää takareittä."],
+                    query: "seated leg curl form short"
+                  }
+                }
               ]
             },
             {
               name: "Vipunostot sivulle",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa", defaultWeight: 8, step: 1 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 8, step: 1 }
+                {
+                  id: "talja", name: "Taljassa", defaultWeight: 8, step: 1,
+                  guide: {
+                    title: "Vipunostot taljassa",
+                    step1: "Vaijeri alhaalla, nosta kyynärpääjohtoisesti hartialinjalle.",
+                    step2: "Jarruta alasvienti.",
+                    target: "Sivuolkapäät",
+                    tips: ["Kyynärpää johtaa liikettä."],
+                    query: "cable lateral raise form short"
+                  }
+                }
               ]
             },
             {
               name: "Ojentajat taljassa",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "koyni", name: "Pään yli köydellä", defaultWeight: 20, step: 2.5 }
+                {
+                  id: "koyni", name: "Pään yli köydellä", defaultWeight: 20, step: 2.5,
+                  guide: {
+                    title: "Ojentajat pään yli taljassa",
+                    step1: "Kädet koukussa pään takana venytyksessä.",
+                    step2: "Ojenna kädet eteenpäin suoraksi.",
+                    target: "Ojentajan pitkä pää",
+                    tips: ["Olkavarret pysyvät paikallaan."],
+                    query: "overhead cable tricep extension form"
+                  }
+                }
               ]
             }
           ]
@@ -788,47 +1385,102 @@
               name: "Maastaveto",
               targetMin: 5, targetMax: 6, rest: 180,
               variants: [
-                { id: "tanko", name: "Perinteinen tanko", defaultWeight: 100, step: 2.5 },
-                { id: "trapbar", name: "Trap bar", defaultWeight: 105, step: 5 }
+                {
+                  id: "tanko", name: "Perinteinen tanko", defaultWeight: 100, step: 2.5,
+                  guide: {
+                    title: "Maastaveto tangolla",
+                    step1: "Tanko sääriä vasten, rinta auki, nosta maata jaloilla työntäen.",
+                    step2: "Ojenna vartalo suoraksi yläasennossa.",
+                    target: "Takaketju",
+                    tips: ["Pidä tanko lähellä kehoa."],
+                    query: "deadlift form short 15 seconds"
+                  }
+                }
               ]
             },
             {
               name: "Pystypunnerrus",
               targetMin: 6, targetMax: 8, rest: 150,
               variants: [
-                { id: "kone", name: "Vipuvarsikone", defaultWeight: 35, step: 2.5 },
-                { id: "kp", name: "Käsipainot istuen", defaultWeight: 16, step: 2 }
+                {
+                  id: "kone", name: "Vipuvarsikone", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Pystypunnerrus koneessa",
+                    step1: "Kahvat korvien tasalla, punnerra pään päälle suoraksi.",
+                    step2: "Laske hallitusti alas.",
+                    target: "Olkapäät",
+                    tips: ["Älä notkista alaselkää."],
+                    query: "seated shoulder press machine form"
+                  }
+                }
               ]
             },
             {
               name: "Ylätalja",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "lapio", name: "Lapiokahva", defaultWeight: 45, step: 2.5 },
-                { id: "mag", name: "MAG-kahva", defaultWeight: 45, step: 2.5 }
+                {
+                  id: "mag", name: "MAG-kahva", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Ylätalja MAG-kahvalla",
+                    step1: "Veto suoraan rinnan yläosaan lapoja alaspäin ohjaten.",
+                    step2: "Hallittu palautus venytykseen.",
+                    target: "Latsit",
+                    tips: ["Kyynärpäät ohjaavat liikettä."],
+                    query: "mag grip lat pulldown form"
+                  }
+                }
               ]
             },
             {
               name: "Jalkaprässi / Hack",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "prassi", name: "Prässi", defaultWeight: 80, step: 5 },
-                { id: "hack", name: "Hack-kyykky", defaultWeight: 55, step: 5 }
+                {
+                  id: "prassi", name: "Prässi", defaultWeight: 80, step: 5,
+                  guide: {
+                    title: "Jalkaprässi",
+                    step1: "Laske kelkka syvälle polvia koukistaen.",
+                    step2: "Ponnista koko jalkapohjalla ylös.",
+                    target: "Etureidet",
+                    tips: ["Älä lukitse polvia tärähtäen."],
+                    query: "leg press form short"
+                  }
+                }
               ]
             },
             {
               name: "Hauiskääntö",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "incline", name: "Incline KP", defaultWeight: 12, step: 1 },
-                { id: "scott", name: "Scott-penkki", defaultWeight: 25, step: 2.5 }
+                {
+                  id: "incline", name: "Incline KP", defaultWeight: 12, step: 1,
+                  guide: {
+                    title: "Incline käsipainohauiskääntö",
+                    step1: "Kädet roikkuvat vinopenkissä taakse.",
+                    step2: "Käännä painot ylös kyynärpäät takana pitäen.",
+                    target: "Hauiksen pitkä pää",
+                    tips: ["Hidas laskuvaihe."],
+                    query: "incline bicep curl form short"
+                  }
+                }
               ]
             },
             {
               name: "Pohkeet seisten",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "kone", name: "Pohjekone", defaultWeight: 40, step: 5 }
+                {
+                  id: "kone", name: "Pohjekone", defaultWeight: 40, step: 5,
+                  guide: {
+                    title: "Pohjenousu seisten",
+                    step1: "2s venytys pohjassa, räjähtävä nousu päkiöille.",
+                    step2: "Purista pohjetta ylhäällä 1 sekunti.",
+                    target: "Pohkeet",
+                    tips: ["Ei pomppua."],
+                    query: "standing calf raise form short"
+                  }
+                }
               ]
             }
           ]
@@ -840,44 +1492,102 @@
               name: "Romanialainen mave (RDL)",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "tanko", name: "Levytanko", defaultWeight: 60, step: 2.5 },
-                { id: "kp", name: "Käsipainot", defaultWeight: 22, step: 2 }
+                {
+                  id: "tanko", name: "Levytanko", defaultWeight: 60, step: 2.5,
+                  guide: {
+                    title: "RDL tangolla",
+                    step1: "Työnnä lantiota suoraan taaksepäin polvissa pieni jousto.",
+                    step2: "Ojenna lantio eteen pakaroita puristaen.",
+                    target: "Takareidet ja pakarat",
+                    tips: ["Tanko sääriä hipoen."],
+                    query: "romanian deadlift form short"
+                  }
+                }
               ]
             },
             {
               name: "Vinopenkki",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "kp", name: "Käsipainot", defaultWeight: 16, step: 2 },
-                { id: "kone", name: "Vipuvarsikone", defaultWeight: 40, step: 2.5 }
+                {
+                  id: "kp", name: "Käsipainot", defaultWeight: 16, step: 2,
+                  guide: {
+                    title: "Vinopenkki käsipainoilla",
+                    step1: "Penkki 30° kulmassa, punnerra painot yläviistoon.",
+                    step2: "Hallittu 2s laskuvaihe.",
+                    target: "Ylärinta",
+                    tips: ["Syvä venytys."],
+                    query: "incline dumbbell press form short"
+                  }
+                }
               ]
             },
             {
               name: "Alataljasoutu",
               targetMin: 8, targetMax: 10, rest: 120,
               variants: [
-                { id: "kapea", name: "Kapea kahva", defaultWeight: 45, step: 2.5 }
+                {
+                  id: "kapea", name: "Kapea kahva", defaultWeight: 45, step: 2.5,
+                  guide: {
+                    title: "Alataljasoutu",
+                    step1: "Vedä kahva napaan lapaluita puristaen.",
+                    step2: "Hallittu palautus.",
+                    target: "Keskiselkä",
+                    tips: ["Selkä suorassa."],
+                    query: "seated cable row form short"
+                  }
+                }
               ]
             },
             {
               name: "Reisiojennus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "kone", name: "Reisiojennuslaite", defaultWeight: 35, step: 2.5 }
+                {
+                  id: "kone", name: "Reisiojennuslaite", defaultWeight: 35, step: 2.5,
+                  guide: {
+                    title: "Reisiojennus",
+                    step1: "Ojenna sääret suoraksi ja pidä 1s puristus.",
+                    step2: "Laske hallitusti alas.",
+                    target: "Etureidet",
+                    tips: ["Keskity supistukseen."],
+                    query: "leg extension form short"
+                  }
+                }
               ]
             },
             {
               name: "Face Pull",
               targetMin: 12, targetMax: 15, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa", defaultWeight: 20, step: 2.5 }
+                {
+                  id: "talja", name: "Taljassa", defaultWeight: 20, step: 2.5,
+                  guide: {
+                    title: "Face Pull",
+                    step1: "Naru silmien tasolla, vedä kohti ohimoita.",
+                    step2: "Peukalot kääntyvät taaksepäin.",
+                    target: "Takaolkapäät",
+                    tips: ["Kyynärpäät ylhäällä."],
+                    query: "face pull form short"
+                  }
+                }
               ]
             },
             {
               name: "Vatsarutistus",
               targetMin: 10, targetMax: 12, rest: 90,
               variants: [
-                { id: "talja", name: "Taljassa", defaultWeight: 30, step: 2.5 }
+                {
+                  id: "talja", name: "Taljassa", defaultWeight: 30, step: 2.5,
+                  guide: {
+                    title: "Vatsarutistus taljassa",
+                    step1: "Polvillaan taljan edessä, pyöristä selkärankaa vatsalla.",
+                    step2: "Hallittu palautus.",
+                    target: "Vatsalihakset",
+                    tips: ["Älä istu taaksepäin."],
+                    query: "cable crunch form short"
+                  }
+                }
               ]
             }
           ]
@@ -887,17 +1597,14 @@
 
     // State
     let currentMode = localStorage.getItem("prog_mode") || "5day";
-    let currentTab = 0;
+    let currentTab = localStorage.getItem("active_tab") !== null ? (isNaN(localStorage.getItem("active_tab")) ? localStorage.getItem("active_tab") : parseInt(localStorage.getItem("active_tab"))) : 0;
     let targetTimerEnd = null;
     let timerInterval = null;
     let wakeLock = null;
 
-    // Screen Wake Lock API (keeps screen on during workout)
     async function requestWakeLock() {
       try {
-        if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
-        }
+        if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
       } catch (e) {}
     }
 
@@ -914,6 +1621,7 @@
       document.getElementById("mode-5").classList.toggle("active", mode === "5day");
       document.getElementById("mode-3").classList.toggle("active", mode === "3day");
       currentTab = 0;
+      localStorage.setItem("active_tab", currentTab);
       renderTabs();
       renderContent();
     }
@@ -932,11 +1640,11 @@
 
     function switchTab(tab) {
       currentTab = tab;
+      localStorage.setItem("active_tab", tab);
       renderTabs();
       renderContent();
     }
 
-    // Storage Key Helpers
     function getSelectedVariant(eIdx) {
       return localStorage.getItem(`var_sel_${currentMode}_${currentTab}_${eIdx}`) || 0;
     }
@@ -969,9 +1677,8 @@
       workout.exercises.forEach((ex, eIdx) => {
         const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
         const currentVariant = ex.variants[selectedVIdx] || ex.variants[0];
-        const stepStatus = parseInt(localStorage.getItem(getProgStepKey(eIdx)) || "0"); // 0 = 0/3, 1 = 1/3, 2 = 2/3, 3 = 3/3 done
+        const stepStatus = parseInt(localStorage.getItem(getProgStepKey(eIdx)) || "0");
 
-        // Determine if Double Progression target is achieved
         let allHitTarget = true;
         for (let s = 0; s < 3; s++) {
           const rKey = getRepsKey(eIdx, s);
@@ -982,13 +1689,12 @@
         html += `
           <div class="exercise-card">
             <div class="exercise-header">
-              <div class="exercise-title" onclick="openExerciseGuide('${ex.name}')">
+              <div class="exercise-title" onclick="openExerciseGuide(${eIdx})">
                 <span>${ex.name}</span>
                 <span class="info-tag">Ohje ℹ️</span>
               </div>
             </div>
 
-            <!-- Equipment Variants Selector -->
             ${ex.variants.length > 1 ? `
               <div class="variant-selector">
                 ${ex.variants.map((v, vIdx) => `
@@ -999,7 +1705,6 @@
               </div>
             ` : ''}
 
-            <!-- Target & Progression Badge -->
             <div class="target-bar">
               <span class="target-text">Tavoite: 3 × ${ex.targetMin}–${ex.targetMax} toistoa</span>
               <span class="overload-badge ${allHitTarget ? 'overload-ready' : 'overload-wait'}">
@@ -1008,12 +1713,10 @@
             </div>
         `;
 
-        // 3 Sets Rows
         for (let s = 0; s < 3; s++) {
           const wKey = getWeightKey(eIdx, currentVariant.id, s);
           const rKey = getRepsKey(eIdx, s);
 
-          // Fallback to legacy keys if exists
           const legacyWeight = localStorage.getItem(`tp_${currentMode}_w${currentTab}_e${eIdx}_s${s}_w`);
           const savedW = localStorage.getItem(wKey) !== null ? parseFloat(localStorage.getItem(wKey)) : (legacyWeight ? parseFloat(legacyWeight) : currentVariant.defaultWeight);
           const savedR = localStorage.getItem(rKey) !== null ? parseInt(localStorage.getItem(rKey)) : ex.targetMin;
@@ -1036,7 +1739,6 @@
           `;
         }
 
-        // Single Sequential Set Action Button (1/3 -> 2/3 -> 3/3 / Finish)
         const isLastExercise = (eIdx === totalExercises - 1);
         let buttonText = "Kuittaa sarja 1/3 ▶ (Aloita tauko)";
         let buttonClass = "";
@@ -1081,22 +1783,18 @@
       renderContent();
     }
 
-    // --- SEQUENTIAL 1/3, 2/3, 3/3 HANDLER ---
     function handleSetProgress(eIdx, restSeconds, isLastExercise) {
       initNotifications();
       const stepKey = getProgStepKey(eIdx);
       let currentStep = parseInt(localStorage.getItem(stepKey) || "0");
 
       if (currentStep === 0) {
-        // Set 1 complete -> Start rest timer
         localStorage.setItem(stepKey, "1");
         startTimer(restSeconds);
       } else if (currentStep === 1) {
-        // Set 2 complete -> Start rest timer
         localStorage.setItem(stepKey, "2");
         startTimer(restSeconds);
       } else if (currentStep === 2) {
-        // Set 3 complete -> DO NOT START TIMER! Finish exercise or workout
         localStorage.setItem(stepKey, "3");
         stopTimer();
         if (isLastExercise) {
@@ -1104,21 +1802,16 @@
           alert("Upea treeni takana! Kaikki liikkeet suoritettu ja treeni tallennettu historiaan. 🔥");
         }
       } else {
-        // Reset this exercise if clicked when already finished
         localStorage.setItem(stepKey, "0");
       }
 
       renderContent();
     }
 
-    // --- SOUND & SILENT-MODE SCREEN FLASH ALERT ---
     function triggerSilentAlarm() {
-      // 1. Strong Vibration Pattern
       if ("vibrate" in navigator) {
         navigator.vibrate([600, 200, 600, 200, 1000]);
       }
-
-      // 2. Audible Beep (works if sound is on)
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
@@ -1133,10 +1826,8 @@
         osc.stop(ctx.currentTime + 1.0);
       } catch (e) {}
 
-      // 3. Flashing visual overlay on screen (critical for silent mode!)
       document.getElementById("flash-alert").classList.add("active");
 
-      // 4. Push notification
       if ("Notification" in window && Notification.permission === "granted") {
         new Notification("Palautusaika päättyi! ⏱️", {
           body: "Aika aloittaa seuraava sarja!",
@@ -1153,6 +1844,7 @@
     function startTimer(seconds) {
       clearInterval(timerInterval);
       targetTimerEnd = Date.now() + seconds * 1000;
+      localStorage.setItem("saved_timer_target", targetTimerEnd);
       document.getElementById("timer").classList.add("show");
       updateTimerUI();
 
@@ -1160,12 +1852,25 @@
         const remaining = Math.round((targetTimerEnd - Date.now()) / 1000);
         if (remaining <= 0) {
           clearInterval(timerInterval);
+          localStorage.removeItem("saved_timer_target");
           document.getElementById("timer-text").innerText = "Aika täynnä!";
           triggerSilentAlarm();
         } else {
           updateTimerUI();
         }
       }, 500);
+    }
+
+    function checkActiveTimerOnLoad() {
+      const savedEnd = localStorage.getItem("saved_timer_target");
+      if (savedEnd) {
+        const remaining = Math.round((parseInt(savedEnd) - Date.now()) / 1000);
+        if (remaining > 0) {
+          startTimer(remaining);
+        } else {
+          localStorage.removeItem("saved_timer_target");
+        }
+      }
     }
 
     function updateTimerUI() {
@@ -1178,60 +1883,34 @@
     function addTimer(sec) {
       if (targetTimerEnd) {
         targetTimerEnd += sec * 1000;
+        localStorage.setItem("saved_timer_target", targetTimerEnd);
         updateTimerUI();
       }
     }
 
     function stopTimer() {
       clearInterval(timerInterval);
+      localStorage.removeItem("saved_timer_target");
       document.getElementById("timer").classList.remove("show");
     }
 
-    // --- MODALS & GUIDES ---
-    const exerciseGuides = {
-      "Penkkipunnerrus": {
-        step1: "Tanko suorilla käsillä rinnan yläpuolella. Lavat tiukasti yhdessä penkissä.",
-        step2: "Laske rintalastan alaosaan (kyynärpäät 45°), räjähtävä työntö ylös.",
-        target: "Kohde: Rintalihakset, etuolkapäät, ojentajat",
-        tips: ["Käytä jalkavoimaa (leg drive).", "Pidä ranteet suorana."],
-        query: "bench press form 15 seconds"
-      },
-      "Vinopenkki": {
-        step1: "Käsipainot/kahvat ylärinnan tasolla syvässä venytyksessä.",
-        step2: "Punnerra yläviistoon rintalihaksen yläosaa supistaen.",
-        target: "Kohde: Ylärinta ja etuolkapäät",
-        tips: ["Penkin kulma n. 30 astetta."],
-        query: "incline chest press form short"
-      },
-      "Kyykky": {
-        step1: "Tukeva asento, happea vatsaan ja keskivartalo lukkoon.",
-        step2: "Kyykky vähintään 90° syvyyteen polvet varvaslinjassa, nousu voimalla.",
-        target: "Kohde: Etureidet ja pakarat",
-        tips: ["Hack-kyykyssä paina alaselkä tiukasti selkänojaan."],
-        query: "squat form short 15 seconds"
-      },
-      "Maastaveto": {
-        step1: "Tanko 2 cm säärissä, rinta auki, lapaluut lukittuina.",
-        step2: "Paina jaloilla maata poispäin ja ojenna vartalo suoraksi.",
-        target: "Kohde: Koko takaketju (pakarat, takareidet, selkä)",
-        tips: ["Trap bar sallii suoremman selkäasennon."],
-        query: "deadlift form short"
-      }
-    };
-
-    function openExerciseGuide(name) {
-      const guide = exerciseGuides[name] || {
+    function openExerciseGuide(eIdx) {
+      const ex = programData[currentMode][currentTab].exercises[eIdx];
+      const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
+      const variant = ex.variants[selectedVIdx] || ex.variants[0];
+      const guide = variant.guide || {
+        title: ex.name,
         step1: "Ota tukeva alkuasento ja hallitse liikerata.",
         step2: "Tee voimakas supistus ja jarruta alasvienti.",
-        target: "Kohdelihakset: Voima & Hypertrofia",
+        target: "Voima & Hypertrofia",
         tips: ["Tee sarjat puhtaalla tekniikalla."],
-        query: name + " form short"
+        query: ex.name + " form short"
       };
 
-      document.getElementById("modal-title").innerText = name;
+      document.getElementById("modal-title").innerText = guide.title;
       document.getElementById("modal-step1").innerText = guide.step1;
       document.getElementById("modal-step2").innerText = guide.step2;
-      document.getElementById("modal-target").innerText = guide.target;
+      document.getElementById("modal-target").innerText = `Kohde: ${guide.target}`;
       document.getElementById("modal-tips").innerHTML = guide.tips.map(t => `<li>${t}</li>`).join("");
       document.getElementById("modal-video-btn").href = `https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`;
 
@@ -1245,7 +1924,6 @@
     function closeMorkoModalDirect() { document.getElementById("morko-modal").classList.remove("open"); }
     function closeMorkoModal(e) { if (e.target.id === "morko-modal") closeMorkoModalDirect(); }
 
-    // --- HISTORY SYSTEM ---
     function saveCurrentToHistory() {
       const workout = programData[currentMode][currentTab];
       const dateStr = new Date().toLocaleDateString("fi-FI", { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -1280,40 +1958,57 @@
       let history = JSON.parse(localStorage.getItem("workout_history") || "[]");
 
       let html = `
-        <div style="font-size:1.1rem; font-weight:700; margin-bottom:12px; color:var(--accent);">
-          📜 Treenihistoria & Kehitys
+        <div style="font-size:1.15rem; font-weight:800; margin-bottom:14px; color:var(--accent);">
+          📜 Tallennetut Treenit
         </div>
 
-        <div class="history-entry" style="border-color:#3730a3; background:#11162b;">
-          <div class="history-header" style="color:#a5b4fc;">
-            <span>Lähtötaso (Juho - Gym08)</span>
-            <span style="font-size:0.75rem; color:var(--text-dim);">Alkuarvot</span>
+        <div class="history-card" style="border-color:#3730a3; background:#101328;">
+          <div class="history-header-box">
+            <span class="history-badge" style="background:#272758; color:#c7d2fe;">Lähtötaso (Juho - Gym08)</span>
+            <span class="history-time">Alkuarvot</span>
           </div>
-          <div class="history-item"><span>Penkkipunnerrus</span> <b>52.5 kg (3 × 6)</b></div>
-          <div class="history-item"><span>Vinopenkki KP</span> <b>16 kg (2 × 6) + 14 kg (1 × 8)</b></div>
-          <div class="history-item"><span>Takakyykky</span> <b>50 kg (3 × 8)</b></div>
-          <div class="history-item"><span>Maastaveto (Mave)</span> <b>100 kg (3 × 6)</b></div>
-          <div class="history-item"><span>Reidenkoukistus</span> <b>Taso 6 (3 × 12)</b></div>
+          <div class="history-item-row">
+            <span class="history-item-name">Penkkipunnerrus</span>
+            <div class="history-sets-pills"><span class="history-pill">52.5 kg × 6</span></div>
+          </div>
+          <div class="history-item-row">
+            <span class="history-item-name">Vinopenkki KP</span>
+            <div class="history-sets-pills"><span class="history-pill">16 kg × 6</span><span class="history-pill">14 kg × 8</span></div>
+          </div>
+          <div class="history-item-row">
+            <span class="history-item-name">Takakyykky</span>
+            <div class="history-sets-pills"><span class="history-pill">50 kg × 8</span></div>
+          </div>
+          <div class="history-item-row">
+            <span class="history-item-name">Maastaveto</span>
+            <div class="history-sets-pills"><span class="history-pill">100 kg × 6</span></div>
+          </div>
+          <div class="history-item-row" style="border:none;">
+            <span class="history-item-name">Reidenkoukistus</span>
+            <div class="history-sets-pills"><span class="history-pill">Taso 6 × 12</span></div>
+          </div>
         </div>
       `;
 
       if (history.length === 0) {
-        html += `<p style="color:var(--text-dim); text-align:center; margin-top:20px;">Ei vielä tallennettuja treenejä. Kun saat treenin valmiiksi, tiedot tallentuvat tähän.</p>`;
+        html += `<p style="color:var(--text-dim); text-align:center; margin-top:24px;">Ei vielä tallennettuja treenejä. Kun saat treenin valmiiksi, tiedot tallentuvat tähän selkeinä kortteina.</p>`;
       } else {
         history.forEach(h => {
           html += `
-            <div class="history-entry">
-              <div class="history-header">
-                <span>${h.name}</span>
-                <span style="font-size:0.75rem; color:var(--text-dim);">${h.date}</span>
+            <div class="history-card">
+              <div class="history-header-box">
+                <span class="history-badge">${h.name}</span>
+                <span class="history-time">${h.date}</span>
               </div>
           `;
-          h.exercises.forEach(ex => {
-            const completedSets = ex.sets.map(s => `${s.weight}${s.unit} × ${s.reps}`).join(", ");
+          h.exercises.forEach((ex, idx) => {
+            const isLast = (idx === h.exercises.length - 1);
             html += `
-              <div class="history-item">
-                <span>${ex.name}</span>
-                <span style="font-weight:600; color:var(--accent);">${completedSets}</span>
+              <div class="history-item-row" ${isLast ? 'style="border:none;"' : ''}>
+                <span class="history-item-name">${ex.name}</span>
+                <div class="history-sets-pills">
+                  ${ex.sets.map(s => `<span class="history-pill">${s.weight} ${s.unit} × ${s.reps}</span>`).join("")}
+                </div>
               </div>
             `;
           });
@@ -1334,8 +2029,9 @@
       }
     }
 
-    // Init
+    // Init with state persistence
     setProgramMode(currentMode);
+    checkActiveTimerOnLoad();
   </script>
 </body>
 </html>
