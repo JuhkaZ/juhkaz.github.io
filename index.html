@@ -117,8 +117,8 @@
     .exercise-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 6px;
+      align-items: center;
+      margin-bottom: 8px;
     }
     .exercise-title {
       font-size: 1rem;
@@ -128,6 +128,21 @@
       display: flex;
       align-items: center;
       gap: 6px;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-edit-gear {
+      background: #0b1120;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 6px;
+      cursor: pointer;
     }
     .info-tag {
       font-size: 0.72rem;
@@ -318,6 +333,49 @@
       height: 32px;
       border-radius: 50%;
     }
+
+    /* Form inside Edit Modal */
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      background: #070a12;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .radio-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .radio-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #070a12;
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .radio-label input { cursor: pointer; }
+
     .motion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
     .motion-box { background: #070a12; border: 1px solid var(--border); border-radius: 10px; padding: 10px; text-align: center; }
     .motion-tag { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
@@ -363,11 +421,11 @@
       height: auto;
     }
     .raw-code {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 900;
       color: var(--accent);
       letter-spacing: 4px;
-      margin: 8px 0 14px 0;
+      margin: 10px 0 16px 0;
       font-family: monospace;
     }
 
@@ -461,12 +519,12 @@
 
   <!-- Screen Flash Alert -->
   <div id="flash-alert" class="flash-alert">
-    <div class="flash-title">⏱️ TAUON AIKA TÄYNNÄ!</div>
-    <div class="flash-sub">Kylmä rauta kutsuu. Seuraava sarja käyntiin!</div>
-    <button class="btn-dismiss-flash" onclick="dismissFlash()">Kuittaa & Aloita sarja</button>
+    <div id="flash-title" class="flash-title">⏱️ TAUON AIKA TÄYNNÄ!</div>
+    <div id="flash-sub" class="flash-sub">Kylmä rauta kutsuu. Seuraava sarja käyntiin!</div>
+    <button class="btn-dismiss-flash" onclick="dismissFlash()">Kuittaa & Aloita</button>
   </div>
 
-  <!-- Dynamic Guide Modal -->
+  <!-- Dynamic Movement Guide Modal -->
   <div id="guide-modal" class="modal-overlay" onclick="closeModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
@@ -489,6 +547,41 @@
     </div>
   </div>
 
+  <!-- Equipment / Exercise Customization Modal -->
+  <div id="edit-modal" class="modal-overlay" onclick="closeEditModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Muokkaa laitteen asetuksia</h3>
+        <button class="modal-close" onclick="closeEditModalDirect()">✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Laitteen / suoritusmuodon nimi</label>
+        <input type="text" id="edit-name-input" class="form-input" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mittaustapa</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="edit-unit" id="unit-kg" value="kg" />
+            Painot (kg)
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="edit-unit" id="unit-level" value="level" />
+            Asetukset (taso)
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Askelkoko (+/- nappeihin)</label>
+        <input type="number" id="edit-step-input" class="form-input" step="0.5" min="0.5" />
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 18px;">
+        <button class="btn-save-workout" style="flex: 2;" onclick="saveCustomEquipment()">Tallenna muutokset</button>
+        <button class="btn-reset" style="flex: 1;" onclick="resetCustomEquipment()">Palauta oletus</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Mörkö Easter Egg Modal -->
   <div id="morko-modal" class="modal-overlay" onclick="closeMorkoModal(event)">
     <div class="modal-card morko-card" onclick="event.stopPropagation()">
@@ -506,15 +599,12 @@
             </linearGradient>
           </defs>
 
-          <!-- Sky & Snowy Mountain Horizon -->
           <rect width="400" height="220" fill="url(#winterSky)" />
           <path d="M 0 200 Q 80 150, 160 190 T 320 180 T 400 195 L 400 320 L 0 320 Z" fill="url(#snowGround)" />
 
-          <!-- Distant Pale Mountain Peak -->
           <polygon points="100,165 130,110 160,165" fill="#d0e2f2" opacity="0.85" />
           <polygon points="120,165 130,110 145,165" fill="#ffffff" opacity="0.9" />
 
-          <!-- Frozen White Trees on Left -->
           <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9">
             <path d="M 40 240 L 40 130" stroke-width="4.5" />
             <path d="M 40 180 Q 15 150, 5 110" />
@@ -524,7 +614,6 @@
             <path d="M 40 140 Q 30 115, 35 95" />
           </g>
 
-          <!-- Frozen White Trees on Right -->
           <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9">
             <path d="M 360 240 L 360 120" stroke-width="4.5" />
             <path d="M 360 170 Q 335 145, 325 105" />
@@ -533,29 +622,22 @@
             <path d="M 375 135 Q 385 120, 380 95" />
           </g>
 
-          <!-- Shadow under Groke -->
           <ellipse cx="200" cy="298" rx="120" ry="14" fill="#a4bed6" opacity="0.75" />
 
-          <!-- Mörkö Silhouette -->
           <path d="M 200 45 C 160 45, 142 80, 130 140 C 118 200, 105 260, 85 288 C 135 304, 265 304, 315 288 C 295 260, 282 200, 270 140 C 258 80, 240 45, 200 45 Z" fill="#7a5592" stroke="#2b1a3d" stroke-width="3" />
 
-          <!-- Arms / Side Fringes -->
           <path d="M 125 185 C 110 220, 102 260, 92 278 C 98 274, 108 268, 115 258 C 120 252, 126 230, 128 215 Z" fill="#583972" stroke="#2b1a3d" stroke-width="2" />
           <path d="M 275 185 C 290 220, 298 260, 308 278 C 302 274, 292 268, 285 258 C 280 252, 274 230, 272 215 Z" fill="#583972" stroke="#2b1a3d" stroke-width="2" />
 
-          <!-- Bottom Hem Pleats -->
           <path d="M 85 288 Q 105 300, 125 290 Q 145 302, 165 292 Q 185 303, 200 293 Q 215 303, 235 292 Q 255 302, 275 290 Q 295 300, 315 288 L 310 304 C 250 318, 150 318, 90 304 Z" fill="#65427d" stroke="#2b1a3d" stroke-width="2.2" />
 
-          <!-- Nostril / Snout -->
           <polygon points="200,68 180,110 220,110" fill="#20223c" stroke="#121324" stroke-width="2" />
 
-          <!-- Eyes -->
           <ellipse cx="186" cy="65" rx="8" ry="9.5" fill="#ffffff" stroke="#121324" stroke-width="2" />
           <ellipse cx="214" cy="65" rx="8" ry="9.5" fill="#ffffff" stroke="#121324" stroke-width="2" />
           <circle cx="187" cy="65" r="3.2" fill="#030712" />
           <circle cx="213" cy="65" r="3.2" fill="#030712" />
 
-          <!-- Mouth Grin with teeth -->
           <rect x="168" y="118" width="64" height="12" rx="4" fill="#20223c" stroke="#121324" stroke-width="1.8" />
           <g fill="#ffffff">
             <rect x="171" y="120" width="5" height="8" rx="0.8" />
@@ -571,7 +653,7 @@
       </div>
 
       <div class="raw-code">56743</div>
-      <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje & Jatka treeniä</button>
+      <button class="btn-save-workout" onclick="closeMorkoModalDirect()">Sulje</button>
     </div>
   </div>
 
@@ -1588,6 +1670,9 @@
     let timerInterval = null;
     let wakeLock = null;
 
+    // Editing State
+    let editContext = { eIdx: 0, vIdx: 0 };
+
     async function requestWakeLock() {
       try {
         if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
@@ -1639,6 +1724,24 @@
       renderContent();
     }
 
+    // Custom Equipment Config Keys
+    function getCustomVariantKey(eIdx, vIdx) {
+      return `custom_cfg_${currentMode}_${currentTab}_${eIdx}_${vIdx}`;
+    }
+
+    function getVariantData(ex, eIdx, vIdx) {
+      const base = ex.variants[vIdx] || ex.variants[0];
+      const custom = JSON.parse(localStorage.getItem(getCustomVariantKey(eIdx, vIdx)) || "{}");
+      return {
+        id: base.id,
+        name: custom.name || base.name,
+        isLevel: custom.isLevel !== undefined ? custom.isLevel : (base.isLevel || false),
+        step: custom.step !== undefined ? custom.step : base.step,
+        defaultWeight: base.defaultWeight,
+        guide: base.guide
+      };
+    }
+
     function getWeightKey(eIdx, vId, sIdx) {
       return `val_w_${currentMode}_${currentTab}_${eIdx}_${vId}_s${sIdx}`;
     }
@@ -1662,7 +1765,7 @@
 
       workout.exercises.forEach((ex, eIdx) => {
         const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
-        const currentVariant = ex.variants[selectedVIdx] || ex.variants[0];
+        const currentVariant = getVariantData(ex, eIdx, selectedVIdx);
         const stepStatus = parseInt(localStorage.getItem(getProgStepKey(eIdx)) || "0");
 
         let allHitTarget = true;
@@ -1679,15 +1782,21 @@
                 <span>${ex.name}</span>
                 <span class="info-tag">Ohje ℹ️</span>
               </div>
+              <div class="header-actions">
+                <button class="btn-edit-gear" onclick="openEditModal(${eIdx}, ${selectedVIdx})">⚙️ Muokkaa laitetta</button>
+              </div>
             </div>
 
             ${ex.variants.length > 1 ? `
               <div class="variant-selector">
-                ${ex.variants.map((v, vIdx) => `
-                  <button class="variant-btn ${vIdx === selectedVIdx ? 'active' : ''}" onclick="setSelectedVariant(${eIdx}, ${vIdx})">
-                    ${v.name}
-                  </button>
-                `).join("")}
+                ${ex.variants.map((v, vIdx) => {
+                  const vData = getVariantData(ex, eIdx, vIdx);
+                  return `
+                    <button class="variant-btn ${vIdx === selectedVIdx ? 'active' : ''}" onclick="setSelectedVariant(${eIdx}, ${vIdx})">
+                      ${vData.name}
+                    </button>
+                  `;
+                }).join("")}
               </div>
             ` : ''}
 
@@ -1733,10 +1842,10 @@
           buttonText = "Kuittaa sarja 2/3 ▶ (Aloita tauko)";
           buttonClass = "active-step";
         } else if (stepStatus === 2) {
-          buttonText = isLastExercise ? "Päätä treeni & Tallenna 🏆" : "Kuittaa sarja 3/3 ✓ (Valmis!)";
+          buttonText = isLastExercise ? "Kuittaa sarja 3/3 ▶ (15s lopputauko 🏁)" : "Kuittaa sarja 3/3 ✓ (Valmis!)";
           buttonClass = "active-step";
         } else if (stepStatus >= 3) {
-          buttonText = isLastExercise ? "Treeni valmis! 🏆 (Nollaa)" : "Liike suoritettu (3/3) ✓ (Nollaa)";
+          buttonText = isLastExercise ? "Treeni valmis & tallennettu 🏆 (Nollaa)" : "Liike suoritettu (3/3) ✓ (Nollaa)";
           buttonClass = "finished-step";
         }
 
@@ -1759,8 +1868,10 @@
 
     function changeVal(eIdx, vId, sIdx, type, delta) {
       const ex = programData[currentMode][currentTab].exercises[eIdx];
+      const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
+      const currentVariant = getVariantData(ex, eIdx, selectedVIdx);
       const key = type === 'w' ? getWeightKey(eIdx, vId, sIdx) : getRepsKey(eIdx, sIdx);
-      let val = localStorage.getItem(key) !== null ? parseFloat(localStorage.getItem(key)) : (type === 'w' ? ex.variants.find(v => v.id === vId).defaultWeight : ex.targetMin);
+      let val = localStorage.getItem(key) !== null ? parseFloat(localStorage.getItem(key)) : (type === 'w' ? currentVariant.defaultWeight : ex.targetMin);
 
       val = Math.max(0, val + delta);
       val = Math.round(val * 10) / 10;
@@ -1782,10 +1893,11 @@
         startTimer(restSeconds);
       } else if (currentStep === 2) {
         localStorage.setItem(stepKey, "3");
-        stopTimer();
         if (isLastExercise) {
-          saveCurrentToHistory();
-          alert("Upea treeni takana! Kaikki liikkeet suoritettu ja treeni tallennettu historiaan. 🔥");
+          // 15 seconds finish break on final set of workout
+          startTimer(15, true);
+        } else {
+          stopTimer();
         }
       } else {
         localStorage.setItem(stepKey, "0");
@@ -1794,16 +1906,58 @@
       renderContent();
     }
 
-    function triggerSilentAlarm() {
+    // --- MODAL: EDIT EQUIPMENT & SETTINGS ---
+    function openEditModal(eIdx, vIdx) {
+      editContext = { eIdx, vIdx };
+      const ex = programData[currentMode][currentTab].exercises[eIdx];
+      const currentVariant = getVariantData(ex, eIdx, vIdx);
+
+      document.getElementById("edit-name-input").value = currentVariant.name;
+      document.getElementById("unit-kg").checked = !currentVariant.isLevel;
+      document.getElementById("unit-level").checked = currentVariant.isLevel;
+      document.getElementById("edit-step-input").value = currentVariant.step;
+
+      document.getElementById("edit-modal").classList.add("open");
+    }
+
+    function closeEditModalDirect() {
+      document.getElementById("edit-modal").classList.remove("open");
+    }
+    function closeEditModal(e) {
+      if (e.target.id === "edit-modal") closeEditModalDirect();
+    }
+
+    function saveCustomEquipment() {
+      const name = document.getElementById("edit-name-input").value.trim();
+      const isLevel = document.getElementById("unit-level").checked;
+      const step = parseFloat(document.getElementById("edit-step-input").value) || 1;
+
+      const key = getCustomVariantKey(editContext.eIdx, editContext.vIdx);
+      localStorage.setItem(key, JSON.stringify({ name, isLevel, step }));
+
+      closeEditModalDirect();
+      renderContent();
+    }
+
+    function resetCustomEquipment() {
+      const key = getCustomVariantKey(editContext.eIdx, editContext.vIdx);
+      localStorage.removeItem(key);
+
+      closeEditModalDirect();
+      renderContent();
+    }
+
+    // --- SILENT SCREEN FLASH & NOTIFICATION ---
+    function triggerSilentAlarm(isFinish = false) {
       if ("vibrate" in navigator) {
-        navigator.vibrate([600, 200, 600, 200, 1000]);
+        navigator.vibrate(isFinish ? [800, 200, 800, 200, 1200] : [600, 200, 600, 200, 1000]);
       }
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.setValueAtTime(isFinish ? 1046 : 880, ctx.currentTime);
         gain.gain.setValueAtTime(0.4, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.0);
         osc.connect(gain);
@@ -1812,13 +1966,15 @@
         osc.stop(ctx.currentTime + 1.0);
       } catch (e) {}
 
-      document.getElementById("flash-alert").classList.add("active");
+      const flash = document.getElementById("flash-alert");
+      document.getElementById("flash-title").innerText = isFinish ? "🏆 TREENI SUORITETTU!" : "⏱️ TAUON AIKA TÄYNNÄ!";
+      document.getElementById("flash-sub").innerText = isFinish ? "Treeni kuittautui tehdyksi ja tallennettiin historiaan." : "Kylmä rauta kutsuu. Seuraava sarja käyntiin!";
+      flash.classList.add("active");
 
       if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("Palautusaika päättyi! ⏱️", {
-          body: "Aika aloittaa seuraava sarja!",
-          requireInteraction: true,
-          vibrate: [600, 200, 600, 200, 1000]
+        new Notification(isFinish ? "Treeni suoritettu! 🏆" : "Palautusaika päättyi! ⏱️", {
+          body: isFinish ? "Treeni on kuittautunut ja tallennettu historiaan." : "Aika aloittaa seuraava sarja!",
+          requireInteraction: true
         });
       }
     }
@@ -1827,63 +1983,76 @@
       document.getElementById("flash-alert").classList.remove("active");
     }
 
-    function startTimer(seconds) {
+    function startTimer(seconds, isFinalWorkoutBreak = false) {
       clearInterval(timerInterval);
       targetTimerEnd = Date.now() + seconds * 1000;
       localStorage.setItem("saved_timer_target", targetTimerEnd);
+      localStorage.setItem("is_final_timer", isFinalWorkoutBreak ? "true" : "false");
       document.getElementById("timer").classList.add("show");
-      updateTimerUI();
+      updateTimerUI(isFinalWorkoutBreak);
 
       timerInterval = setInterval(() => {
         const remaining = Math.round((targetTimerEnd - Date.now()) / 1000);
         if (remaining <= 0) {
           clearInterval(timerInterval);
           localStorage.removeItem("saved_timer_target");
-          document.getElementById("timer-text").innerText = "Aika täynnä!";
-          triggerSilentAlarm();
+          localStorage.removeItem("is_final_timer");
+          document.getElementById("timer-text").innerText = isFinalWorkoutBreak ? "Treeni valmis! 🏆" : "Aika täynnä!";
+          
+          if (isFinalWorkoutBreak) {
+            saveCurrentToHistory();
+            renderContent();
+            triggerSilentAlarm(true);
+          } else {
+            triggerSilentAlarm(false);
+          }
         } else {
-          updateTimerUI();
+          updateTimerUI(isFinalWorkoutBreak);
         }
       }, 500);
     }
 
     function checkActiveTimerOnLoad() {
       const savedEnd = localStorage.getItem("saved_timer_target");
+      const isFinal = localStorage.getItem("is_final_timer") === "true";
       if (savedEnd) {
         const remaining = Math.round((parseInt(savedEnd) - Date.now()) / 1000);
         if (remaining > 0) {
-          startTimer(remaining);
+          startTimer(remaining, isFinal);
         } else {
           localStorage.removeItem("saved_timer_target");
+          localStorage.removeItem("is_final_timer");
         }
       }
     }
 
-    function updateTimerUI() {
+    function updateTimerUI(isFinal = false) {
       const remaining = Math.max(0, Math.round((targetTimerEnd - Date.now()) / 1000));
       const m = Math.floor(remaining / 60);
       const s = remaining % 60;
-      document.getElementById("timer-text").innerText = `Lepo: ${m}:${s < 10 ? '0' : ''}${s}`;
+      const prefix = isFinal ? "Viimeistelytauko: " : "Lepo: ";
+      document.getElementById("timer-text").innerText = `${prefix}${m}:${s < 10 ? '0' : ''}${s}`;
     }
 
     function addTimer(sec) {
       if (targetTimerEnd) {
         targetTimerEnd += sec * 1000;
         localStorage.setItem("saved_timer_target", targetTimerEnd);
-        updateTimerUI();
+        updateTimerUI(localStorage.getItem("is_final_timer") === "true");
       }
     }
 
     function stopTimer() {
       clearInterval(timerInterval);
       localStorage.removeItem("saved_timer_target");
+      localStorage.removeItem("is_final_timer");
       document.getElementById("timer").classList.remove("show");
     }
 
     function openExerciseGuide(eIdx) {
       const ex = programData[currentMode][currentTab].exercises[eIdx];
       const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
-      const variant = ex.variants[selectedVIdx] || ex.variants[0];
+      const variant = getVariantData(ex, eIdx, selectedVIdx);
       const guide = variant.guide || {
         title: ex.name,
         step1: "Ota tukeva alkuasento ja hallitse liikerata.",
@@ -1922,7 +2091,7 @@
 
       workout.exercises.forEach((ex, eIdx) => {
         const selectedVIdx = parseInt(getSelectedVariant(eIdx)) || 0;
-        const currentVariant = ex.variants[selectedVIdx] || ex.variants[0];
+        const currentVariant = getVariantData(ex, eIdx, selectedVIdx);
         const setsData = [];
 
         for (let s = 0; s < 3; s++) {
